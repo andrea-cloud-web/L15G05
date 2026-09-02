@@ -1,7 +1,7 @@
 ---
 title: "Data2002 Project 1"
 date: "`r Sys.Date()`"
-author: "541035662 530029720 540872536 550505479 530210568"
+author: "541035662 530029720 540872536 550505479 530210568 550041014"
 format: 
   html: 
     embed-resources: true # Creates a single HTML file as output
@@ -271,6 +271,7 @@ rq3_summary <- df_clean %>%
     SD = sd(work_hrs),
     Q1 = quantile(work_hrs, 0.25),
     Q3 = quantile(work_hrs, 0.75),
+    IQR = IQR(work_hrs),
     min = min(work_hrs),
     max = max(work_hrs)
   )
