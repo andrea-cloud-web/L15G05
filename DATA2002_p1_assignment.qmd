@@ -26,23 +26,13 @@ number-sections: true # (Optional) Puts numbers next to heading/subheadings
 
 ## Data Wrangling
 
-[Import data]
+All data processing for this report was conducted in R (R Core Team 2026) within the Rmarkdown environment (Xie, Allaire, and Grolemund 2018) to ensure reproducibility. Data wrangling was performed using base R and the tidyverse (Wickham et al. 2019). Visualisations were produced with ggplot2 (Wickham et al. 2019).
 
-[Variable selection]
+The raw survey dataset was imported and variable names were cleaned and shortened to improve readability throughout the analysis. Several categorical variables were recoded for clarity, including the assess variable, where “Other” responses were removed to retain only meaningful categories. The multitask variable was also converted into a binary factor with consistent labels.
 
-[Missing-value handling]
+Missing values were not removed globally; instead, they were handled on a case‑by‑case basis to preserve as much information as possible.
 
-[Recode cram variable]
-
-[Clean paid employment hours]
-
-**Load, rename, and clean**
-
-Import the survey dataset, rename variables for clarity, remove "Other" responses from `assess`, and remove `work_hrs` values above 70 hours per week. This threshold was chosen because more than 70 hours is equivalent to a 10-hour day with no days off, exceeding a standard full-time work week and leaving little time for sleep, classes, or commuting.
-
-**Compare and save**
-
-Boxplot `work_hrs` before and after cleaning, then save the cleaned dataset as `survey_cleaned.csv`.
+A threshold was applied to the work_hrs variable to remove implausible values above 70 hours per week. This cutoff was chosen because working more than 70 hours per week exceeds a standard full‑time workload and leaves insufficient time for sleep, commuting, and university study. Boxplots were generated to compare the distribution of weekly employment hours before and after cleaning, illustrating the impact of this threshold. The cleaned dataset was then saved for subsequent analysis.
 
 ```{r}
 library(tidyverse)
