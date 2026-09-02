@@ -36,8 +36,6 @@ number-sections: true # (Optional) Puts numbers next to heading/subheadings
 
 [Clean paid employment hours]
 
-[Prepare multitask variable]
-
 **Load, rename, and clean**
 
 Import the survey dataset, rename variables for clarity, remove "Other" responses from `assess`, and remove `work_hrs` values above 70 hours per week. This threshold was chosen because more than 70 hours is equivalent to a 10-hour day with no days off, exceeding a standard full-time work week and leaving little time for sleep, classes, or commuting.
@@ -261,7 +259,11 @@ independence: students who cram are considerably more likely to multitask
    "Immediately" preparers.
 
 
-## RQ3: Do students who multitask during lectures spend a different average number of hours per week in paid employment compared with students who do not multitask?
+## RQ3: Paid employment and multitasking
+
+**Research question:** Do students who multitask during lectures spend a
+different average number of hours per week in paid employment compared with
+students who do not multitask?
 
 Paid employment represents an external time commitment for students. Students balancing more paid work with university study may exhibit different lecture behaviours. Having examined paid employment in relation to cramming and multitasking in relation to cramming, we investigate whether paid-employment hours also differ between students who do and do not multitask during lectures.
 
@@ -276,14 +278,17 @@ rq3_summary <- df_clean %>%
     n = n(),
     mean = mean(work_hrs),
     median = median(work_hrs),
-    sd = sd(work_hrs),
+    SD = sd(work_hrs),
     Q1 = quantile(work_hrs, 0.25),
     Q3 = quantile(work_hrs, 0.75),
     min = min(work_hrs),
     max = max(work_hrs)
   )
 
-knitr::kable(rq3_summary)
+knitr::kable(
+  rq3_summary,
+  align = rep("c", ncol(rq3_summary))
+)
 ```
 The boxplot in @fig-work-multitask compares weekly paid-employment hours between students who reported multitasking during lectures and those who did not. Students who reported multitasking had a higher mean weekly paid-employment time (8.02 hours) than those who did not multitask (6.23 hours), giving an observed mean difference of 1.79 hours per week. Both groups show visually right-skewed distributions, with many students reporting few or no hours of paid employment and a smaller number reporting substantially higher working hours. This observed difference in group means is examined formally using a permutation test.
 ```{r}
@@ -357,18 +362,141 @@ df_clean %>%
   )
 ```
 
-[Hypotheses]
+```{r}
+#| label: rq3-permutation-test
+#| include: false
 
-[Permutation procedure]
+rq3_data <- df_clean %>%
+  filter(!is.na(work_hrs), !is.na(multitask)) %>%
+  mutate(multitask = factor(multitask, levels = c("No", "Yes")))
 
-[Permutation null distribution figure]
+welch_stat <- function(hours, group) {
+  hours_yes <- hours[group == "Yes"]
+  hours_no  <- hours[group == "No"]
 
-[Permutation p-value]
+  (mean(hours_yes) - mean(hours_no)) /
+    sqrt(var(hours_yes) / length(hours_yes) +
+           var(hours_no) / length(hours_no))
+}
 
-[Decision + contextual conclusion]
+mean_yes <- mean(rq3_data$work_hrs[rq3_data$multitask == "Yes"])
+mean_no  <- mean(rq3_data$work_hrs[rq3_data$multitask == "No"])
+mean_difference <- mean_yes - mean_no
+t_observed <- welch_stat(rq3_data$work_hrs, rq3_data$multitask)
 
-[Limitations]
+set.seed(2002)
+B <- 10000
 
+t_permuted <- replicate(
+  B,
+  welch_stat(
+    rq3_data$work_hrs,
+    sample(rq3_data$multitask, replace = FALSE)
+  )
+)
+
+n_yes <- sum(rq3_data$multitask == "Yes")
+n_no  <- sum(rq3_data$multitask == "No")
+sd_yes <- sd(rq3_data$work_hrs[rq3_data$multitask == "Yes"])
+sd_no  <- sd(rq3_data$work_hrs[rq3_data$multitask == "No"])
+pooled_sd <- sqrt(
+  ((n_yes - 1) * sd_yes^2 + (n_no - 1) * sd_no^2) /
+    (n_yes + n_no - 2)
+)
+cohens_d <- mean_difference / pooled_sd
+```
+
+```{r}
+#| label: fig-rq3-permutation
+#| fig-cap: "Permutation null distribution of the Welch t-statistic. Dashed red lines indicate the observed cut-offs at plus and minus the absolute observed statistic."
+
+tibble(t_permuted = t_permuted) %>%
+  ggplot(aes(x = t_permuted)) +
+  geom_histogram(
+    bins = 45,
+    fill = "#8ECAE6",
+    colour = "white"
+  ) +
+  geom_vline(
+    xintercept = c(-abs(t_observed), abs(t_observed)),
+    colour = "#D62828",
+    linewidth = 0.9,
+    linetype = "dashed"
+  ) +
+  labs(
+    x = "Permuted Welch t-statistic",
+    y = "Number of permutations",
+    title = "Permutation distribution under the null hypothesis"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5))
+```
+
+The two-sided permutation p-value is calculated by counting simulated
+statistics at least as extreme as the observed statistic in either direction:
+
+```{r}
+#| label: rq3-p-value
+
+extreme_count <- sum(abs(t_permuted) >= abs(t_observed))
+
+# Plus-one correction for a Monte Carlo permutation p-value
+p_permutation <- (extreme_count + 1) / (B + 1)
+
+tibble(
+  extreme_permutations = extreme_count,
+  total_permutations = B,
+  permutation_p_value = p_permutation
+) %>%
+  knitr::kable(
+    format = "html",
+    digits = c(0, 0, 4),
+    col.names = c(
+      "Extreme permutations",
+      "Total permutations",
+      "Permutation p-value"
+    ),  
+    align = c("c", "c", "c"),
+    table.attr = 'class="table table-bordered table-striped" style="width: auto; margin-left: auto; margin-right: auto;"'
+  )
+```
+
+We formally test the difference using a two-sided permutation test with the
+Welch $t$-statistic as the resampling statistic.
+
+1. **Hypotheses:** Let $\mu_Y$ and $\mu_N$ be the population mean weekly
+   paid-employment hours for students who do and do not multitask,
+   respectively. $H_0:\mu_Y-\mu_N=0$ versus
+   $H_A:\mu_Y-\mu_N\neq0$.
+
+2. **Assumptions:** Responses from different students are treated as
+   independent. Under $H_0$, multitasking labels are assumed exchangeable. A
+   normal population is not required for the permutation p-value, although the
+   mean-based statistic remains sensitive to large values.
+
+3. **Test statistic:**
+   $T=(\bar X_Y-\bar X_N)/\sqrt{S_Y^2/n_Y+S_N^2/n_N}$. The observed difference
+   is `r sprintf("%.2f", mean_difference)` hours per week and
+   $t_0=`r sprintf("%.3f", t_observed)`$.
+
+4. **Permutation procedure:** With `set.seed(2002)`, the Yes/No labels were
+   randomly reassigned $B=10{,}000$ times while employment hours were held
+   fixed. The Welch statistic was recalculated each time to form the null
+   distribution in @fig-rq3-permutation.
+
+5. **P-value:** For the two-sided test, permutations satisfying
+   $|T_b^*|\geq|t_0|$ were counted. The plus-one estimate is
+   $p_{\mathrm{perm}}=`r sprintf("%.4f", p_permutation)`$.
+
+6. **Decision:** Since $p<0.05$, we reject $H_0$. There is evidence that mean
+   paid-employment hours differ by multitasking status; multitasking students
+   worked `r sprintf("%.2f", mean_difference)` more hours per week on average
+   in this sample. However, Cohen's $d=`r sprintf("%.2f", cohens_d)`$ indicates
+   a small effect, so its practical importance is limited. Both variables are
+   self-reported, the 70-hour cleaning threshold is analyst-chosen, and
+   confounding may remain. As this is an observational survey of DATA2x02
+   students, the result cannot establish causation or automatically generalise
+   to other students.
 
 # Conclusion
 
