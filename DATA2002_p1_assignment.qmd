@@ -5,7 +5,7 @@ author: "541035662 530029720 540872536 550505479 530210568 550041014"
 format: 
   html: 
     embed-resources: true # Creates a single HTML file as output
-    code-fold: true # Code folding; allows you to show/hide code chunks
+    code-fold: false # Show code chunks directly in the rendered HTML
     code-tools: true # Includes a menu to download the code file 
     # code-tools are particularly important if you use inline R to 
     # improve the reproducibility of your report
@@ -34,6 +34,69 @@ Missing values were not removed globally; instead, they were handled on a case�
 
 A threshold was applied to the work_hrs variable to remove implausible values above 70 hours per week. This cutoff was chosen because working more than 70 hours per week exceeds a standard full‑time workload and leaves insufficient time for sleep, commuting, and university study. Boxplots were generated to compare the distribution of weekly employment hours before and after cleaning, illustrating the impact of this threshold. The cleaned dataset was then saved for subsequent analysis.
 
+## RQ1: Work hours and cramming
+
+[Motivation]
+```{r}
+#| label: rq1-setup
+rq1_data <- df_clean %>%
+  select(assess, work_hrs) %>%
+  mutate(is_cram = if_else(assess == "Cram", "Cram", "Non-Cram"))
+```
+[EDA figure + summary statistics]
+
+rrq1_data %>%
+  ggplot(aes(x = is_cram, y = work_hrs)) +
+  geom_boxplot(
+    aes(fill = is_cram),
+    width = 0.5,
+    outlier.shape = NA,
+    alpha = 0.85
+  ) +
+  geom_jitter(
+    aes(colour = "Individual observations"),
+    position = position_jitter(width = 0.15, seed = 123),
+    alpha = 0.35,
+    size = 1.5
+  ) +
+  stat_summary(
+    aes(colour = "Group mean"),
+    fun = mean,
+    geom = "point",
+    shape = 18,
+    size = 4
+  ) +
+  stat_summary(
+    fun = mean,
+    geom = "text",
+    aes(label = after_stat(round(y, 2))),
+    vjust = -0.75,
+    size = 3.5
+  ) +
+  scale_fill_manual(
+    name = "Cram status",
+    values = c("Non-Cram" = "#A8DADC", "Cram" = "#E76F51")
+  ) +
+  scale_colour_manual(
+    name = NULL,
+    values = c("Individual observations" = "#457B9D", "Group mean" = "red")
+  ) +
+  labs(
+    x = NULL,
+    y = "Weekly paid employment hours",
+    title = "Weekly work hours by cramming behaviour",
+    caption = "Diamonds and labels indicate group means."
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    plot.title = element_text(face = "plain", hjust = 0.5),
+    legend.position = "top",
+    panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_blank()
+  )
+
+Figure 1: Distribution of weekly paid employment hours by cramming status.
+
 [Hypotheses]
 
 Let $\mu_1$ be the mean weekly work hours for Cram students and $\mu_2$ for Non-Cram students.
@@ -44,7 +107,7 @@ $H_1: \mu_1 \neq \mu_2$
 [Assumptions]
 
 The Welch two-sample t-test assumes approximate normality within each group. We test this on the raw data using the Shapiro-Wilk test.
-```{r}
+
 ```{r}
 #| label: rq1-normality-raw
 cram_raw <- rq1_data %>% filter(is_cram == "Cram") %>% pull(work_hrs)
@@ -54,6 +117,8 @@ shapiro.test(noncram_raw)
 ```
 
 Both groups have Shapiro-Wilk p-values far below 0.05, indicating the raw data is strongly right-skewed and non-normal. We apply a log(x+1) transformation.
+
+[FRIEND: log transform + Levene test + Welch t-test code block]
 
 [Observed test statistic]
 
@@ -74,8 +139,11 @@ cohend
 
 [Decision + contextual conclusion]
 
+Since $p < 0.001 < \alpha = 0.05$, we reject $H_0$. Cram students report significantly higher weekly work hours (on the log scale) than Non-Cram students, with Cohen's d = 0.370, a small-to-medium effect. This provides evidence that paid employment hours are associated with whether a student adopts a cramming strategy before assessments.
+
 [Limitations]
 
+Both work hours and assessment style are self-reported, which may introduce social desirability bias or recall error. The 70-hour cleaning threshold used to remove implausible outliers is analyst-chosen rather than derived from the data. As this is observational cross-sectional survey data, the result can only establish an association, not a causal direction — it is equally plausible that paid work displaces study time leading to cramming, or that students who already tend to procrastinate are more inclined to take on paid work. The log transformation also did not fully resolve non-normality due to zero-inflation in work hours (39% of Cram students and 58% of Non-Cram students report zero weekly work hours), though the large sample size supports asymptotic validity of the t-test via the Central Limit Theorem.
 
 ## RQ2
 ### Step 1: Data import & cleaning (multitasking vs cramming)
@@ -227,6 +295,17 @@ different average number of hours per week in paid employment compared with
 students who do not multitask?
 
 Paid employment represents an external time commitment for students. Students balancing more paid work with university study may exhibit different lecture behaviours. Having examined paid employment in relation to cramming and multitasking in relation to cramming, we investigate whether paid-employment hours also differ between students who do and do not multitask during lectures.
+
+```{r}
+#| label: rq3-setup
+#| message: false
+df_clean <- read_csv("survey_cleaned.csv") %>%
+  mutate(
+    work_hrs = as.numeric(work_hrs),
+    multitask = factor(multitask, levels = c("No", "Yes"))
+  ) %>%
+  filter(is.na(work_hrs) | work_hrs <= 70)
+```
 
 ```{r}
 #| label: tbl-flipper
