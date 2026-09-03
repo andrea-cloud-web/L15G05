@@ -279,11 +279,8 @@ cohend
 
 Cohen's d = 0.372, indicating a small-to-medium effect size.
 
-### Conclusion
-
-Since p = 0.0004 \< 0.05, we reject $H_0$. Cram students report significantly higher weekly work hours (on the log scale) than Non-Cram students, with Cohen's d = 0.372, a small-to-medium effect. This provides evidence that paid employment hours are associated with whether a student adopts a cramming strategy before assessments.
-
-### Limitations
+### Conclusion&Limitations
+Since $p = 0.0004 < 0.05$, we reject $H_0$. Cram students report significantly higher weekly work hours (log scale) than Non-Cram students, with a small-to-medium effect (Cohen’s $d = 0.372$), suggesting that paid work is one of several factors associated with cramming. Although zero-inflation remained after log transformation, the large sample size supports the t-test approximation. As the data are observational, this association cannot establish that longer work hours cause cramming.
 
 ## RQ2: Multitasking and cramming
 
