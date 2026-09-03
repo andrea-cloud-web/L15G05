@@ -2,12 +2,12 @@
 title: "Data2002 Project 1"
 date: "`r Sys.Date()`"
 author: "541035662 530029720 540872536 550505479 530210568 550041014"
-format: 
-  html: 
+format:
+  html:
     #embed-resources: true # Creates a single HTML file as output
     code-fold: false # Show code chunks directly in the rendered HTML
-    code-tools: true # Includes a menu to download the code file 
-    # code-tools are particularly important if you use inline R to 
+    code-tools: true # Includes a menu to download the code file
+    # code-tools are particularly important if you use inline R to
     # improve the reproducibility of your report
 table-of-contents: true # (Optional) Creates a table of contents
 number-sections: true # (Optional) Puts numbers next to heading/subheadings
@@ -178,6 +178,11 @@ Figure 1: Distribution of weekly paid employment hours by cramming status.
 [FRIEND: Limitations]
 
 ## RQ2
+
+**Research question:** Is multitasking during lectures associated with students' assessment preparation style, specifically whether they tend to cram before deadlines?
+
+Multitasking during lectures (e.g. using phones or other devices) is often seen as a sign of disengagement or poor time management. This research question examines whether multitasking behaviour is associated with cramming, since students who habitually delay their revision may be more likely to disengage during class as deadlines approach. Understanding this link could help the teaching team judge whether lecture engagement issues are connected to broader time-management or study-habit problems, rather than treating them as separate concerns. A chi-squared test of independence is used to test whether multitasking behaviour and cramming behaviour are associated.
+
 ### Step 1: Data import & cleaning (multitasking vs cramming)
 
 ```{r}
@@ -371,14 +376,14 @@ The boxplot in @fig-work-multitask compares weekly paid-employment hours between
 df_clean %>%
   filter(!is.na(work_hrs), !is.na(multitask)) %>%
   ggplot(aes(x = multitask, y = work_hrs)) +
-  
+
   geom_boxplot(
     aes(fill = multitask),
     width = 0.5,
     outlier.shape = NA,
     alpha = 0.4
   ) +
-  
+
   geom_jitter(
     aes(colour = "Individual observations"),
     position = position_jitter(
@@ -388,7 +393,7 @@ df_clean %>%
     alpha = 0.35,
     size = 1.5
   ) +
-  
+
   stat_summary(
     aes(colour = "Group mean"),
     fun = mean,
@@ -404,7 +409,7 @@ df_clean %>%
     vjust = -0.75,
     size = 3.5
   ) +
-  
+
   scale_fill_manual(
     name = "Multitasking",
     values = c(
@@ -420,14 +425,14 @@ df_clean %>%
       "Group mean" = "red"
     )
   ) +
-  
+
   labs(
     x = "Multitasking during lectures",
     y = "Weekly paid employment (hours)",
     title = "Weekly paid employment hours by multitasking status",
     caption = "Diamonds and labels indicate group means."
   ) +
-  
+
   theme_minimal(base_size = 12) +
   theme(
     plot.title = element_text(face = "bold", hjust = 0.5),
@@ -528,7 +533,7 @@ tibble(
       "Extreme permutations",
       "Total permutations",
       "Permutation p-value"
-    ),  
+    ),
     align = c("c", "c", "c"),
     table.attr = 'class="table table-bordered table-striped" style="width: auto; margin-left: auto; margin-right: auto;"'
   )
