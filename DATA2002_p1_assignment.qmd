@@ -286,65 +286,61 @@ Since p = 0.0004 \< 0.05, we reject $H_0$. Cram students report significantly hi
 
 ## RQ2: Multitasking and cramming
 
-**Research Question:** Is multitasking during lectures associated with students' assessment preparation style, specifically whether they tend to cram before deadlines?
+**Research Question:** Is multitasking during lectures associated with whether students cram before assessments?
 
-Multitasking during lectures (e.g. using phones or other devices) is often seen as a sign of disengagement or poor time management. This research question examines whether multitasking behaviour is associated with cramming, since students who habitually delay their revision may be more likely to disengage during class as deadlines approach. Understanding this link could help the teaching team judge whether lecture engagement issues are connected to broader time-management or study-habit problems, rather than treating them as separate concerns. A chi-squared test of independence is used to test whether multitasking behaviour and cramming behaviour are associated.
+Multitasking in lectures is usually read as disengagement. If it also tracks with cramming, the teaching team can treat lecture engagement and time management as one problem rather than two.
 
 ### Exploratory data analysis
 
 ```{r}
 #| label: rq2-setup
-#| message: false
-rq2_data <- read_csv("survey_cleaned.csv") %>%
+rq2_data <- df %>%
   select(assess, multitask) %>%
   drop_na(assess, multitask) %>%
   mutate(
-    assess    = factor(assess, levels = c("Gradually", "Immediately", "Cram")),
-    is_cram   = factor(
-      if_else(assess == "Cram", "Cram", "Not Cram"),
-      levels = c("Not Cram", "Cram")
-    ),
-    multitask = factor(multitask, levels = c("No", "Yes"))
+    is_cram = factor(
+      if_else(assess == "Cram", "Cram", "Non-Cram"),
+      levels = c("Non-Cram", "Cram")
+    )
   )
 ```
 
-Only `assess` and `multitask` are retained, and rows are dropped only when they are missing on these two variables, so observations that remain usable for the other research questions are not discarded. The three-level `assess` variable is collapsed into a binary `is_cram` variable so that the analysis aligns directly with the research question of cramming versus not cramming.
-
 ```{r}
 #| label: tbl-rq2-table
-#| tbl-cap: "Contingency table of cramming behaviour by multitasking status."
+#| tbl-cap: "Cramming behaviour by multitasking status, with marginal totals."
 cram_tab <- table(rq2_data$is_cram, rq2_data$multitask)
 
-knitr::kable(
-  cram_tab,
-  align = rep("c", ncol(cram_tab))
-)
+cram_tab %>%
+  addmargins() %>%
+  as.data.frame.matrix() %>%
+  tibble::rownames_to_column("Preparation style") %>%
+  knitr::kable(
+    align = "c",
+    col.names = c("Preparation style", "Does not multitask", "Multitasks", "Total")
+  )
 ```
 
 ```{r}
 #| label: rq2-computations
 #| include: false
-chi_test <- chisq.test(cram_tab, correct = FALSE)
-
+chi_test     <- chisq.test(cram_tab, correct = FALSE)
 chi_statistic <- unname(chi_test$statistic)
 chi_df        <- unname(chi_test$parameter)
 chi_p         <- chi_test$p.value
 min_expected  <- min(chi_test$expected)
+n_total       <- sum(cram_tab)
+cramers_v     <- sqrt(chi_statistic / n_total)
 
-n_total   <- sum(cram_tab)
-cramers_v <- sqrt(chi_statistic / n_total)
+yes_counts   <- cram_tab[c("Cram", "Non-Cram"), "Yes"]
+group_totals <- rowSums(cram_tab)[c("Cram", "Non-Cram")]
+prop_test    <- prop.test(x = yes_counts, n = group_totals, correct = FALSE)
 
-rq2_props <- rq2_data %>%
-  count(is_cram, multitask) %>%
-  group_by(is_cram) %>%
-  mutate(prop = n / sum(n)) %>%
-  filter(multitask == "Yes")
-
-pct_cram    <- 100 * rq2_props$prop[rq2_props$is_cram == "Cram"]
-pct_notcram <- 100 * rq2_props$prop[rq2_props$is_cram == "Not Cram"]
+pct_cram    <- 100 * unname(prop_test$estimate[1])
+pct_notcram <- 100 * unname(prop_test$estimate[2])
+diff_ci     <- 100 * prop_test$conf.int
 ```
 
-The stacked bar chart in @fig-rq2-eda compares the proportion of students who reported multitasking during lectures between the two preparation groups. Multitasking was more common among students who cram (`r sprintf("%.1f", pct_cram)`%) than among students who do not cram (`r sprintf("%.1f", pct_notcram)`%), a difference of roughly `r sprintf("%.1f", pct_cram - pct_notcram)` percentage points. This observed difference in proportions is examined formally using a chi-squared test of independence.
+We use `df` rather than `survey_cleaned.csv`, whose `work_hrs` threshold also removes respondents this question does not need; rows are dropped only for missing `assess` or `multitask`, and `assess` is collapsed into cramming versus not. Multitasking was more common among students who cram (`r sprintf("%.1f", pct_cram)`%) than among those who do not (`r sprintf("%.1f", pct_notcram)`%), a difference of `r sprintf("%.1f", pct_cram - pct_notcram)` percentage points (@fig-rq2-eda). @fig-rq2-3level shows the two non-cramming categories behave similarly, supporting the collapse.
 
 ```{r}
 #| label: fig-rq2-eda
@@ -356,77 +352,61 @@ rq2_data %>%
   ggplot(aes(x = is_cram, y = prop, fill = multitask)) +
   geom_col(position = "fill", width = 0.5, alpha = 0.85) +
   scale_y_continuous(labels = scales::percent) +
-  scale_fill_manual(
-    name = "Multitasks?",
-    values = c("No" = "#A8DADC", "Yes" = "#E76F51")
-  ) +
-  labs(
-    x = "Assessment preparation style",
-    y = "Proportion of students",
-    title = "Multitasking by cramming behaviour",
-    caption = "Bars show the within-group proportion of students."
-  ) +
+  scale_fill_manual(name = "Multitasks?",
+                    values = c("No" = "#A8DADC", "Yes" = "#E76F51")) +
+  labs(x = "Assessment preparation style", y = "Proportion of students",
+       title = "Multitasking by cramming behaviour") +
   theme_minimal(base_size = 12) +
-  theme(
-    plot.title = element_text(face = "plain", hjust = 0.5),
-    legend.position = "top",
-    panel.grid.minor = element_blank(),
-    panel.grid.major.x = element_blank()
-  )
+  theme(plot.title = element_text(face = "plain", hjust = 0.5),
+        legend.position = "top",
+        panel.grid.minor = element_blank(),
+        panel.grid.major.x = element_blank())
 ```
-
-@fig-rq2-3level shows the same relationship using the original three-level `assess` variable. The pattern is consistent: the multitasking rate is highest among students who cram, and similar between the two non-cramming groups, which supports collapsing these two categories for the formal test.
 
 ```{r}
 #| label: fig-rq2-3level
-#| fig-cap: "Proportion of students who multitask, by the original three-level assessment preparation style."
-#| message: false
-read_csv("survey_cleaned.csv") %>%
-  drop_na(assess, multitask) %>%
-  mutate(
-    assess    = factor(assess, levels = c("Gradually", "Immediately", "Cram")),
-    multitask = factor(multitask, levels = c("No", "Yes"))
-  ) %>%
+#| fig-cap: "Proportion of students who multitask, by the original three-level preparation style."
+rq2_data %>%
   count(assess, multitask) %>%
   group_by(assess) %>%
   mutate(prop = n / sum(n)) %>%
   ggplot(aes(x = assess, y = prop, fill = multitask)) +
   geom_col(position = "fill", width = 0.5, alpha = 0.85) +
   scale_y_continuous(labels = scales::percent) +
-  scale_fill_manual(
-    name = "Multitasks?",
-    values = c("No" = "#A8DADC", "Yes" = "#E76F51")
-  ) +
-  labs(
-    x = "Assessment preparation style (3 levels)",
-    y = "Proportion of students",
-    title = "Multitasking by assessment preparation style"
-  ) +
+  scale_fill_manual(name = "Multitasks?",
+                    values = c("No" = "#A8DADC", "Yes" = "#E76F51")) +
+  labs(x = "Assessment preparation style (3 levels)",
+       y = "Proportion of students",
+       title = "Multitasking by assessment preparation style") +
   theme_minimal(base_size = 12) +
-  theme(
-    plot.title = element_text(face = "plain", hjust = 0.5),
-    legend.position = "top",
-    panel.grid.minor = element_blank(),
-    panel.grid.major.x = element_blank()
-  )
+  theme(plot.title = element_text(face = "plain", hjust = 0.5),
+        legend.position = "top",
+        panel.grid.minor = element_blank(),
+        panel.grid.major.x = element_blank())
 ```
 
 ### Hypotheses
 
-Let multitasking status and cramming status be the two categorical variables summarised in @tbl-rq2-table.
-
-$H_0$: multitasking behaviour is independent of cramming behaviour. $H_1$: multitasking behaviour is not independent of cramming behaviour.
+$H_0$: multitasking is independent of cramming among DATA2x02 students; $H_1$: the two are not independent.
 
 ### Assumptions
 
-The chi-squared test of independence assumes that observations are independent, with one row per student, which is reasonable here as no student appears twice in the survey. It also requires expected cell counts of at least 5 in every cell of the contingency table.
+Responses from different students are treated as independent.
 
 ```{r}
-#| label: rq2-assumptions
-chi_test$expected
+#| label: tbl-rq2-expected
+#| tbl-cap: "Expected cell counts under independence."
+chi_test$expected %>%
+  round(1) %>%
+  as.data.frame.matrix() %>%
+  tibble::rownames_to_column("Preparation style") %>%
+  knitr::kable(
+    align = "c",
+    col.names = c("Preparation style", "Does not multitask", "Multitasks")
+  )
 ```
 
-The smallest expected count is `r sprintf("%.1f", min_expected)`, so all expected counts are comfortably above 5 and the chi-squared approximation is valid. Neither Fisher's exact test nor a Yates continuity correction is required.
+The smallest expected count is `r sprintf("%.1f", min_expected)`, so all cells exceed 5 and the approximation is valid; no continuity correction is needed.
 
 ### Test statistic
 
@@ -435,28 +415,33 @@ The smallest expected count is `r sprintf("%.1f", min_expected)`, so all expecte
 chi_test
 ```
 
-The test statistic is $T=\sum_{i,j}(O_{ij}-E_{ij})^2/E_{ij}$, which under $H_0$ follows a $\chi^2$ distribution with $(r-1)(c-1) = `r chi_df`$ degree of freedom. The observed value is $t_0 = `r sprintf("%.2f", chi_statistic)`$.
+Under $H_0$, $T=\sum_{i,j}(O_{ij}-E_{ij})^2/E_{ij}$ follows a $\chi^2$ distribution with `r chi_df` degree of freedom; the observed value is $t_0 = `r sprintf("%.2f", chi_statistic)`$.
 
 ### P-value
 
-The corresponding p-value is $P(\chi^2_{`r chi_df`} \geq `r sprintf("%.2f", chi_statistic)`) = `r signif(chi_p, 3)`$. We calculate Cramér's V to quantify the size of this effect.
-
 ```{r}
-#| label: rq2-effect-size
-cramers_v
+#| label: tbl-rq2-effect-size
+#| tbl-cap: "Effect size and confidence interval."
+tibble::tibble(
+  Measure = c("Cramér's V",
+              "Difference in % multitasking (Cram - Non-Cram)"),
+  Estimate = c(sprintf("%.3f", cramers_v),
+               sprintf("%.1f pp", pct_cram - pct_notcram)),
+  `95% CI` = c("-",
+               sprintf("[%.1f, %.1f] pp", diff_ci[1], diff_ci[2]))
+) %>%
+  knitr::kable(align = c("l", "c", "c"))
 ```
 
-Cramér's $V = `r sprintf("%.2f", cramers_v)`$ based on $n = `r n_total`$ complete responses, indicating a small-to-moderate association.
+The p-value is `r signif(chi_p, 3)`. Cramér's $V = `r sprintf("%.2f", cramers_v)`$ ($n = `r n_total`$); the 95% CI for the difference in multitasking rates is `r sprintf("%.1f", diff_ci[1])` to `r sprintf("%.1f", diff_ci[2])` percentage points.
 
 ### Conclusion
 
-Since $p < 0.001$, we reject $H_0$. There is strong evidence of an association between multitasking during lectures and cramming: students who cram were substantially more likely to multitask (`r sprintf("%.1f", pct_cram)`%) than students who did not cram (`r sprintf("%.1f", pct_notcram)`%) in this sample. Cramér's $V = `r sprintf("%.2f", cramers_v)`$ indicates that the strength of this association is nonetheless modest, so multitasking should be read as one of several correlates of cramming rather than a defining feature of it.
+We reject $H_0$: multitasking and cramming are associated, though $V = `r sprintf("%.2f", cramers_v)`$ makes it one correlate of cramming rather than a defining feature.
 
 ### Limitations
 
-Both variables are self-reported and self-interpreted, so respondents may apply the labels "cram" and "multi-task" inconsistently. Collapsing `assess` from three levels to two also discards some information about the distinction between preparing gradually and preparing immediately. As this is an observational, voluntary-response survey of DATA2x02 students, the association cannot establish causation — a third factor such as overall workload or procrastination tendency could plausibly drive both behaviours — and it may not generalise beyond this cohort.
-
-
+Both variables are self-reported, so "cram" and "multi-task" may be applied inconsistently, and collapsing `assess` discards information. This observational, voluntary-response survey cannot establish causation — shared workload or procrastination could drive both — and may not generalise.
 
 ## RQ3: Paid employment and multitasking
 
