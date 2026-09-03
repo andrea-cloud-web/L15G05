@@ -4,7 +4,7 @@ date: "`r Sys.Date()`"
 author: "541035662 530029720 540872536 550505479 530210568 550041014"
 format: 
   html: 
-    embed-resources: true # Creates a single HTML file as output
+    #embed-resources: true # Creates a single HTML file as output
     code-fold: false # Show code chunks directly in the rendered HTML
     code-tools: true # Includes a menu to download the code file 
     # code-tools are particularly important if you use inline R to 
@@ -36,16 +36,43 @@ A threshold was applied to the work_hrs variable to remove implausible values ab
 
 ## RQ1: Work hours and cramming
 
+1.2 RQ1: Work hours and cramming
+[## RQ1: Work hours and cramming
+
 [Motivation]
+
+Weekly paid employment hours are often considered a key factor affecting student engagement. This research question examines whether work hours are associated with students' assessment strategy, specifically whether they tend to cram before deadlines. If time-pressured students are more likely to delay revision until the last minute, this insight could help the teaching team decide whether more flexible study support is needed for students with heavy work commitments. A Welch two-sample t-test is used to compare mean weekly work hours between Cram and Non-Cram students.
+
 ```{r}
 #| label: rq1-setup
 rq1_data <- df_clean %>%
   select(assess, work_hrs) %>%
   mutate(is_cram = if_else(assess == "Cram", "Cram", "Non-Cram"))
 ```
+
 [EDA figure + summary statistics]
 
-rrq1_data %>%
+```{r}
+#| label: rq1-summary-table
+rq1_data %>%
+  group_by(is_cram) %>%
+  summarise(
+    n = n(),
+    mean = mean(work_hrs),
+    median = median(work_hrs),
+    SD = sd(work_hrs),
+    Q1 = quantile(work_hrs, 0.25),
+    Q3 = quantile(work_hrs, 0.75),
+    IQR = IQR(work_hrs),
+    min = min(work_hrs),
+    max = max(work_hrs)
+  ) %>%
+  knitr::kable(align = rep("c", 9))
+```
+
+```{r}
+#| label: rq1-eda
+rq1_data %>%
   ggplot(aes(x = is_cram, y = work_hrs)) +
   geom_boxplot(
     aes(fill = is_cram),
@@ -94,6 +121,7 @@ rrq1_data %>%
     panel.grid.minor = element_blank(),
     panel.grid.major.x = element_blank()
   )
+```
 
 Figure 1: Distribution of weekly paid employment hours by cramming status.
 
@@ -118,7 +146,7 @@ shapiro.test(noncram_raw)
 
 Both groups have Shapiro-Wilk p-values far below 0.05, indicating the raw data is strongly right-skewed and non-normal. We apply a log(x+1) transformation.
 
-[FRIEND: log transform + Levene test + Welch t-test code block]
+[FRIEND: log transform + Levene test + Welch t-test code block goes here]
 
 [Observed test statistic]
 
@@ -137,13 +165,9 @@ cohend <- (mean(cram_log) - mean(noncram_log)) / pooled_sd
 cohend
 ```
 
-[Decision + contextual conclusion]
+[FRIEND: Decision + contextual conclusion]
 
-Since $p < 0.001 < \alpha = 0.05$, we reject $H_0$. Cram students report significantly higher weekly work hours (on the log scale) than Non-Cram students, with Cohen's d = 0.370, a small-to-medium effect. This provides evidence that paid employment hours are associated with whether a student adopts a cramming strategy before assessments.
-
-[Limitations]
-
-Both work hours and assessment style are self-reported, which may introduce social desirability bias or recall error. The 70-hour cleaning threshold used to remove implausible outliers is analyst-chosen rather than derived from the data. As this is observational cross-sectional survey data, the result can only establish an association, not a causal direction — it is equally plausible that paid work displaces study time leading to cramming, or that students who already tend to procrastinate are more inclined to take on paid work. The log transformation also did not fully resolve non-normality due to zero-inflation in work hours (39% of Cram students and 58% of Non-Cram students report zero weekly work hours), though the large sample size supports asymptotic validity of the t-test via the Central Limit Theorem.
+[FRIEND: Limitations]
 
 ## RQ2
 ### Step 1: Data import & cleaning (multitasking vs cramming)
