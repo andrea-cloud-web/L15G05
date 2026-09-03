@@ -34,72 +34,43 @@ Missing values were not removed globally; instead, they were handled on a caseâ€
 
 A threshold was applied to the work_hrs variable to remove implausible values above 70 hours per week. This cutoff was chosen because working more than 70 hours per week exceeds a standard fullâ€‘time workload and leaves insufficient time for sleep, commuting, and university study. Boxplots were generated to compare the distribution of weekly employment hours before and after cleaning, illustrating the impact of this threshold. The cleaned dataset was then saved for subsequent analysis.
 
-```{r}
-library(tidyverse)
-
-raw <- read_csv("DATA2X02_2026_2_survey_clean.csv", show_col_types = FALSE)
-
-df <- raw %>%
-  rename(
-    age          = `What is your age? (years)`,
-    height       = `What is your approximate height? (cms)`,
-    intl_dom     = `Are you an International or Domestic student?`,
-    unit         = `Are you in DATA2002 or DATA2902?`,
-    grade1001    = `What grade did you get in DATA1001/1901 (or equivalent unit)?`,
-    gradehope    = `What grade do you hope to get in DATA2002/2902?`,
-    assess       = `When it comes to uni assessments, what do you tend to do?`,
-    commute      = `On average, how long does it take you to get to campus? (mins) [1 direction]`,
-    pay_rent     = `Do you pay rent?`,
-    rent_amt     = `On average, how much rent do you pay per week? (dollars)`,
-    work_hrs     = `On average, how many hours a week do you spend in paid employment? (hours)`,
-    sleep_hrs    = `On average, how many hours sleep do you get per night? (hours)`,
-    music        = `What is your favourite type of music?`,
-    aliens       = `Do you believe in the existence of aliens? (Extraterrestial life)`,
-    water        = `On average, how much water do you drink in a day? (litres)`,
-    n_lang       = `How many spoken languages can you speak fluently?`,
-    multitask    = `Do you multi-task in lectures? (ie do other tasks concurrently)`
-  ) %>%
-  filter(assess != "Other") %>%
-  mutate(assess = factor(assess, levels = c("Immediately", "Gradually", "Cram")),
-         multitask = factor(multitask, levels = c("no", "yes"), labels = c("No", "Yes")))
-
-threshold <- 70
-
-df_clean <- df %>% filter(work_hrs <= threshold)
-
-ggplot(bind_rows(
-    df %>% mutate(stage = "Before cleaning"),
-    df_clean %>% mutate(stage = "After cleaning")
-  ),
-  aes(x = stage, y = work_hrs, fill = stage)) +
-  geom_boxplot() +
-  scale_fill_manual(values = c("Before cleaning" = "#8ecae6", "After cleaning" = "#ffb703")) +
-  labs(
-    title = "Weekly employment hours before and after cleaning",
-    x = NULL, y = "Weekly employment hours", fill = NULL
-  ) +
-  theme_minimal()
-
-write_csv(df_clean, "survey_cleaned.csv")
-```
-
-# Results
-
-## RQ1
-
-[Motivation]
-
-[EDA figure + summary statistics]
-
 [Hypotheses]
+
+Let $\mu_1$ be the mean weekly work hours for Cram students and $\mu_2$ for Non-Cram students.
+
+$H_0: \mu_1 = \mu_2$
+$H_1: \mu_1 \neq \mu_2$
 
 [Assumptions]
 
-[Test statistic]
+The Welch two-sample t-test assumes approximate normality within each group. We test this on the raw data using the Shapiro-Wilk test.
+```{r}
+```{r}
+#| label: rq1-normality-raw
+cram_raw <- rq1_data %>% filter(is_cram == "Cram") %>% pull(work_hrs)
+noncram_raw <- rq1_data %>% filter(is_cram == "Non-Cram") %>% pull(work_hrs)
+shapiro.test(cram_raw)
+shapiro.test(noncram_raw)
+```
+
+Both groups have Shapiro-Wilk p-values far below 0.05, indicating the raw data is strongly right-skewed and non-normal. We apply a log(x+1) transformation.
 
 [Observed test statistic]
 
+The Welch two-sample t-test statistic is $t = 3.60$.
+
 [p-value]
+
+$p < 0.001$
+
+```{r}
+#| label: rq1-effect-size
+pooled_sd <- sqrt(((length(cram_log) - 1) * var(cram_log) +
+                    (length(noncram_log) - 1) * var(noncram_log)) /
+                    (length(cram_log) + length(noncram_log) - 2))
+cohend <- (mean(cram_log) - mean(noncram_log)) / pooled_sd
+cohend
+```
 
 [Decision + contextual conclusion]
 
