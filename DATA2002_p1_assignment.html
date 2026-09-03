@@ -76,7 +76,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="DATA2002_p1_assignment_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="DATA2002_p1_assignment_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="DATA2002_p1_assignment_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="DATA2002_p1_assignment_files/libs/bootstrap/bootstrap-917079515d91bccb85b543faf8aa8bb6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="DATA2002_p1_assignment_files/libs/bootstrap/bootstrap-215b371544c282197b31c8aa00ce3677.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
@@ -189,11 +189,11 @@ window.Quarto = {
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.2.1     ✔ readr     2.2.0
-✔ forcats   1.0.1     ✔ stringr   1.6.0
-✔ ggplot2   4.0.3     ✔ tibble    3.3.1
-✔ lubridate 1.9.5     ✔ tidyr     1.3.2
-✔ purrr     1.2.2     
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.2
+✔ ggplot2   4.0.0     ✔ tibble    3.3.0
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.1.0     
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()
@@ -257,7 +257,7 @@ window.Quarto = {
 <section id="rq1-work-hours-and-cramming" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="rq1-work-hours-and-cramming"><span class="header-section-number">2.1</span> RQ1: Work hours and cramming</h2>
 <p>[Motivation]</p>
-<p>Weekly paid employment hours are often considered a key factor affecting student engagement. This research question examines whether work hours are associated with students’ assessment strategy, specifically whether they tend to cram before deadlines. If time-pressured students are more likely to delay revision until the last minute, this insight could help the teaching team decide whether more flexible study support is needed for students with heavy work commitments. A Welch two-sample t-test is used to compare mean weekly work hours between Cram and Non-Cram students.</p>
+<p>Weekly paid employment may affect the amount of time students have available for assessment preparation. This research question examines whether students who cram before deadlines spend a different amount of time in paid employment compared with students who do not cram. Understanding this relationship could help the teaching team identify whether heavier work commitments are associated with different assessment-preparation behaviours and whether more flexible study support may be beneficial. A Welch two-sample t-test is used to compare mean weekly work hours between Cram and Non-Cram students.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>rq1_data <span class="ot">&lt;-</span> df_clean <span class="sc">%&gt;%</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(assess, work_hrs) <span class="sc">%&gt;%</span></span>
@@ -400,6 +400,8 @@ window.Quarto = {
 </section>
 <section id="rq2" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="rq2"><span class="header-section-number">2.2</span> RQ2</h2>
+<p><strong>Research question:</strong> Is multitasking during lectures associated with students’ assessment preparation style, specifically whether they tend to cram before deadlines?</p>
+<p>Multitasking during lectures (e.g.&nbsp;using phones or other devices) is often seen as a sign of disengagement or poor time management. This research question examines whether multitasking behaviour is associated with cramming, since students who habitually delay their revision may be more likely to disengage during class as deadlines approach. Understanding this link could help the teaching team judge whether lecture engagement issues are connected to broader time-management or study-habit problems, rather than treating them as separate concerns. A chi-squared test of independence is used to test whether multitasking behaviour and cramming behaviour are associated.</p>
 <section id="step-1-data-import-cleaning-multitasking-vs-cramming" class="level3" data-number="2.2.1">
 <h3 data-number="2.2.1" class="anchored" data-anchor-id="step-1-data-import-cleaning-multitasking-vs-cramming"><span class="header-section-number">2.2.1</span> Step 1: Data import &amp; cleaning (multitasking vs cramming)</h3>
 <div class="cell">
@@ -649,14 +651,14 @@ Table&nbsp;1: Summary statistics of weekly paid employment hours by multitasking
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>df_clean <span class="sc">%&gt;%</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(work_hrs), <span class="sc">!</span><span class="fu">is.na</span>(multitask)) <span class="sc">%&gt;%</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> multitask, <span class="at">y =</span> work_hrs)) <span class="sc">+</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(</span>
 <span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">fill =</span> multitask),</span>
 <span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.5</span>,</span>
 <span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">outlier.shape =</span> <span class="cn">NA</span>,</span>
 <span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.4</span></span>
 <span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(</span>
 <span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Individual observations"</span>),</span>
 <span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">position_jitter</span>(</span>
@@ -666,7 +668,7 @@ Table&nbsp;1: Summary statistics of weekly paid employment hours by multitasking
 <span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.35</span>,</span>
 <span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">1.5</span></span>
 <span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(</span>
 <span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Group mean"</span>),</span>
 <span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">fun =</span> mean,</span>
@@ -682,7 +684,7 @@ Table&nbsp;1: Summary statistics of weekly paid employment hours by multitasking
 <span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.75</span>,</span>
 <span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">3.5</span></span>
 <span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(</span>
 <span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Multitasking"</span>,</span>
 <span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(</span>
@@ -698,14 +700,14 @@ Table&nbsp;1: Summary statistics of weekly paid employment hours by multitasking
 <span id="cb25-50"><a href="#cb25-50" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Group mean"</span> <span class="ot">=</span> <span class="st">"red"</span></span>
 <span id="cb25-51"><a href="#cb25-51" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb25-52"><a href="#cb25-52" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb25-53"><a href="#cb25-53" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-53"><a href="#cb25-53" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-54"><a href="#cb25-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
 <span id="cb25-55"><a href="#cb25-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Multitasking during lectures"</span>,</span>
 <span id="cb25-56"><a href="#cb25-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Weekly paid employment (hours)"</span>,</span>
 <span id="cb25-57"><a href="#cb25-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Weekly paid employment hours by multitasking status"</span>,</span>
 <span id="cb25-58"><a href="#cb25-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Diamonds and labels indicate group means."</span></span>
 <span id="cb25-59"><a href="#cb25-59" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb25-60"><a href="#cb25-60" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-60"><a href="#cb25-60" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-61"><a href="#cb25-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
 <span id="cb25-62"><a href="#cb25-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
 <span id="cb25-63"><a href="#cb25-63" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
@@ -777,7 +779,7 @@ Figure&nbsp;2: Permutation null distribution of the Welch t-statistic. Dashed re
 <span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Extreme permutations"</span>,</span>
 <span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Total permutations"</span>,</span>
 <span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Permutation p-value"</span></span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>    ),  </span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>    ),</span>
 <span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">"c"</span>, <span class="st">"c"</span>, <span class="st">"c"</span>),</span>
 <span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">table.attr =</span> <span class="st">'class="table table-bordered table-striped" style="width: auto; margin-left: auto; margin-right: auto;"'</span></span>
 <span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1288,12 +1290,12 @@ Figure&nbsp;2: Permutation null distribution of the Welch t-statistic. Dashed re
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Data2002 Project 1"</span></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "`r Sys.Date()`"</span></span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "541035662 530029720 540872536 550505479 530210568 550041014"</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> </span></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co">  html: </span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
 <span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="co">    #embed-resources: true # Creates a single HTML file as output</span></span>
 <span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: false # Show code chunks directly in the rendered HTML</span></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true # Includes a menu to download the code file </span></span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="co">    # code-tools are particularly important if you use inline R to </span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true # Includes a menu to download the code file</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="co">    # code-tools are particularly important if you use inline R to</span></span>
 <span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="co">    # improve the reproducibility of your report</span></span>
 <span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="an">table-of-contents:</span><span class="co"> true # (Optional) Creates a table of contents</span></span>
 <span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="an">number-sections:</span><span class="co"> true # (Optional) Puts numbers next to heading/subheadings</span></span>
@@ -1376,508 +1378,512 @@ Figure&nbsp;2: Permutation null distribution of the Welch t-statistic. Dashed re
 <span id="cb28-92"><a href="#cb28-92" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-93"><a href="#cb28-93" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Motivation</span><span class="co">]</span></span>
 <span id="cb28-94"><a href="#cb28-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-95"><a href="#cb28-95" aria-hidden="true" tabindex="-1"></a>Weekly paid employment hours are often considered a key factor affecting student engagement. This research question examines whether work hours are associated with students' assessment strategy, specifically whether they tend to cram before deadlines. If time-pressured students are more likely to delay revision until the last minute, this insight could help the teaching team decide whether more flexible study support is needed for students with heavy work commitments. A Welch two-sample t-test is used to compare mean weekly work hours between Cram and Non-Cram students.</span>
-<span id="cb28-96"><a href="#cb28-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-99"><a href="#cb28-99" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-100"><a href="#cb28-100" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rq1-setup</span></span>
-<span id="cb28-101"><a href="#cb28-101" aria-hidden="true" tabindex="-1"></a>rq1_data <span class="ot">&lt;-</span> df_clean <span class="sc">%&gt;%</span></span>
-<span id="cb28-102"><a href="#cb28-102" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(assess, work_hrs) <span class="sc">%&gt;%</span></span>
-<span id="cb28-103"><a href="#cb28-103" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">is_cram =</span> <span class="fu">if_else</span>(assess <span class="sc">==</span> <span class="st">"Cram"</span>, <span class="st">"Cram"</span>, <span class="st">"Non-Cram"</span>))</span>
-<span id="cb28-104"><a href="#cb28-104" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-105"><a href="#cb28-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-106"><a href="#cb28-106" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">EDA figure + summary statistics</span><span class="co">]</span></span>
-<span id="cb28-107"><a href="#cb28-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-110"><a href="#cb28-110" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-111"><a href="#cb28-111" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rq1-summary-table</span></span>
-<span id="cb28-112"><a href="#cb28-112" aria-hidden="true" tabindex="-1"></a>rq1_data <span class="sc">%&gt;%</span></span>
-<span id="cb28-113"><a href="#cb28-113" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(is_cram) <span class="sc">%&gt;%</span></span>
-<span id="cb28-114"><a href="#cb28-114" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb28-115"><a href="#cb28-115" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="cb28-116"><a href="#cb28-116" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">mean</span>(work_hrs),</span>
-<span id="cb28-117"><a href="#cb28-117" aria-hidden="true" tabindex="-1"></a>    <span class="at">median =</span> <span class="fu">median</span>(work_hrs),</span>
-<span id="cb28-118"><a href="#cb28-118" aria-hidden="true" tabindex="-1"></a>    <span class="at">SD =</span> <span class="fu">sd</span>(work_hrs),</span>
-<span id="cb28-119"><a href="#cb28-119" aria-hidden="true" tabindex="-1"></a>    <span class="at">Q1 =</span> <span class="fu">quantile</span>(work_hrs, <span class="fl">0.25</span>),</span>
-<span id="cb28-120"><a href="#cb28-120" aria-hidden="true" tabindex="-1"></a>    <span class="at">Q3 =</span> <span class="fu">quantile</span>(work_hrs, <span class="fl">0.75</span>),</span>
-<span id="cb28-121"><a href="#cb28-121" aria-hidden="true" tabindex="-1"></a>    <span class="at">IQR =</span> <span class="fu">IQR</span>(work_hrs),</span>
-<span id="cb28-122"><a href="#cb28-122" aria-hidden="true" tabindex="-1"></a>    <span class="at">min =</span> <span class="fu">min</span>(work_hrs),</span>
-<span id="cb28-123"><a href="#cb28-123" aria-hidden="true" tabindex="-1"></a>    <span class="at">max =</span> <span class="fu">max</span>(work_hrs)</span>
-<span id="cb28-124"><a href="#cb28-124" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb28-125"><a href="#cb28-125" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">align =</span> <span class="fu">rep</span>(<span class="st">"c"</span>, <span class="dv">9</span>))</span>
-<span id="cb28-126"><a href="#cb28-126" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-127"><a href="#cb28-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-130"><a href="#cb28-130" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-131"><a href="#cb28-131" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rq1-eda</span></span>
-<span id="cb28-132"><a href="#cb28-132" aria-hidden="true" tabindex="-1"></a>rq1_data <span class="sc">%&gt;%</span></span>
-<span id="cb28-133"><a href="#cb28-133" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> is_cram, <span class="at">y =</span> work_hrs)) <span class="sc">+</span></span>
-<span id="cb28-134"><a href="#cb28-134" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(</span>
-<span id="cb28-135"><a href="#cb28-135" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">fill =</span> is_cram),</span>
-<span id="cb28-136"><a href="#cb28-136" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.5</span>,</span>
-<span id="cb28-137"><a href="#cb28-137" aria-hidden="true" tabindex="-1"></a>    <span class="at">outlier.shape =</span> <span class="cn">NA</span>,</span>
-<span id="cb28-138"><a href="#cb28-138" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.85</span></span>
-<span id="cb28-139"><a href="#cb28-139" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb28-140"><a href="#cb28-140" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(</span>
-<span id="cb28-141"><a href="#cb28-141" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Individual observations"</span>),</span>
-<span id="cb28-142"><a href="#cb28-142" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.15</span>, <span class="at">seed =</span> <span class="dv">123</span>),</span>
-<span id="cb28-143"><a href="#cb28-143" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.35</span>,</span>
-<span id="cb28-144"><a href="#cb28-144" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">1.5</span></span>
-<span id="cb28-145"><a href="#cb28-145" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb28-146"><a href="#cb28-146" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(</span>
-<span id="cb28-147"><a href="#cb28-147" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Group mean"</span>),</span>
-<span id="cb28-148"><a href="#cb28-148" aria-hidden="true" tabindex="-1"></a>    <span class="at">fun =</span> mean,</span>
-<span id="cb28-149"><a href="#cb28-149" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">"point"</span>,</span>
-<span id="cb28-150"><a href="#cb28-150" aria-hidden="true" tabindex="-1"></a>    <span class="at">shape =</span> <span class="dv">18</span>,</span>
-<span id="cb28-151"><a href="#cb28-151" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">4</span></span>
-<span id="cb28-152"><a href="#cb28-152" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb28-153"><a href="#cb28-153" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(</span>
-<span id="cb28-154"><a href="#cb28-154" aria-hidden="true" tabindex="-1"></a>    <span class="at">fun =</span> mean,</span>
-<span id="cb28-155"><a href="#cb28-155" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">"text"</span>,</span>
-<span id="cb28-156"><a href="#cb28-156" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">after_stat</span>(<span class="fu">round</span>(y, <span class="dv">2</span>))),</span>
-<span id="cb28-157"><a href="#cb28-157" aria-hidden="true" tabindex="-1"></a>    <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.75</span>,</span>
-<span id="cb28-158"><a href="#cb28-158" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">3.5</span></span>
-<span id="cb28-159"><a href="#cb28-159" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb28-160"><a href="#cb28-160" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(</span>
-<span id="cb28-161"><a href="#cb28-161" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Cram status"</span>,</span>
-<span id="cb28-162"><a href="#cb28-162" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Non-Cram"</span> <span class="ot">=</span> <span class="st">"#A8DADC"</span>, <span class="st">"Cram"</span> <span class="ot">=</span> <span class="st">"#E76F51"</span>)</span>
-<span id="cb28-163"><a href="#cb28-163" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb28-164"><a href="#cb28-164" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(</span>
-<span id="cb28-165"><a href="#cb28-165" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="cn">NULL</span>,</span>
-<span id="cb28-166"><a href="#cb28-166" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Individual observations"</span> <span class="ot">=</span> <span class="st">"#457B9D"</span>, <span class="st">"Group mean"</span> <span class="ot">=</span> <span class="st">"red"</span>)</span>
-<span id="cb28-167"><a href="#cb28-167" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb28-168"><a href="#cb28-168" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb28-169"><a href="#cb28-169" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
-<span id="cb28-170"><a href="#cb28-170" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Weekly paid employment hours"</span>,</span>
-<span id="cb28-171"><a href="#cb28-171" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Weekly work hours by cramming behaviour"</span>,</span>
-<span id="cb28-172"><a href="#cb28-172" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Diamonds and labels indicate group means."</span></span>
-<span id="cb28-173"><a href="#cb28-173" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb28-174"><a href="#cb28-174" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
-<span id="cb28-175"><a href="#cb28-175" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb28-176"><a href="#cb28-176" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"plain"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb28-177"><a href="#cb28-177" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
-<span id="cb28-178"><a href="#cb28-178" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb28-179"><a href="#cb28-179" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>()</span>
-<span id="cb28-180"><a href="#cb28-180" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb28-181"><a href="#cb28-181" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-182"><a href="#cb28-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-183"><a href="#cb28-183" aria-hidden="true" tabindex="-1"></a>Figure 1: Distribution of weekly paid employment hours by cramming status.</span>
-<span id="cb28-184"><a href="#cb28-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-185"><a href="#cb28-185" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">FRIEND: Decision + contextual conclusion</span><span class="co">]</span></span>
-<span id="cb28-186"><a href="#cb28-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-187"><a href="#cb28-187" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">FRIEND: Limitations</span><span class="co">]</span></span>
-<span id="cb28-188"><a href="#cb28-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-189"><a href="#cb28-189" aria-hidden="true" tabindex="-1"></a><span class="fu">## RQ2</span></span>
-<span id="cb28-190"><a href="#cb28-190" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 1: Data import &amp; cleaning (multitasking vs cramming)</span></span>
+<span id="cb28-95"><a href="#cb28-95" aria-hidden="true" tabindex="-1"></a>Weekly paid employment may affect the amount of time students have available for assessment preparation. This research question examines whether students who cram before deadlines spend a different amount of time in paid employment compared with students who do not cram. Understanding this relationship could help the teaching team identify whether heavier work commitments are associated with different assessment-preparation behaviours and whether more flexible study support may be beneficial. A Welch two-sample t-test is used to compare mean weekly work hours between Cram and Non-Cram students.</span>
+<span id="cb28-98"><a href="#cb28-98" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb28-99"><a href="#cb28-99" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rq1-setup</span></span>
+<span id="cb28-100"><a href="#cb28-100" aria-hidden="true" tabindex="-1"></a>rq1_data <span class="ot">&lt;-</span> df_clean <span class="sc">%&gt;%</span></span>
+<span id="cb28-101"><a href="#cb28-101" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(assess, work_hrs) <span class="sc">%&gt;%</span></span>
+<span id="cb28-102"><a href="#cb28-102" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">is_cram =</span> <span class="fu">if_else</span>(assess <span class="sc">==</span> <span class="st">"Cram"</span>, <span class="st">"Cram"</span>, <span class="st">"Non-Cram"</span>))</span>
+<span id="cb28-103"><a href="#cb28-103" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-104"><a href="#cb28-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-105"><a href="#cb28-105" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">EDA figure + summary statistics</span><span class="co">]</span></span>
+<span id="cb28-106"><a href="#cb28-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-109"><a href="#cb28-109" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb28-110"><a href="#cb28-110" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rq1-summary-table</span></span>
+<span id="cb28-111"><a href="#cb28-111" aria-hidden="true" tabindex="-1"></a>rq1_data <span class="sc">%&gt;%</span></span>
+<span id="cb28-112"><a href="#cb28-112" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(is_cram) <span class="sc">%&gt;%</span></span>
+<span id="cb28-113"><a href="#cb28-113" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb28-114"><a href="#cb28-114" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb28-115"><a href="#cb28-115" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">mean</span>(work_hrs),</span>
+<span id="cb28-116"><a href="#cb28-116" aria-hidden="true" tabindex="-1"></a>    <span class="at">median =</span> <span class="fu">median</span>(work_hrs),</span>
+<span id="cb28-117"><a href="#cb28-117" aria-hidden="true" tabindex="-1"></a>    <span class="at">SD =</span> <span class="fu">sd</span>(work_hrs),</span>
+<span id="cb28-118"><a href="#cb28-118" aria-hidden="true" tabindex="-1"></a>    <span class="at">Q1 =</span> <span class="fu">quantile</span>(work_hrs, <span class="fl">0.25</span>),</span>
+<span id="cb28-119"><a href="#cb28-119" aria-hidden="true" tabindex="-1"></a>    <span class="at">Q3 =</span> <span class="fu">quantile</span>(work_hrs, <span class="fl">0.75</span>),</span>
+<span id="cb28-120"><a href="#cb28-120" aria-hidden="true" tabindex="-1"></a>    <span class="at">IQR =</span> <span class="fu">IQR</span>(work_hrs),</span>
+<span id="cb28-121"><a href="#cb28-121" aria-hidden="true" tabindex="-1"></a>    <span class="at">min =</span> <span class="fu">min</span>(work_hrs),</span>
+<span id="cb28-122"><a href="#cb28-122" aria-hidden="true" tabindex="-1"></a>    <span class="at">max =</span> <span class="fu">max</span>(work_hrs)</span>
+<span id="cb28-123"><a href="#cb28-123" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb28-124"><a href="#cb28-124" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">align =</span> <span class="fu">rep</span>(<span class="st">"c"</span>, <span class="dv">9</span>))</span>
+<span id="cb28-125"><a href="#cb28-125" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-126"><a href="#cb28-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-129"><a href="#cb28-129" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb28-130"><a href="#cb28-130" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rq1-eda</span></span>
+<span id="cb28-131"><a href="#cb28-131" aria-hidden="true" tabindex="-1"></a>rq1_data <span class="sc">%&gt;%</span></span>
+<span id="cb28-132"><a href="#cb28-132" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> is_cram, <span class="at">y =</span> work_hrs)) <span class="sc">+</span></span>
+<span id="cb28-133"><a href="#cb28-133" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(</span>
+<span id="cb28-134"><a href="#cb28-134" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">fill =</span> is_cram),</span>
+<span id="cb28-135"><a href="#cb28-135" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.5</span>,</span>
+<span id="cb28-136"><a href="#cb28-136" aria-hidden="true" tabindex="-1"></a>    <span class="at">outlier.shape =</span> <span class="cn">NA</span>,</span>
+<span id="cb28-137"><a href="#cb28-137" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.85</span></span>
+<span id="cb28-138"><a href="#cb28-138" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb28-139"><a href="#cb28-139" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(</span>
+<span id="cb28-140"><a href="#cb28-140" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Individual observations"</span>),</span>
+<span id="cb28-141"><a href="#cb28-141" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.15</span>, <span class="at">seed =</span> <span class="dv">123</span>),</span>
+<span id="cb28-142"><a href="#cb28-142" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.35</span>,</span>
+<span id="cb28-143"><a href="#cb28-143" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">1.5</span></span>
+<span id="cb28-144"><a href="#cb28-144" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb28-145"><a href="#cb28-145" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(</span>
+<span id="cb28-146"><a href="#cb28-146" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Group mean"</span>),</span>
+<span id="cb28-147"><a href="#cb28-147" aria-hidden="true" tabindex="-1"></a>    <span class="at">fun =</span> mean,</span>
+<span id="cb28-148"><a href="#cb28-148" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">"point"</span>,</span>
+<span id="cb28-149"><a href="#cb28-149" aria-hidden="true" tabindex="-1"></a>    <span class="at">shape =</span> <span class="dv">18</span>,</span>
+<span id="cb28-150"><a href="#cb28-150" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">4</span></span>
+<span id="cb28-151"><a href="#cb28-151" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb28-152"><a href="#cb28-152" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(</span>
+<span id="cb28-153"><a href="#cb28-153" aria-hidden="true" tabindex="-1"></a>    <span class="at">fun =</span> mean,</span>
+<span id="cb28-154"><a href="#cb28-154" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">"text"</span>,</span>
+<span id="cb28-155"><a href="#cb28-155" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">after_stat</span>(<span class="fu">round</span>(y, <span class="dv">2</span>))),</span>
+<span id="cb28-156"><a href="#cb28-156" aria-hidden="true" tabindex="-1"></a>    <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.75</span>,</span>
+<span id="cb28-157"><a href="#cb28-157" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">3.5</span></span>
+<span id="cb28-158"><a href="#cb28-158" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb28-159"><a href="#cb28-159" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(</span>
+<span id="cb28-160"><a href="#cb28-160" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Cram status"</span>,</span>
+<span id="cb28-161"><a href="#cb28-161" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Non-Cram"</span> <span class="ot">=</span> <span class="st">"#A8DADC"</span>, <span class="st">"Cram"</span> <span class="ot">=</span> <span class="st">"#E76F51"</span>)</span>
+<span id="cb28-162"><a href="#cb28-162" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb28-163"><a href="#cb28-163" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(</span>
+<span id="cb28-164"><a href="#cb28-164" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="cn">NULL</span>,</span>
+<span id="cb28-165"><a href="#cb28-165" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Individual observations"</span> <span class="ot">=</span> <span class="st">"#457B9D"</span>, <span class="st">"Group mean"</span> <span class="ot">=</span> <span class="st">"red"</span>)</span>
+<span id="cb28-166"><a href="#cb28-166" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb28-167"><a href="#cb28-167" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb28-168"><a href="#cb28-168" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb28-169"><a href="#cb28-169" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Weekly paid employment hours"</span>,</span>
+<span id="cb28-170"><a href="#cb28-170" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Weekly work hours by cramming behaviour"</span>,</span>
+<span id="cb28-171"><a href="#cb28-171" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Diamonds and labels indicate group means."</span></span>
+<span id="cb28-172"><a href="#cb28-172" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb28-173"><a href="#cb28-173" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb28-174"><a href="#cb28-174" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb28-175"><a href="#cb28-175" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"plain"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb28-176"><a href="#cb28-176" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
+<span id="cb28-177"><a href="#cb28-177" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb28-178"><a href="#cb28-178" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb28-179"><a href="#cb28-179" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb28-180"><a href="#cb28-180" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-181"><a href="#cb28-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-182"><a href="#cb28-182" aria-hidden="true" tabindex="-1"></a>Figure 1: Distribution of weekly paid employment hours by cramming status.</span>
+<span id="cb28-183"><a href="#cb28-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-184"><a href="#cb28-184" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">FRIEND: Decision + contextual conclusion</span><span class="co">]</span></span>
+<span id="cb28-185"><a href="#cb28-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-186"><a href="#cb28-186" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">FRIEND: Limitations</span><span class="co">]</span></span>
+<span id="cb28-187"><a href="#cb28-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-188"><a href="#cb28-188" aria-hidden="true" tabindex="-1"></a><span class="fu">## RQ2</span></span>
+<span id="cb28-189"><a href="#cb28-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-190"><a href="#cb28-190" aria-hidden="true" tabindex="-1"></a>**Research question:** Is multitasking during lectures associated with students' assessment preparation style, specifically whether they tend to cram before deadlines?</span>
 <span id="cb28-191"><a href="#cb28-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-194"><a href="#cb28-194" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-195"><a href="#cb28-195" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rq2-setup</span></span>
-<span id="cb28-196"><a href="#cb28-196" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb28-197"><a href="#cb28-197" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb28-198"><a href="#cb28-198" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-199"><a href="#cb28-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-202"><a href="#cb28-202" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-203"><a href="#cb28-203" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rq2-clean</span></span>
-<span id="cb28-204"><a href="#cb28-204" aria-hidden="true" tabindex="-1"></a>survey <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"survey_cleaned.csv"</span>)</span>
-<span id="cb28-205"><a href="#cb28-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-206"><a href="#cb28-206" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep only the variables needed for RQ2, and derive a binary</span></span>
-<span id="cb28-207"><a href="#cb28-207" aria-hidden="true" tabindex="-1"></a><span class="co"># "Cram vs Not Cram" version of `assess` so the test lines up with the RQ</span></span>
-<span id="cb28-208"><a href="#cb28-208" aria-hidden="true" tabindex="-1"></a><span class="co"># statement ("multitasking and cramming"), rather than the original 3-level</span></span>
-<span id="cb28-209"><a href="#cb28-209" aria-hidden="true" tabindex="-1"></a><span class="co"># assessment-style variable (Gradually / Immediately / Cram).</span></span>
-<span id="cb28-210"><a href="#cb28-210" aria-hidden="true" tabindex="-1"></a>rq2_data <span class="ot">&lt;-</span> survey <span class="sc">%&gt;%</span></span>
-<span id="cb28-211"><a href="#cb28-211" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(assess, multitask) <span class="sc">%&gt;%</span></span>
-<span id="cb28-212"><a href="#cb28-212" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(assess, multitask) <span class="sc">%&gt;%</span></span>
-<span id="cb28-213"><a href="#cb28-213" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb28-214"><a href="#cb28-214" aria-hidden="true" tabindex="-1"></a>    <span class="at">assess    =</span> <span class="fu">factor</span>(assess, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Gradually"</span>, <span class="st">"Immediately"</span>, <span class="st">"Cram"</span>)),</span>
-<span id="cb28-215"><a href="#cb28-215" aria-hidden="true" tabindex="-1"></a>    <span class="at">is_cram   =</span> <span class="fu">if_else</span>(assess <span class="sc">==</span> <span class="st">"Cram"</span>, <span class="st">"Cram"</span>, <span class="st">"Not Cram"</span>),</span>
-<span id="cb28-216"><a href="#cb28-216" aria-hidden="true" tabindex="-1"></a>    <span class="at">is_cram   =</span> <span class="fu">factor</span>(is_cram, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Not Cram"</span>, <span class="st">"Cram"</span>)),</span>
-<span id="cb28-217"><a href="#cb28-217" aria-hidden="true" tabindex="-1"></a>    <span class="at">multitask =</span> <span class="fu">factor</span>(multitask, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"No"</span>, <span class="st">"Yes"</span>))</span>
-<span id="cb28-218"><a href="#cb28-218" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb28-219"><a href="#cb28-219" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-220"><a href="#cb28-220" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(rq2_data)</span>
-<span id="cb28-221"><a href="#cb28-221" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-222"><a href="#cb28-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-223"><a href="#cb28-223" aria-hidden="true" tabindex="-1"></a>We only select <span class="in">`assess`</span> and <span class="in">`multitask`</span> (not the whole cleaned dataset), and</span>
-<span id="cb28-224"><a href="#cb28-224" aria-hidden="true" tabindex="-1"></a>only drop rows missing on these two columns — so this subsetting is specific</span>
-<span id="cb28-225"><a href="#cb28-225" aria-hidden="true" tabindex="-1"></a>to RQ2 and doesn't discard rows that are unusable for other RQs. <span class="in">`assess`</span> is</span>
-<span id="cb28-226"><a href="#cb28-226" aria-hidden="true" tabindex="-1"></a>collapsed from 3 levels into a binary <span class="in">`is_cram`</span> variable to match the RQ2</span>
-<span id="cb28-227"><a href="#cb28-227" aria-hidden="true" tabindex="-1"></a>question directly (cram vs not cram).</span>
-<span id="cb28-228"><a href="#cb28-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-229"><a href="#cb28-229" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 2: Exploratory visualisation (multitasking vs cramming)</span></span>
-<span id="cb28-230"><a href="#cb28-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-233"><a href="#cb28-233" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-234"><a href="#cb28-234" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rq2-eda</span></span>
-<span id="cb28-235"><a href="#cb28-235" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Proportion of students who multitask, by cramming behaviour"</span></span>
-<span id="cb28-236"><a href="#cb28-236" aria-hidden="true" tabindex="-1"></a>rq2_data <span class="sc">%&gt;%</span></span>
-<span id="cb28-237"><a href="#cb28-237" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(is_cram, multitask) <span class="sc">%&gt;%</span></span>
-<span id="cb28-238"><a href="#cb28-238" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(is_cram) <span class="sc">%&gt;%</span></span>
-<span id="cb28-239"><a href="#cb28-239" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">%&gt;%</span></span>
-<span id="cb28-240"><a href="#cb28-240" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> is_cram, <span class="at">y =</span> prop, <span class="at">fill =</span> multitask)) <span class="sc">+</span></span>
-<span id="cb28-241"><a href="#cb28-241" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span></span>
-<span id="cb28-242"><a href="#cb28-242" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
-<span id="cb28-243"><a href="#cb28-243" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb28-244"><a href="#cb28-244" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Assessment preparation style"</span>,</span>
-<span id="cb28-245"><a href="#cb28-245" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Proportion of students"</span>,</span>
-<span id="cb28-246"><a href="#cb28-246" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"Multitasks?"</span>,</span>
-<span id="cb28-247"><a href="#cb28-247" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Multitasking is more common among students who cram"</span></span>
-<span id="cb28-248"><a href="#cb28-248" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb28-249"><a href="#cb28-249" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span>
-<span id="cb28-250"><a href="#cb28-250" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-251"><a href="#cb28-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-252"><a href="#cb28-252" aria-hidden="true" tabindex="-1"></a>Supplementary (optional) — the same relationship broken down by the original</span>
-<span id="cb28-253"><a href="#cb28-253" aria-hidden="true" tabindex="-1"></a>3-level <span class="in">`assess`</span> variable, useful as a descriptive figure even though the</span>
-<span id="cb28-254"><a href="#cb28-254" aria-hidden="true" tabindex="-1"></a>formal test uses the collapsed 2x2 version:</span>
+<span id="cb28-192"><a href="#cb28-192" aria-hidden="true" tabindex="-1"></a>Multitasking during lectures (e.g. using phones or other devices) is often seen as a sign of disengagement or poor time management. This research question examines whether multitasking behaviour is associated with cramming, since students who habitually delay their revision may be more likely to disengage during class as deadlines approach. Understanding this link could help the teaching team judge whether lecture engagement issues are connected to broader time-management or study-habit problems, rather than treating them as separate concerns. A chi-squared test of independence is used to test whether multitasking behaviour and cramming behaviour are associated.</span>
+<span id="cb28-193"><a href="#cb28-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-194"><a href="#cb28-194" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 1: Data import &amp; cleaning (multitasking vs cramming)</span></span>
+<span id="cb28-195"><a href="#cb28-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-198"><a href="#cb28-198" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb28-199"><a href="#cb28-199" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rq2-setup</span></span>
+<span id="cb28-200"><a href="#cb28-200" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb28-201"><a href="#cb28-201" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb28-202"><a href="#cb28-202" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-203"><a href="#cb28-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-206"><a href="#cb28-206" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb28-207"><a href="#cb28-207" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rq2-clean</span></span>
+<span id="cb28-208"><a href="#cb28-208" aria-hidden="true" tabindex="-1"></a>survey <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"survey_cleaned.csv"</span>)</span>
+<span id="cb28-209"><a href="#cb28-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-210"><a href="#cb28-210" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep only the variables needed for RQ2, and derive a binary</span></span>
+<span id="cb28-211"><a href="#cb28-211" aria-hidden="true" tabindex="-1"></a><span class="co"># "Cram vs Not Cram" version of `assess` so the test lines up with the RQ</span></span>
+<span id="cb28-212"><a href="#cb28-212" aria-hidden="true" tabindex="-1"></a><span class="co"># statement ("multitasking and cramming"), rather than the original 3-level</span></span>
+<span id="cb28-213"><a href="#cb28-213" aria-hidden="true" tabindex="-1"></a><span class="co"># assessment-style variable (Gradually / Immediately / Cram).</span></span>
+<span id="cb28-214"><a href="#cb28-214" aria-hidden="true" tabindex="-1"></a>rq2_data <span class="ot">&lt;-</span> survey <span class="sc">%&gt;%</span></span>
+<span id="cb28-215"><a href="#cb28-215" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(assess, multitask) <span class="sc">%&gt;%</span></span>
+<span id="cb28-216"><a href="#cb28-216" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(assess, multitask) <span class="sc">%&gt;%</span></span>
+<span id="cb28-217"><a href="#cb28-217" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb28-218"><a href="#cb28-218" aria-hidden="true" tabindex="-1"></a>    <span class="at">assess    =</span> <span class="fu">factor</span>(assess, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Gradually"</span>, <span class="st">"Immediately"</span>, <span class="st">"Cram"</span>)),</span>
+<span id="cb28-219"><a href="#cb28-219" aria-hidden="true" tabindex="-1"></a>    <span class="at">is_cram   =</span> <span class="fu">if_else</span>(assess <span class="sc">==</span> <span class="st">"Cram"</span>, <span class="st">"Cram"</span>, <span class="st">"Not Cram"</span>),</span>
+<span id="cb28-220"><a href="#cb28-220" aria-hidden="true" tabindex="-1"></a>    <span class="at">is_cram   =</span> <span class="fu">factor</span>(is_cram, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Not Cram"</span>, <span class="st">"Cram"</span>)),</span>
+<span id="cb28-221"><a href="#cb28-221" aria-hidden="true" tabindex="-1"></a>    <span class="at">multitask =</span> <span class="fu">factor</span>(multitask, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"No"</span>, <span class="st">"Yes"</span>))</span>
+<span id="cb28-222"><a href="#cb28-222" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb28-223"><a href="#cb28-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-224"><a href="#cb28-224" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(rq2_data)</span>
+<span id="cb28-225"><a href="#cb28-225" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-226"><a href="#cb28-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-227"><a href="#cb28-227" aria-hidden="true" tabindex="-1"></a>We only select <span class="in">`assess`</span> and <span class="in">`multitask`</span> (not the whole cleaned dataset), and</span>
+<span id="cb28-228"><a href="#cb28-228" aria-hidden="true" tabindex="-1"></a>only drop rows missing on these two columns — so this subsetting is specific</span>
+<span id="cb28-229"><a href="#cb28-229" aria-hidden="true" tabindex="-1"></a>to RQ2 and doesn't discard rows that are unusable for other RQs. <span class="in">`assess`</span> is</span>
+<span id="cb28-230"><a href="#cb28-230" aria-hidden="true" tabindex="-1"></a>collapsed from 3 levels into a binary <span class="in">`is_cram`</span> variable to match the RQ2</span>
+<span id="cb28-231"><a href="#cb28-231" aria-hidden="true" tabindex="-1"></a>question directly (cram vs not cram).</span>
+<span id="cb28-232"><a href="#cb28-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-233"><a href="#cb28-233" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 2: Exploratory visualisation (multitasking vs cramming)</span></span>
+<span id="cb28-234"><a href="#cb28-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-237"><a href="#cb28-237" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb28-238"><a href="#cb28-238" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rq2-eda</span></span>
+<span id="cb28-239"><a href="#cb28-239" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Proportion of students who multitask, by cramming behaviour"</span></span>
+<span id="cb28-240"><a href="#cb28-240" aria-hidden="true" tabindex="-1"></a>rq2_data <span class="sc">%&gt;%</span></span>
+<span id="cb28-241"><a href="#cb28-241" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(is_cram, multitask) <span class="sc">%&gt;%</span></span>
+<span id="cb28-242"><a href="#cb28-242" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(is_cram) <span class="sc">%&gt;%</span></span>
+<span id="cb28-243"><a href="#cb28-243" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">%&gt;%</span></span>
+<span id="cb28-244"><a href="#cb28-244" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> is_cram, <span class="at">y =</span> prop, <span class="at">fill =</span> multitask)) <span class="sc">+</span></span>
+<span id="cb28-245"><a href="#cb28-245" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span></span>
+<span id="cb28-246"><a href="#cb28-246" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb28-247"><a href="#cb28-247" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb28-248"><a href="#cb28-248" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Assessment preparation style"</span>,</span>
+<span id="cb28-249"><a href="#cb28-249" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Proportion of students"</span>,</span>
+<span id="cb28-250"><a href="#cb28-250" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"Multitasks?"</span>,</span>
+<span id="cb28-251"><a href="#cb28-251" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Multitasking is more common among students who cram"</span></span>
+<span id="cb28-252"><a href="#cb28-252" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb28-253"><a href="#cb28-253" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span>
+<span id="cb28-254"><a href="#cb28-254" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb28-255"><a href="#cb28-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-258"><a href="#cb28-258" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-259"><a href="#cb28-259" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rq2-eda-3level</span></span>
-<span id="cb28-260"><a href="#cb28-260" aria-hidden="true" tabindex="-1"></a>survey <span class="sc">%&gt;%</span></span>
-<span id="cb28-261"><a href="#cb28-261" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(assess, multitask) <span class="sc">%&gt;%</span></span>
-<span id="cb28-262"><a href="#cb28-262" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(assess, multitask) <span class="sc">%&gt;%</span></span>
-<span id="cb28-263"><a href="#cb28-263" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(assess) <span class="sc">%&gt;%</span></span>
-<span id="cb28-264"><a href="#cb28-264" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">%&gt;%</span></span>
-<span id="cb28-265"><a href="#cb28-265" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> assess, <span class="at">y =</span> prop, <span class="at">fill =</span> multitask)) <span class="sc">+</span></span>
-<span id="cb28-266"><a href="#cb28-266" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span></span>
-<span id="cb28-267"><a href="#cb28-267" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
-<span id="cb28-268"><a href="#cb28-268" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Assessment preparation style (3 levels)"</span>,</span>
-<span id="cb28-269"><a href="#cb28-269" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Proportion of students"</span>, <span class="at">fill =</span> <span class="st">"Multitasks?"</span>) <span class="sc">+</span></span>
-<span id="cb28-270"><a href="#cb28-270" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span>
-<span id="cb28-271"><a href="#cb28-271" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-272"><a href="#cb28-272" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-273"><a href="#cb28-273" aria-hidden="true" tabindex="-1"></a>Both plots show the same pattern: the multitasking rate is visibly higher</span>
-<span id="cb28-274"><a href="#cb28-274" aria-hidden="true" tabindex="-1"></a>among students who cram (~75%) than among those who don't (~52% "Gradually",</span>
-<span id="cb28-275"><a href="#cb28-275" aria-hidden="true" tabindex="-1"></a>~46% "Immediately"). This motivates formally testing the association in the</span>
-<span id="cb28-276"><a href="#cb28-276" aria-hidden="true" tabindex="-1"></a>next step.</span>
-<span id="cb28-277"><a href="#cb28-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-278"><a href="#cb28-278" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 3: Hypothesis test — Chi-squared test of independence</span></span>
-<span id="cb28-279"><a href="#cb28-279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-280"><a href="#cb28-280" aria-hidden="true" tabindex="-1"></a>**H:**</span>
-<span id="cb28-281"><a href="#cb28-281" aria-hidden="true" tabindex="-1"></a>$H_0$: multitasking behaviour is independent of cramming behaviour.</span>
-<span id="cb28-282"><a href="#cb28-282" aria-hidden="true" tabindex="-1"></a>$H_1$: multitasking behaviour is *not* independent of cramming behaviour.</span>
+<span id="cb28-256"><a href="#cb28-256" aria-hidden="true" tabindex="-1"></a>Supplementary (optional) — the same relationship broken down by the original</span>
+<span id="cb28-257"><a href="#cb28-257" aria-hidden="true" tabindex="-1"></a>3-level <span class="in">`assess`</span> variable, useful as a descriptive figure even though the</span>
+<span id="cb28-258"><a href="#cb28-258" aria-hidden="true" tabindex="-1"></a>formal test uses the collapsed 2x2 version:</span>
+<span id="cb28-259"><a href="#cb28-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-262"><a href="#cb28-262" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb28-263"><a href="#cb28-263" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rq2-eda-3level</span></span>
+<span id="cb28-264"><a href="#cb28-264" aria-hidden="true" tabindex="-1"></a>survey <span class="sc">%&gt;%</span></span>
+<span id="cb28-265"><a href="#cb28-265" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(assess, multitask) <span class="sc">%&gt;%</span></span>
+<span id="cb28-266"><a href="#cb28-266" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(assess, multitask) <span class="sc">%&gt;%</span></span>
+<span id="cb28-267"><a href="#cb28-267" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(assess) <span class="sc">%&gt;%</span></span>
+<span id="cb28-268"><a href="#cb28-268" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">%&gt;%</span></span>
+<span id="cb28-269"><a href="#cb28-269" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> assess, <span class="at">y =</span> prop, <span class="at">fill =</span> multitask)) <span class="sc">+</span></span>
+<span id="cb28-270"><a href="#cb28-270" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span></span>
+<span id="cb28-271"><a href="#cb28-271" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb28-272"><a href="#cb28-272" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Assessment preparation style (3 levels)"</span>,</span>
+<span id="cb28-273"><a href="#cb28-273" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Proportion of students"</span>, <span class="at">fill =</span> <span class="st">"Multitasks?"</span>) <span class="sc">+</span></span>
+<span id="cb28-274"><a href="#cb28-274" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span>
+<span id="cb28-275"><a href="#cb28-275" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-276"><a href="#cb28-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-277"><a href="#cb28-277" aria-hidden="true" tabindex="-1"></a>Both plots show the same pattern: the multitasking rate is visibly higher</span>
+<span id="cb28-278"><a href="#cb28-278" aria-hidden="true" tabindex="-1"></a>among students who cram (~75%) than among those who don't (~52% "Gradually",</span>
+<span id="cb28-279"><a href="#cb28-279" aria-hidden="true" tabindex="-1"></a>~46% "Immediately"). This motivates formally testing the association in the</span>
+<span id="cb28-280"><a href="#cb28-280" aria-hidden="true" tabindex="-1"></a>next step.</span>
+<span id="cb28-281"><a href="#cb28-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-282"><a href="#cb28-282" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 3: Hypothesis test — Chi-squared test of independence</span></span>
 <span id="cb28-283"><a href="#cb28-283" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-286"><a href="#cb28-286" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-287"><a href="#cb28-287" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rq2-table</span></span>
-<span id="cb28-288"><a href="#cb28-288" aria-hidden="true" tabindex="-1"></a>cram_tab <span class="ot">&lt;-</span> <span class="fu">table</span>(rq2_data<span class="sc">$</span>is_cram, rq2_data<span class="sc">$</span>multitask)</span>
-<span id="cb28-289"><a href="#cb28-289" aria-hidden="true" tabindex="-1"></a>cram_tab</span>
-<span id="cb28-290"><a href="#cb28-290" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-291"><a href="#cb28-291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-292"><a href="#cb28-292" aria-hidden="true" tabindex="-1"></a>**A (assumptions):** The chi-squared test of independence requires (i)</span>
-<span id="cb28-293"><a href="#cb28-293" aria-hidden="true" tabindex="-1"></a>independent observations (one row per student — reasonable here, no student</span>
-<span id="cb28-294"><a href="#cb28-294" aria-hidden="true" tabindex="-1"></a>appears twice in the survey) and (ii) expected cell counts $\geq 5$ in every</span>
-<span id="cb28-295"><a href="#cb28-295" aria-hidden="true" tabindex="-1"></a>cell of the contingency table.</span>
-<span id="cb28-296"><a href="#cb28-296" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-299"><a href="#cb28-299" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-300"><a href="#cb28-300" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rq2-assumptions</span></span>
-<span id="cb28-301"><a href="#cb28-301" aria-hidden="true" tabindex="-1"></a>chi_test <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(cram_tab, <span class="at">correct =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb28-302"><a href="#cb28-302" aria-hidden="true" tabindex="-1"></a>chi_test<span class="sc">$</span>expected</span>
-<span id="cb28-303"><a href="#cb28-303" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-304"><a href="#cb28-304" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-305"><a href="#cb28-305" aria-hidden="true" tabindex="-1"></a>All four expected counts are well above 5 (minimum ≈ 51.5), so the</span>
-<span id="cb28-306"><a href="#cb28-306" aria-hidden="true" tabindex="-1"></a>chi-squared approximation is valid here — there is no need to fall back on</span>
-<span id="cb28-307"><a href="#cb28-307" aria-hidden="true" tabindex="-1"></a>Fisher's exact test or a Yates continuity correction.</span>
+<span id="cb28-284"><a href="#cb28-284" aria-hidden="true" tabindex="-1"></a>**H:**</span>
+<span id="cb28-285"><a href="#cb28-285" aria-hidden="true" tabindex="-1"></a>$H_0$: multitasking behaviour is independent of cramming behaviour.</span>
+<span id="cb28-286"><a href="#cb28-286" aria-hidden="true" tabindex="-1"></a>$H_1$: multitasking behaviour is *not* independent of cramming behaviour.</span>
+<span id="cb28-287"><a href="#cb28-287" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-290"><a href="#cb28-290" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb28-291"><a href="#cb28-291" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rq2-table</span></span>
+<span id="cb28-292"><a href="#cb28-292" aria-hidden="true" tabindex="-1"></a>cram_tab <span class="ot">&lt;-</span> <span class="fu">table</span>(rq2_data<span class="sc">$</span>is_cram, rq2_data<span class="sc">$</span>multitask)</span>
+<span id="cb28-293"><a href="#cb28-293" aria-hidden="true" tabindex="-1"></a>cram_tab</span>
+<span id="cb28-294"><a href="#cb28-294" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-295"><a href="#cb28-295" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-296"><a href="#cb28-296" aria-hidden="true" tabindex="-1"></a>**A (assumptions):** The chi-squared test of independence requires (i)</span>
+<span id="cb28-297"><a href="#cb28-297" aria-hidden="true" tabindex="-1"></a>independent observations (one row per student — reasonable here, no student</span>
+<span id="cb28-298"><a href="#cb28-298" aria-hidden="true" tabindex="-1"></a>appears twice in the survey) and (ii) expected cell counts $\geq 5$ in every</span>
+<span id="cb28-299"><a href="#cb28-299" aria-hidden="true" tabindex="-1"></a>cell of the contingency table.</span>
+<span id="cb28-300"><a href="#cb28-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-303"><a href="#cb28-303" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb28-304"><a href="#cb28-304" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rq2-assumptions</span></span>
+<span id="cb28-305"><a href="#cb28-305" aria-hidden="true" tabindex="-1"></a>chi_test <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(cram_tab, <span class="at">correct =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb28-306"><a href="#cb28-306" aria-hidden="true" tabindex="-1"></a>chi_test<span class="sc">$</span>expected</span>
+<span id="cb28-307"><a href="#cb28-307" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb28-308"><a href="#cb28-308" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-309"><a href="#cb28-309" aria-hidden="true" tabindex="-1"></a>**T &amp; P (test statistic &amp; p-value):**</span>
-<span id="cb28-310"><a href="#cb28-310" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-313"><a href="#cb28-313" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-314"><a href="#cb28-314" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rq2-test</span></span>
-<span id="cb28-315"><a href="#cb28-315" aria-hidden="true" tabindex="-1"></a>chi_test</span>
-<span id="cb28-316"><a href="#cb28-316" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-317"><a href="#cb28-317" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-320"><a href="#cb28-320" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-321"><a href="#cb28-321" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rq2-effect-size</span></span>
-<span id="cb28-322"><a href="#cb28-322" aria-hidden="true" tabindex="-1"></a><span class="co"># Effect size (Cramer's V), to accompany the p-value</span></span>
-<span id="cb28-323"><a href="#cb28-323" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">sum</span>(cram_tab)</span>
-<span id="cb28-324"><a href="#cb28-324" aria-hidden="true" tabindex="-1"></a>cramers_v <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">unname</span>(chi_test<span class="sc">$</span>statistic) <span class="sc">/</span> n)</span>
-<span id="cb28-325"><a href="#cb28-325" aria-hidden="true" tabindex="-1"></a>cramers_v</span>
-<span id="cb28-326"><a href="#cb28-326" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-327"><a href="#cb28-327" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-328"><a href="#cb28-328" aria-hidden="true" tabindex="-1"></a>Observed: $\chi^2 = 21.35$, $df = 1$, $p \approx 3.8\times10^{-6}$,</span>
-<span id="cb28-329"><a href="#cb28-329" aria-hidden="true" tabindex="-1"></a>Cramér's $V \approx 0.18$ (small-to-moderate association).</span>
-<span id="cb28-330"><a href="#cb28-330" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-331"><a href="#cb28-331" aria-hidden="true" tabindex="-1"></a>**C (conclusion with limitations):**</span>
-<span id="cb28-332"><a href="#cb28-332" aria-hidden="true" tabindex="-1"></a>There is very strong evidence ($p &lt; 0.001$) against the null hypothesis of</span>
-<span id="cb28-333"><a href="#cb28-333" aria-hidden="true" tabindex="-1"></a>independence: students who cram are considerably more likely to multitask</span>
-<span id="cb28-334"><a href="#cb28-334" aria-hidden="true" tabindex="-1"></a>(75.2%) than students who don't (51.8%). However:</span>
-<span id="cb28-335"><a href="#cb28-335" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-336"><a href="#cb28-336" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>This is an observational, self-selected survey sample — voluntary</span>
-<span id="cb28-337"><a href="#cb28-337" aria-hidden="true" tabindex="-1"></a>   response bias means busier or more disorganised students may be</span>
-<span id="cb28-338"><a href="#cb28-338" aria-hidden="true" tabindex="-1"></a>   over- or under-represented.</span>
-<span id="cb28-339"><a href="#cb28-339" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>"Cram" and "multitask" are both self-reported and self-interpreted</span>
-<span id="cb28-340"><a href="#cb28-340" aria-hidden="true" tabindex="-1"></a>   categories, which may not be applied consistently across respondents.</span>
-<span id="cb28-341"><a href="#cb28-341" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Association is not causation — a third factor (e.g. workload,</span>
-<span id="cb28-342"><a href="#cb28-342" aria-hidden="true" tabindex="-1"></a>   procrastination tendency) could plausibly drive both behaviours.</span>
-<span id="cb28-343"><a href="#cb28-343" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Collapsing <span class="in">`assess`</span> from 3 levels to 2 (Cram vs Not Cram) loses some</span>
-<span id="cb28-344"><a href="#cb28-344" aria-hidden="true" tabindex="-1"></a>   information about the distinction between "Gradually" and</span>
-<span id="cb28-345"><a href="#cb28-345" aria-hidden="true" tabindex="-1"></a>   "Immediately" preparers.</span>
-<span id="cb28-346"><a href="#cb28-346" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-347"><a href="#cb28-347" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-348"><a href="#cb28-348" aria-hidden="true" tabindex="-1"></a><span class="fu">## RQ3: Paid employment and multitasking</span></span>
-<span id="cb28-349"><a href="#cb28-349" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-350"><a href="#cb28-350" aria-hidden="true" tabindex="-1"></a>**Research question:** Do students who multitask during lectures spend a</span>
-<span id="cb28-351"><a href="#cb28-351" aria-hidden="true" tabindex="-1"></a>different average number of hours per week in paid employment compared with</span>
-<span id="cb28-352"><a href="#cb28-352" aria-hidden="true" tabindex="-1"></a>students who do not multitask?</span>
+<span id="cb28-309"><a href="#cb28-309" aria-hidden="true" tabindex="-1"></a>All four expected counts are well above 5 (minimum ≈ 51.5), so the</span>
+<span id="cb28-310"><a href="#cb28-310" aria-hidden="true" tabindex="-1"></a>chi-squared approximation is valid here — there is no need to fall back on</span>
+<span id="cb28-311"><a href="#cb28-311" aria-hidden="true" tabindex="-1"></a>Fisher's exact test or a Yates continuity correction.</span>
+<span id="cb28-312"><a href="#cb28-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-313"><a href="#cb28-313" aria-hidden="true" tabindex="-1"></a>**T &amp; P (test statistic &amp; p-value):**</span>
+<span id="cb28-314"><a href="#cb28-314" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-317"><a href="#cb28-317" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb28-318"><a href="#cb28-318" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rq2-test</span></span>
+<span id="cb28-319"><a href="#cb28-319" aria-hidden="true" tabindex="-1"></a>chi_test</span>
+<span id="cb28-320"><a href="#cb28-320" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-321"><a href="#cb28-321" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-324"><a href="#cb28-324" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb28-325"><a href="#cb28-325" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rq2-effect-size</span></span>
+<span id="cb28-326"><a href="#cb28-326" aria-hidden="true" tabindex="-1"></a><span class="co"># Effect size (Cramer's V), to accompany the p-value</span></span>
+<span id="cb28-327"><a href="#cb28-327" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">sum</span>(cram_tab)</span>
+<span id="cb28-328"><a href="#cb28-328" aria-hidden="true" tabindex="-1"></a>cramers_v <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">unname</span>(chi_test<span class="sc">$</span>statistic) <span class="sc">/</span> n)</span>
+<span id="cb28-329"><a href="#cb28-329" aria-hidden="true" tabindex="-1"></a>cramers_v</span>
+<span id="cb28-330"><a href="#cb28-330" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-331"><a href="#cb28-331" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-332"><a href="#cb28-332" aria-hidden="true" tabindex="-1"></a>Observed: $\chi^2 = 21.35$, $df = 1$, $p \approx 3.8\times10^{-6}$,</span>
+<span id="cb28-333"><a href="#cb28-333" aria-hidden="true" tabindex="-1"></a>Cramér's $V \approx 0.18$ (small-to-moderate association).</span>
+<span id="cb28-334"><a href="#cb28-334" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-335"><a href="#cb28-335" aria-hidden="true" tabindex="-1"></a>**C (conclusion with limitations):**</span>
+<span id="cb28-336"><a href="#cb28-336" aria-hidden="true" tabindex="-1"></a>There is very strong evidence ($p &lt; 0.001$) against the null hypothesis of</span>
+<span id="cb28-337"><a href="#cb28-337" aria-hidden="true" tabindex="-1"></a>independence: students who cram are considerably more likely to multitask</span>
+<span id="cb28-338"><a href="#cb28-338" aria-hidden="true" tabindex="-1"></a>(75.2%) than students who don't (51.8%). However:</span>
+<span id="cb28-339"><a href="#cb28-339" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-340"><a href="#cb28-340" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>This is an observational, self-selected survey sample — voluntary</span>
+<span id="cb28-341"><a href="#cb28-341" aria-hidden="true" tabindex="-1"></a>   response bias means busier or more disorganised students may be</span>
+<span id="cb28-342"><a href="#cb28-342" aria-hidden="true" tabindex="-1"></a>   over- or under-represented.</span>
+<span id="cb28-343"><a href="#cb28-343" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>"Cram" and "multitask" are both self-reported and self-interpreted</span>
+<span id="cb28-344"><a href="#cb28-344" aria-hidden="true" tabindex="-1"></a>   categories, which may not be applied consistently across respondents.</span>
+<span id="cb28-345"><a href="#cb28-345" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Association is not causation — a third factor (e.g. workload,</span>
+<span id="cb28-346"><a href="#cb28-346" aria-hidden="true" tabindex="-1"></a>   procrastination tendency) could plausibly drive both behaviours.</span>
+<span id="cb28-347"><a href="#cb28-347" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Collapsing <span class="in">`assess`</span> from 3 levels to 2 (Cram vs Not Cram) loses some</span>
+<span id="cb28-348"><a href="#cb28-348" aria-hidden="true" tabindex="-1"></a>   information about the distinction between "Gradually" and</span>
+<span id="cb28-349"><a href="#cb28-349" aria-hidden="true" tabindex="-1"></a>   "Immediately" preparers.</span>
+<span id="cb28-350"><a href="#cb28-350" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-351"><a href="#cb28-351" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-352"><a href="#cb28-352" aria-hidden="true" tabindex="-1"></a><span class="fu">## RQ3: Paid employment and multitasking</span></span>
 <span id="cb28-353"><a href="#cb28-353" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-354"><a href="#cb28-354" aria-hidden="true" tabindex="-1"></a>Paid employment represents an external time commitment for students. Students balancing more paid work with university study may exhibit different lecture behaviours. Having examined paid employment in relation to cramming and multitasking in relation to cramming, we investigate whether paid-employment hours also differ between students who do and do not multitask during lectures.</span>
-<span id="cb28-355"><a href="#cb28-355" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-358"><a href="#cb28-358" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-359"><a href="#cb28-359" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rq3-setup</span></span>
-<span id="cb28-360"><a href="#cb28-360" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb28-361"><a href="#cb28-361" aria-hidden="true" tabindex="-1"></a>df_clean <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"survey_cleaned.csv"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb28-362"><a href="#cb28-362" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb28-363"><a href="#cb28-363" aria-hidden="true" tabindex="-1"></a>    <span class="at">work_hrs =</span> <span class="fu">as.numeric</span>(work_hrs),</span>
-<span id="cb28-364"><a href="#cb28-364" aria-hidden="true" tabindex="-1"></a>    <span class="at">multitask =</span> <span class="fu">factor</span>(multitask, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"No"</span>, <span class="st">"Yes"</span>))</span>
-<span id="cb28-365"><a href="#cb28-365" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb28-366"><a href="#cb28-366" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(work_hrs) <span class="sc">|</span> work_hrs <span class="sc">&lt;=</span> <span class="dv">70</span>)</span>
-<span id="cb28-367"><a href="#cb28-367" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-368"><a href="#cb28-368" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-371"><a href="#cb28-371" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-372"><a href="#cb28-372" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-flipper</span></span>
-<span id="cb28-373"><a href="#cb28-373" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Summary statistics of weekly paid employment hours by multitasking status."</span></span>
-<span id="cb28-374"><a href="#cb28-374" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-375"><a href="#cb28-375" aria-hidden="true" tabindex="-1"></a>rq3_summary <span class="ot">&lt;-</span> df_clean <span class="sc">%&gt;%</span></span>
-<span id="cb28-376"><a href="#cb28-376" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(work_hrs), <span class="sc">!</span><span class="fu">is.na</span>(multitask)) <span class="sc">%&gt;%</span></span>
-<span id="cb28-377"><a href="#cb28-377" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(multitask) <span class="sc">%&gt;%</span></span>
-<span id="cb28-378"><a href="#cb28-378" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb28-379"><a href="#cb28-379" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="cb28-380"><a href="#cb28-380" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">mean</span>(work_hrs),</span>
-<span id="cb28-381"><a href="#cb28-381" aria-hidden="true" tabindex="-1"></a>    <span class="at">median =</span> <span class="fu">median</span>(work_hrs),</span>
-<span id="cb28-382"><a href="#cb28-382" aria-hidden="true" tabindex="-1"></a>    <span class="at">SD =</span> <span class="fu">sd</span>(work_hrs),</span>
-<span id="cb28-383"><a href="#cb28-383" aria-hidden="true" tabindex="-1"></a>    <span class="at">Q1 =</span> <span class="fu">quantile</span>(work_hrs, <span class="fl">0.25</span>),</span>
-<span id="cb28-384"><a href="#cb28-384" aria-hidden="true" tabindex="-1"></a>    <span class="at">Q3 =</span> <span class="fu">quantile</span>(work_hrs, <span class="fl">0.75</span>),</span>
-<span id="cb28-385"><a href="#cb28-385" aria-hidden="true" tabindex="-1"></a>    <span class="at">IQR =</span> <span class="fu">IQR</span>(work_hrs),</span>
-<span id="cb28-386"><a href="#cb28-386" aria-hidden="true" tabindex="-1"></a>    <span class="at">min =</span> <span class="fu">min</span>(work_hrs),</span>
-<span id="cb28-387"><a href="#cb28-387" aria-hidden="true" tabindex="-1"></a>    <span class="at">max =</span> <span class="fu">max</span>(work_hrs)</span>
-<span id="cb28-388"><a href="#cb28-388" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb28-389"><a href="#cb28-389" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-390"><a href="#cb28-390" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb28-391"><a href="#cb28-391" aria-hidden="true" tabindex="-1"></a>  rq3_summary,</span>
-<span id="cb28-392"><a href="#cb28-392" aria-hidden="true" tabindex="-1"></a>  <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">"c"</span>, <span class="fu">ncol</span>(rq3_summary))</span>
-<span id="cb28-393"><a href="#cb28-393" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb28-394"><a href="#cb28-394" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-395"><a href="#cb28-395" aria-hidden="true" tabindex="-1"></a>The boxplot in @fig-work-multitask compares weekly paid-employment hours between students who reported multitasking during lectures and those who did not. Students who reported multitasking had a higher mean weekly paid-employment time (8.02 hours) than those who did not multitask (6.23 hours), giving an observed mean difference of 1.79 hours per week. Both groups show visually right-skewed distributions, with many students reporting few or no hours of paid employment and a smaller number reporting substantially higher working hours. This observed difference in group means is examined formally using a permutation test.</span>
-<span id="cb28-398"><a href="#cb28-398" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-399"><a href="#cb28-399" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-work-multitask</span></span>
-<span id="cb28-400"><a href="#cb28-400" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Distribution of weekly paid employment hours by multitasking status."</span></span>
-<span id="cb28-401"><a href="#cb28-401" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-402"><a href="#cb28-402" aria-hidden="true" tabindex="-1"></a>df_clean <span class="sc">%&gt;%</span></span>
-<span id="cb28-403"><a href="#cb28-403" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(work_hrs), <span class="sc">!</span><span class="fu">is.na</span>(multitask)) <span class="sc">%&gt;%</span></span>
-<span id="cb28-404"><a href="#cb28-404" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> multitask, <span class="at">y =</span> work_hrs)) <span class="sc">+</span></span>
-<span id="cb28-405"><a href="#cb28-405" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-406"><a href="#cb28-406" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(</span>
-<span id="cb28-407"><a href="#cb28-407" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">fill =</span> multitask),</span>
-<span id="cb28-408"><a href="#cb28-408" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.5</span>,</span>
-<span id="cb28-409"><a href="#cb28-409" aria-hidden="true" tabindex="-1"></a>    <span class="at">outlier.shape =</span> <span class="cn">NA</span>,</span>
-<span id="cb28-410"><a href="#cb28-410" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.4</span></span>
-<span id="cb28-411"><a href="#cb28-411" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb28-412"><a href="#cb28-412" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-413"><a href="#cb28-413" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(</span>
-<span id="cb28-414"><a href="#cb28-414" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Individual observations"</span>),</span>
-<span id="cb28-415"><a href="#cb28-415" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">position_jitter</span>(</span>
-<span id="cb28-416"><a href="#cb28-416" aria-hidden="true" tabindex="-1"></a>      <span class="at">width =</span> <span class="fl">0.15</span>,</span>
-<span id="cb28-417"><a href="#cb28-417" aria-hidden="true" tabindex="-1"></a>      <span class="at">seed =</span> <span class="dv">123</span></span>
-<span id="cb28-418"><a href="#cb28-418" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb28-419"><a href="#cb28-419" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.35</span>,</span>
-<span id="cb28-420"><a href="#cb28-420" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">1.5</span></span>
-<span id="cb28-421"><a href="#cb28-421" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb28-422"><a href="#cb28-422" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-423"><a href="#cb28-423" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(</span>
-<span id="cb28-424"><a href="#cb28-424" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Group mean"</span>),</span>
-<span id="cb28-425"><a href="#cb28-425" aria-hidden="true" tabindex="-1"></a>    <span class="at">fun =</span> mean,</span>
-<span id="cb28-426"><a href="#cb28-426" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">"point"</span>,</span>
-<span id="cb28-427"><a href="#cb28-427" aria-hidden="true" tabindex="-1"></a>    <span class="at">shape =</span> <span class="dv">18</span>,</span>
-<span id="cb28-428"><a href="#cb28-428" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">4</span></span>
-<span id="cb28-429"><a href="#cb28-429" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb28-430"><a href="#cb28-430" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-431"><a href="#cb28-431" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(</span>
-<span id="cb28-432"><a href="#cb28-432" aria-hidden="true" tabindex="-1"></a>    <span class="at">fun =</span> mean,</span>
-<span id="cb28-433"><a href="#cb28-433" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">"text"</span>,</span>
-<span id="cb28-434"><a href="#cb28-434" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">after_stat</span>(<span class="fu">round</span>(y, <span class="dv">2</span>))),</span>
-<span id="cb28-435"><a href="#cb28-435" aria-hidden="true" tabindex="-1"></a>    <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.75</span>,</span>
-<span id="cb28-436"><a href="#cb28-436" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">3.5</span></span>
-<span id="cb28-437"><a href="#cb28-437" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb28-438"><a href="#cb28-438" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-439"><a href="#cb28-439" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(</span>
-<span id="cb28-440"><a href="#cb28-440" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Multitasking"</span>,</span>
-<span id="cb28-441"><a href="#cb28-441" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(</span>
-<span id="cb28-442"><a href="#cb28-442" aria-hidden="true" tabindex="-1"></a>      <span class="st">"No"</span> <span class="ot">=</span> <span class="st">"#A8DADC"</span>,</span>
-<span id="cb28-443"><a href="#cb28-443" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Yes"</span> <span class="ot">=</span> <span class="st">"#F4A261"</span></span>
-<span id="cb28-444"><a href="#cb28-444" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb28-445"><a href="#cb28-445" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb28-446"><a href="#cb28-446" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-447"><a href="#cb28-447" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(</span>
-<span id="cb28-448"><a href="#cb28-448" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="cn">NULL</span>,</span>
-<span id="cb28-449"><a href="#cb28-449" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(</span>
-<span id="cb28-450"><a href="#cb28-450" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Individual observations"</span> <span class="ot">=</span> <span class="st">"#457B9D"</span>,</span>
-<span id="cb28-451"><a href="#cb28-451" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Group mean"</span> <span class="ot">=</span> <span class="st">"red"</span></span>
-<span id="cb28-452"><a href="#cb28-452" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb28-453"><a href="#cb28-453" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb28-454"><a href="#cb28-454" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-455"><a href="#cb28-455" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb28-456"><a href="#cb28-456" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Multitasking during lectures"</span>,</span>
-<span id="cb28-457"><a href="#cb28-457" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Weekly paid employment (hours)"</span>,</span>
-<span id="cb28-458"><a href="#cb28-458" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Weekly paid employment hours by multitasking status"</span>,</span>
-<span id="cb28-459"><a href="#cb28-459" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Diamonds and labels indicate group means."</span></span>
-<span id="cb28-460"><a href="#cb28-460" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb28-461"><a href="#cb28-461" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-462"><a href="#cb28-462" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
-<span id="cb28-463"><a href="#cb28-463" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb28-464"><a href="#cb28-464" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb28-465"><a href="#cb28-465" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span></span>
-<span id="cb28-466"><a href="#cb28-466" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb28-467"><a href="#cb28-467" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-468"><a href="#cb28-468" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-471"><a href="#cb28-471" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-472"><a href="#cb28-472" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rq3-permutation-test</span></span>
-<span id="cb28-473"><a href="#cb28-473" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
-<span id="cb28-474"><a href="#cb28-474" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-475"><a href="#cb28-475" aria-hidden="true" tabindex="-1"></a>rq3_data <span class="ot">&lt;-</span> df_clean <span class="sc">%&gt;%</span></span>
-<span id="cb28-476"><a href="#cb28-476" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(work_hrs), <span class="sc">!</span><span class="fu">is.na</span>(multitask)) <span class="sc">%&gt;%</span></span>
-<span id="cb28-477"><a href="#cb28-477" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">multitask =</span> <span class="fu">factor</span>(multitask, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"No"</span>, <span class="st">"Yes"</span>)))</span>
+<span id="cb28-354"><a href="#cb28-354" aria-hidden="true" tabindex="-1"></a>**Research question:** Do students who multitask during lectures spend a</span>
+<span id="cb28-355"><a href="#cb28-355" aria-hidden="true" tabindex="-1"></a>different average number of hours per week in paid employment compared with</span>
+<span id="cb28-356"><a href="#cb28-356" aria-hidden="true" tabindex="-1"></a>students who do not multitask?</span>
+<span id="cb28-357"><a href="#cb28-357" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-358"><a href="#cb28-358" aria-hidden="true" tabindex="-1"></a>Paid employment represents an external time commitment for students. Students balancing more paid work with university study may exhibit different lecture behaviours. Having examined paid employment in relation to cramming and multitasking in relation to cramming, we investigate whether paid-employment hours also differ between students who do and do not multitask during lectures.</span>
+<span id="cb28-359"><a href="#cb28-359" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-362"><a href="#cb28-362" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb28-363"><a href="#cb28-363" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rq3-setup</span></span>
+<span id="cb28-364"><a href="#cb28-364" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb28-365"><a href="#cb28-365" aria-hidden="true" tabindex="-1"></a>df_clean <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"survey_cleaned.csv"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb28-366"><a href="#cb28-366" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb28-367"><a href="#cb28-367" aria-hidden="true" tabindex="-1"></a>    <span class="at">work_hrs =</span> <span class="fu">as.numeric</span>(work_hrs),</span>
+<span id="cb28-368"><a href="#cb28-368" aria-hidden="true" tabindex="-1"></a>    <span class="at">multitask =</span> <span class="fu">factor</span>(multitask, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"No"</span>, <span class="st">"Yes"</span>))</span>
+<span id="cb28-369"><a href="#cb28-369" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb28-370"><a href="#cb28-370" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(work_hrs) <span class="sc">|</span> work_hrs <span class="sc">&lt;=</span> <span class="dv">70</span>)</span>
+<span id="cb28-371"><a href="#cb28-371" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-372"><a href="#cb28-372" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-375"><a href="#cb28-375" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb28-376"><a href="#cb28-376" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-flipper</span></span>
+<span id="cb28-377"><a href="#cb28-377" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Summary statistics of weekly paid employment hours by multitasking status."</span></span>
+<span id="cb28-378"><a href="#cb28-378" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-379"><a href="#cb28-379" aria-hidden="true" tabindex="-1"></a>rq3_summary <span class="ot">&lt;-</span> df_clean <span class="sc">%&gt;%</span></span>
+<span id="cb28-380"><a href="#cb28-380" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(work_hrs), <span class="sc">!</span><span class="fu">is.na</span>(multitask)) <span class="sc">%&gt;%</span></span>
+<span id="cb28-381"><a href="#cb28-381" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(multitask) <span class="sc">%&gt;%</span></span>
+<span id="cb28-382"><a href="#cb28-382" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb28-383"><a href="#cb28-383" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb28-384"><a href="#cb28-384" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">mean</span>(work_hrs),</span>
+<span id="cb28-385"><a href="#cb28-385" aria-hidden="true" tabindex="-1"></a>    <span class="at">median =</span> <span class="fu">median</span>(work_hrs),</span>
+<span id="cb28-386"><a href="#cb28-386" aria-hidden="true" tabindex="-1"></a>    <span class="at">SD =</span> <span class="fu">sd</span>(work_hrs),</span>
+<span id="cb28-387"><a href="#cb28-387" aria-hidden="true" tabindex="-1"></a>    <span class="at">Q1 =</span> <span class="fu">quantile</span>(work_hrs, <span class="fl">0.25</span>),</span>
+<span id="cb28-388"><a href="#cb28-388" aria-hidden="true" tabindex="-1"></a>    <span class="at">Q3 =</span> <span class="fu">quantile</span>(work_hrs, <span class="fl">0.75</span>),</span>
+<span id="cb28-389"><a href="#cb28-389" aria-hidden="true" tabindex="-1"></a>    <span class="at">IQR =</span> <span class="fu">IQR</span>(work_hrs),</span>
+<span id="cb28-390"><a href="#cb28-390" aria-hidden="true" tabindex="-1"></a>    <span class="at">min =</span> <span class="fu">min</span>(work_hrs),</span>
+<span id="cb28-391"><a href="#cb28-391" aria-hidden="true" tabindex="-1"></a>    <span class="at">max =</span> <span class="fu">max</span>(work_hrs)</span>
+<span id="cb28-392"><a href="#cb28-392" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb28-393"><a href="#cb28-393" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-394"><a href="#cb28-394" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb28-395"><a href="#cb28-395" aria-hidden="true" tabindex="-1"></a>  rq3_summary,</span>
+<span id="cb28-396"><a href="#cb28-396" aria-hidden="true" tabindex="-1"></a>  <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">"c"</span>, <span class="fu">ncol</span>(rq3_summary))</span>
+<span id="cb28-397"><a href="#cb28-397" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-398"><a href="#cb28-398" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-399"><a href="#cb28-399" aria-hidden="true" tabindex="-1"></a>The boxplot in @fig-work-multitask compares weekly paid-employment hours between students who reported multitasking during lectures and those who did not. Students who reported multitasking had a higher mean weekly paid-employment time (8.02 hours) than those who did not multitask (6.23 hours), giving an observed mean difference of 1.79 hours per week. Both groups show visually right-skewed distributions, with many students reporting few or no hours of paid employment and a smaller number reporting substantially higher working hours. This observed difference in group means is examined formally using a permutation test.</span>
+<span id="cb28-402"><a href="#cb28-402" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb28-403"><a href="#cb28-403" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-work-multitask</span></span>
+<span id="cb28-404"><a href="#cb28-404" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Distribution of weekly paid employment hours by multitasking status."</span></span>
+<span id="cb28-405"><a href="#cb28-405" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-406"><a href="#cb28-406" aria-hidden="true" tabindex="-1"></a>df_clean <span class="sc">%&gt;%</span></span>
+<span id="cb28-407"><a href="#cb28-407" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(work_hrs), <span class="sc">!</span><span class="fu">is.na</span>(multitask)) <span class="sc">%&gt;%</span></span>
+<span id="cb28-408"><a href="#cb28-408" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> multitask, <span class="at">y =</span> work_hrs)) <span class="sc">+</span></span>
+<span id="cb28-409"><a href="#cb28-409" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-410"><a href="#cb28-410" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(</span>
+<span id="cb28-411"><a href="#cb28-411" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">fill =</span> multitask),</span>
+<span id="cb28-412"><a href="#cb28-412" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.5</span>,</span>
+<span id="cb28-413"><a href="#cb28-413" aria-hidden="true" tabindex="-1"></a>    <span class="at">outlier.shape =</span> <span class="cn">NA</span>,</span>
+<span id="cb28-414"><a href="#cb28-414" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.4</span></span>
+<span id="cb28-415"><a href="#cb28-415" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb28-416"><a href="#cb28-416" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-417"><a href="#cb28-417" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(</span>
+<span id="cb28-418"><a href="#cb28-418" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Individual observations"</span>),</span>
+<span id="cb28-419"><a href="#cb28-419" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">position_jitter</span>(</span>
+<span id="cb28-420"><a href="#cb28-420" aria-hidden="true" tabindex="-1"></a>      <span class="at">width =</span> <span class="fl">0.15</span>,</span>
+<span id="cb28-421"><a href="#cb28-421" aria-hidden="true" tabindex="-1"></a>      <span class="at">seed =</span> <span class="dv">123</span></span>
+<span id="cb28-422"><a href="#cb28-422" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb28-423"><a href="#cb28-423" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.35</span>,</span>
+<span id="cb28-424"><a href="#cb28-424" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">1.5</span></span>
+<span id="cb28-425"><a href="#cb28-425" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb28-426"><a href="#cb28-426" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-427"><a href="#cb28-427" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(</span>
+<span id="cb28-428"><a href="#cb28-428" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Group mean"</span>),</span>
+<span id="cb28-429"><a href="#cb28-429" aria-hidden="true" tabindex="-1"></a>    <span class="at">fun =</span> mean,</span>
+<span id="cb28-430"><a href="#cb28-430" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">"point"</span>,</span>
+<span id="cb28-431"><a href="#cb28-431" aria-hidden="true" tabindex="-1"></a>    <span class="at">shape =</span> <span class="dv">18</span>,</span>
+<span id="cb28-432"><a href="#cb28-432" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">4</span></span>
+<span id="cb28-433"><a href="#cb28-433" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb28-434"><a href="#cb28-434" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb28-435"><a href="#cb28-435" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(</span>
+<span id="cb28-436"><a href="#cb28-436" aria-hidden="true" tabindex="-1"></a>    <span class="at">fun =</span> mean,</span>
+<span id="cb28-437"><a href="#cb28-437" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">"text"</span>,</span>
+<span id="cb28-438"><a href="#cb28-438" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">after_stat</span>(<span class="fu">round</span>(y, <span class="dv">2</span>))),</span>
+<span id="cb28-439"><a href="#cb28-439" aria-hidden="true" tabindex="-1"></a>    <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.75</span>,</span>
+<span id="cb28-440"><a href="#cb28-440" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">3.5</span></span>
+<span id="cb28-441"><a href="#cb28-441" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb28-442"><a href="#cb28-442" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-443"><a href="#cb28-443" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(</span>
+<span id="cb28-444"><a href="#cb28-444" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Multitasking"</span>,</span>
+<span id="cb28-445"><a href="#cb28-445" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb28-446"><a href="#cb28-446" aria-hidden="true" tabindex="-1"></a>      <span class="st">"No"</span> <span class="ot">=</span> <span class="st">"#A8DADC"</span>,</span>
+<span id="cb28-447"><a href="#cb28-447" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Yes"</span> <span class="ot">=</span> <span class="st">"#F4A261"</span></span>
+<span id="cb28-448"><a href="#cb28-448" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb28-449"><a href="#cb28-449" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb28-450"><a href="#cb28-450" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb28-451"><a href="#cb28-451" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(</span>
+<span id="cb28-452"><a href="#cb28-452" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="cn">NULL</span>,</span>
+<span id="cb28-453"><a href="#cb28-453" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb28-454"><a href="#cb28-454" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Individual observations"</span> <span class="ot">=</span> <span class="st">"#457B9D"</span>,</span>
+<span id="cb28-455"><a href="#cb28-455" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Group mean"</span> <span class="ot">=</span> <span class="st">"red"</span></span>
+<span id="cb28-456"><a href="#cb28-456" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb28-457"><a href="#cb28-457" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb28-458"><a href="#cb28-458" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-459"><a href="#cb28-459" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb28-460"><a href="#cb28-460" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Multitasking during lectures"</span>,</span>
+<span id="cb28-461"><a href="#cb28-461" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Weekly paid employment (hours)"</span>,</span>
+<span id="cb28-462"><a href="#cb28-462" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Weekly paid employment hours by multitasking status"</span>,</span>
+<span id="cb28-463"><a href="#cb28-463" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Diamonds and labels indicate group means."</span></span>
+<span id="cb28-464"><a href="#cb28-464" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb28-465"><a href="#cb28-465" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-466"><a href="#cb28-466" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb28-467"><a href="#cb28-467" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb28-468"><a href="#cb28-468" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb28-469"><a href="#cb28-469" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span></span>
+<span id="cb28-470"><a href="#cb28-470" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb28-471"><a href="#cb28-471" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-472"><a href="#cb28-472" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-475"><a href="#cb28-475" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb28-476"><a href="#cb28-476" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rq3-permutation-test</span></span>
+<span id="cb28-477"><a href="#cb28-477" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
 <span id="cb28-478"><a href="#cb28-478" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-479"><a href="#cb28-479" aria-hidden="true" tabindex="-1"></a>welch_stat <span class="ot">&lt;-</span> <span class="cf">function</span>(hours, group) {</span>
-<span id="cb28-480"><a href="#cb28-480" aria-hidden="true" tabindex="-1"></a>  hours_yes <span class="ot">&lt;-</span> hours[group <span class="sc">==</span> <span class="st">"Yes"</span>]</span>
-<span id="cb28-481"><a href="#cb28-481" aria-hidden="true" tabindex="-1"></a>  hours_no  <span class="ot">&lt;-</span> hours[group <span class="sc">==</span> <span class="st">"No"</span>]</span>
+<span id="cb28-479"><a href="#cb28-479" aria-hidden="true" tabindex="-1"></a>rq3_data <span class="ot">&lt;-</span> df_clean <span class="sc">%&gt;%</span></span>
+<span id="cb28-480"><a href="#cb28-480" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(work_hrs), <span class="sc">!</span><span class="fu">is.na</span>(multitask)) <span class="sc">%&gt;%</span></span>
+<span id="cb28-481"><a href="#cb28-481" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">multitask =</span> <span class="fu">factor</span>(multitask, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"No"</span>, <span class="st">"Yes"</span>)))</span>
 <span id="cb28-482"><a href="#cb28-482" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-483"><a href="#cb28-483" aria-hidden="true" tabindex="-1"></a>  (<span class="fu">mean</span>(hours_yes) <span class="sc">-</span> <span class="fu">mean</span>(hours_no)) <span class="sc">/</span></span>
-<span id="cb28-484"><a href="#cb28-484" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sqrt</span>(<span class="fu">var</span>(hours_yes) <span class="sc">/</span> <span class="fu">length</span>(hours_yes) <span class="sc">+</span></span>
-<span id="cb28-485"><a href="#cb28-485" aria-hidden="true" tabindex="-1"></a>           <span class="fu">var</span>(hours_no) <span class="sc">/</span> <span class="fu">length</span>(hours_no))</span>
-<span id="cb28-486"><a href="#cb28-486" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb28-487"><a href="#cb28-487" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-488"><a href="#cb28-488" aria-hidden="true" tabindex="-1"></a>mean_yes <span class="ot">&lt;-</span> <span class="fu">mean</span>(rq3_data<span class="sc">$</span>work_hrs[rq3_data<span class="sc">$</span>multitask <span class="sc">==</span> <span class="st">"Yes"</span>])</span>
-<span id="cb28-489"><a href="#cb28-489" aria-hidden="true" tabindex="-1"></a>mean_no  <span class="ot">&lt;-</span> <span class="fu">mean</span>(rq3_data<span class="sc">$</span>work_hrs[rq3_data<span class="sc">$</span>multitask <span class="sc">==</span> <span class="st">"No"</span>])</span>
-<span id="cb28-490"><a href="#cb28-490" aria-hidden="true" tabindex="-1"></a>mean_difference <span class="ot">&lt;-</span> mean_yes <span class="sc">-</span> mean_no</span>
-<span id="cb28-491"><a href="#cb28-491" aria-hidden="true" tabindex="-1"></a>t_observed <span class="ot">&lt;-</span> <span class="fu">welch_stat</span>(rq3_data<span class="sc">$</span>work_hrs, rq3_data<span class="sc">$</span>multitask)</span>
-<span id="cb28-492"><a href="#cb28-492" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-493"><a href="#cb28-493" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2002</span>)</span>
-<span id="cb28-494"><a href="#cb28-494" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
-<span id="cb28-495"><a href="#cb28-495" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-496"><a href="#cb28-496" aria-hidden="true" tabindex="-1"></a>t_permuted <span class="ot">&lt;-</span> <span class="fu">replicate</span>(</span>
-<span id="cb28-497"><a href="#cb28-497" aria-hidden="true" tabindex="-1"></a>  B,</span>
-<span id="cb28-498"><a href="#cb28-498" aria-hidden="true" tabindex="-1"></a>  <span class="fu">welch_stat</span>(</span>
-<span id="cb28-499"><a href="#cb28-499" aria-hidden="true" tabindex="-1"></a>    rq3_data<span class="sc">$</span>work_hrs,</span>
-<span id="cb28-500"><a href="#cb28-500" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sample</span>(rq3_data<span class="sc">$</span>multitask, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb28-501"><a href="#cb28-501" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb28-502"><a href="#cb28-502" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb28-503"><a href="#cb28-503" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-504"><a href="#cb28-504" aria-hidden="true" tabindex="-1"></a>n_yes <span class="ot">&lt;-</span> <span class="fu">sum</span>(rq3_data<span class="sc">$</span>multitask <span class="sc">==</span> <span class="st">"Yes"</span>)</span>
-<span id="cb28-505"><a href="#cb28-505" aria-hidden="true" tabindex="-1"></a>n_no  <span class="ot">&lt;-</span> <span class="fu">sum</span>(rq3_data<span class="sc">$</span>multitask <span class="sc">==</span> <span class="st">"No"</span>)</span>
-<span id="cb28-506"><a href="#cb28-506" aria-hidden="true" tabindex="-1"></a>sd_yes <span class="ot">&lt;-</span> <span class="fu">sd</span>(rq3_data<span class="sc">$</span>work_hrs[rq3_data<span class="sc">$</span>multitask <span class="sc">==</span> <span class="st">"Yes"</span>])</span>
-<span id="cb28-507"><a href="#cb28-507" aria-hidden="true" tabindex="-1"></a>sd_no  <span class="ot">&lt;-</span> <span class="fu">sd</span>(rq3_data<span class="sc">$</span>work_hrs[rq3_data<span class="sc">$</span>multitask <span class="sc">==</span> <span class="st">"No"</span>])</span>
-<span id="cb28-508"><a href="#cb28-508" aria-hidden="true" tabindex="-1"></a>pooled_sd <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(</span>
-<span id="cb28-509"><a href="#cb28-509" aria-hidden="true" tabindex="-1"></a>  ((n_yes <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> sd_yes<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (n_no <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> sd_no<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span></span>
-<span id="cb28-510"><a href="#cb28-510" aria-hidden="true" tabindex="-1"></a>    (n_yes <span class="sc">+</span> n_no <span class="sc">-</span> <span class="dv">2</span>)</span>
-<span id="cb28-511"><a href="#cb28-511" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb28-512"><a href="#cb28-512" aria-hidden="true" tabindex="-1"></a>cohens_d <span class="ot">&lt;-</span> mean_difference <span class="sc">/</span> pooled_sd</span>
-<span id="cb28-513"><a href="#cb28-513" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-514"><a href="#cb28-514" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-517"><a href="#cb28-517" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-518"><a href="#cb28-518" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-rq3-permutation</span></span>
-<span id="cb28-519"><a href="#cb28-519" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Permutation null distribution of the Welch t-statistic. Dashed red lines indicate the observed cut-offs at plus and minus the absolute observed statistic."</span></span>
-<span id="cb28-520"><a href="#cb28-520" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-521"><a href="#cb28-521" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">t_permuted =</span> t_permuted) <span class="sc">%&gt;%</span></span>
-<span id="cb28-522"><a href="#cb28-522" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> t_permuted)) <span class="sc">+</span></span>
-<span id="cb28-523"><a href="#cb28-523" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(</span>
-<span id="cb28-524"><a href="#cb28-524" aria-hidden="true" tabindex="-1"></a>    <span class="at">bins =</span> <span class="dv">45</span>,</span>
-<span id="cb28-525"><a href="#cb28-525" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"#8ECAE6"</span>,</span>
-<span id="cb28-526"><a href="#cb28-526" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"white"</span></span>
-<span id="cb28-527"><a href="#cb28-527" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb28-528"><a href="#cb28-528" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(</span>
-<span id="cb28-529"><a href="#cb28-529" aria-hidden="true" tabindex="-1"></a>    <span class="at">xintercept =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fu">abs</span>(t_observed), <span class="fu">abs</span>(t_observed)),</span>
-<span id="cb28-530"><a href="#cb28-530" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"#D62828"</span>,</span>
-<span id="cb28-531"><a href="#cb28-531" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">0.9</span>,</span>
-<span id="cb28-532"><a href="#cb28-532" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="st">"dashed"</span></span>
-<span id="cb28-533"><a href="#cb28-533" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb28-534"><a href="#cb28-534" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb28-535"><a href="#cb28-535" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Permuted Welch t-statistic"</span>,</span>
-<span id="cb28-536"><a href="#cb28-536" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Number of permutations"</span>,</span>
-<span id="cb28-537"><a href="#cb28-537" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Permutation distribution under the null hypothesis"</span></span>
-<span id="cb28-538"><a href="#cb28-538" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb28-539"><a href="#cb28-539" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
-<span id="cb28-540"><a href="#cb28-540" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>))</span>
-<span id="cb28-541"><a href="#cb28-541" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-542"><a href="#cb28-542" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-543"><a href="#cb28-543" aria-hidden="true" tabindex="-1"></a>The two-sided permutation p-value is calculated by counting simulated</span>
-<span id="cb28-544"><a href="#cb28-544" aria-hidden="true" tabindex="-1"></a>statistics at least as extreme as the observed statistic in either direction:</span>
-<span id="cb28-545"><a href="#cb28-545" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-548"><a href="#cb28-548" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-549"><a href="#cb28-549" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rq3-p-value</span></span>
-<span id="cb28-550"><a href="#cb28-550" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-551"><a href="#cb28-551" aria-hidden="true" tabindex="-1"></a>extreme_count <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">abs</span>(t_permuted) <span class="sc">&gt;=</span> <span class="fu">abs</span>(t_observed))</span>
-<span id="cb28-552"><a href="#cb28-552" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-553"><a href="#cb28-553" aria-hidden="true" tabindex="-1"></a><span class="co"># Plus-one correction for a Monte Carlo permutation p-value</span></span>
-<span id="cb28-554"><a href="#cb28-554" aria-hidden="true" tabindex="-1"></a>p_permutation <span class="ot">&lt;-</span> (extreme_count <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">/</span> (B <span class="sc">+</span> <span class="dv">1</span>)</span>
-<span id="cb28-555"><a href="#cb28-555" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-556"><a href="#cb28-556" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb28-557"><a href="#cb28-557" aria-hidden="true" tabindex="-1"></a>  <span class="at">extreme_permutations =</span> extreme_count,</span>
-<span id="cb28-558"><a href="#cb28-558" aria-hidden="true" tabindex="-1"></a>  <span class="at">total_permutations =</span> B,</span>
-<span id="cb28-559"><a href="#cb28-559" aria-hidden="true" tabindex="-1"></a>  <span class="at">permutation_p_value =</span> p_permutation</span>
-<span id="cb28-560"><a href="#cb28-560" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb28-561"><a href="#cb28-561" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb28-562"><a href="#cb28-562" aria-hidden="true" tabindex="-1"></a>    <span class="at">format =</span> <span class="st">"html"</span>,</span>
-<span id="cb28-563"><a href="#cb28-563" aria-hidden="true" tabindex="-1"></a>    <span class="at">digits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">4</span>),</span>
-<span id="cb28-564"><a href="#cb28-564" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(</span>
-<span id="cb28-565"><a href="#cb28-565" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Extreme permutations"</span>,</span>
-<span id="cb28-566"><a href="#cb28-566" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Total permutations"</span>,</span>
-<span id="cb28-567"><a href="#cb28-567" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Permutation p-value"</span></span>
-<span id="cb28-568"><a href="#cb28-568" aria-hidden="true" tabindex="-1"></a>    ),  </span>
-<span id="cb28-569"><a href="#cb28-569" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">"c"</span>, <span class="st">"c"</span>, <span class="st">"c"</span>),</span>
-<span id="cb28-570"><a href="#cb28-570" aria-hidden="true" tabindex="-1"></a>    <span class="at">table.attr =</span> <span class="st">'class="table table-bordered table-striped" style="width: auto; margin-left: auto; margin-right: auto;"'</span></span>
-<span id="cb28-571"><a href="#cb28-571" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb28-572"><a href="#cb28-572" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-573"><a href="#cb28-573" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-574"><a href="#cb28-574" aria-hidden="true" tabindex="-1"></a>We formally test the difference using a two-sided permutation test with the</span>
-<span id="cb28-575"><a href="#cb28-575" aria-hidden="true" tabindex="-1"></a>Welch $t$-statistic as the resampling statistic.</span>
-<span id="cb28-576"><a href="#cb28-576" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-577"><a href="#cb28-577" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Hypotheses:** Let $\mu_Y$ and $\mu_N$ be the population mean weekly</span>
-<span id="cb28-578"><a href="#cb28-578" aria-hidden="true" tabindex="-1"></a>   paid-employment hours for students who do and do not multitask,</span>
-<span id="cb28-579"><a href="#cb28-579" aria-hidden="true" tabindex="-1"></a>   respectively. $H_0:\mu_Y-\mu_N=0$ versus</span>
-<span id="cb28-580"><a href="#cb28-580" aria-hidden="true" tabindex="-1"></a>   $H_A:\mu_Y-\mu_N\neq0$.</span>
-<span id="cb28-581"><a href="#cb28-581" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-582"><a href="#cb28-582" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Assumptions:** Responses from different students are treated as</span>
-<span id="cb28-583"><a href="#cb28-583" aria-hidden="true" tabindex="-1"></a>   independent. Under $H_0$, multitasking labels are assumed exchangeable. A</span>
-<span id="cb28-584"><a href="#cb28-584" aria-hidden="true" tabindex="-1"></a>   normal population is not required for the permutation p-value, although the</span>
-<span id="cb28-585"><a href="#cb28-585" aria-hidden="true" tabindex="-1"></a>   mean-based statistic remains sensitive to large values.</span>
-<span id="cb28-586"><a href="#cb28-586" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-587"><a href="#cb28-587" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Test statistic:**</span>
-<span id="cb28-588"><a href="#cb28-588" aria-hidden="true" tabindex="-1"></a>   $T=(\bar X_Y-\bar X_N)/\sqrt{S_Y^2/n_Y+S_N^2/n_N}$. The observed difference</span>
-<span id="cb28-589"><a href="#cb28-589" aria-hidden="true" tabindex="-1"></a>   is <span class="in">`r sprintf("%.2f", mean_difference)`</span> hours per week and</span>
-<span id="cb28-590"><a href="#cb28-590" aria-hidden="true" tabindex="-1"></a>   $t_0=<span class="in">`r sprintf("%.3f", t_observed)`</span>$.</span>
-<span id="cb28-591"><a href="#cb28-591" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-592"><a href="#cb28-592" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Permutation procedure:** With <span class="in">`set.seed(2002)`</span>, the Yes/No labels were</span>
-<span id="cb28-593"><a href="#cb28-593" aria-hidden="true" tabindex="-1"></a>   randomly reassigned $B=10{,}000$ times while employment hours were held</span>
-<span id="cb28-594"><a href="#cb28-594" aria-hidden="true" tabindex="-1"></a>   fixed. The Welch statistic was recalculated each time to form the null</span>
-<span id="cb28-595"><a href="#cb28-595" aria-hidden="true" tabindex="-1"></a>   distribution in @fig-rq3-permutation.</span>
-<span id="cb28-596"><a href="#cb28-596" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-597"><a href="#cb28-597" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**P-value:** For the two-sided test, permutations satisfying</span>
-<span id="cb28-598"><a href="#cb28-598" aria-hidden="true" tabindex="-1"></a>   $|T_b^*|\geq|t_0|$ were counted. The plus-one estimate is</span>
-<span id="cb28-599"><a href="#cb28-599" aria-hidden="true" tabindex="-1"></a>   $p_{\mathrm{perm}}=<span class="in">`r sprintf("%.4f", p_permutation)`</span>$.</span>
+<span id="cb28-483"><a href="#cb28-483" aria-hidden="true" tabindex="-1"></a>welch_stat <span class="ot">&lt;-</span> <span class="cf">function</span>(hours, group) {</span>
+<span id="cb28-484"><a href="#cb28-484" aria-hidden="true" tabindex="-1"></a>  hours_yes <span class="ot">&lt;-</span> hours[group <span class="sc">==</span> <span class="st">"Yes"</span>]</span>
+<span id="cb28-485"><a href="#cb28-485" aria-hidden="true" tabindex="-1"></a>  hours_no  <span class="ot">&lt;-</span> hours[group <span class="sc">==</span> <span class="st">"No"</span>]</span>
+<span id="cb28-486"><a href="#cb28-486" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-487"><a href="#cb28-487" aria-hidden="true" tabindex="-1"></a>  (<span class="fu">mean</span>(hours_yes) <span class="sc">-</span> <span class="fu">mean</span>(hours_no)) <span class="sc">/</span></span>
+<span id="cb28-488"><a href="#cb28-488" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sqrt</span>(<span class="fu">var</span>(hours_yes) <span class="sc">/</span> <span class="fu">length</span>(hours_yes) <span class="sc">+</span></span>
+<span id="cb28-489"><a href="#cb28-489" aria-hidden="true" tabindex="-1"></a>           <span class="fu">var</span>(hours_no) <span class="sc">/</span> <span class="fu">length</span>(hours_no))</span>
+<span id="cb28-490"><a href="#cb28-490" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb28-491"><a href="#cb28-491" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-492"><a href="#cb28-492" aria-hidden="true" tabindex="-1"></a>mean_yes <span class="ot">&lt;-</span> <span class="fu">mean</span>(rq3_data<span class="sc">$</span>work_hrs[rq3_data<span class="sc">$</span>multitask <span class="sc">==</span> <span class="st">"Yes"</span>])</span>
+<span id="cb28-493"><a href="#cb28-493" aria-hidden="true" tabindex="-1"></a>mean_no  <span class="ot">&lt;-</span> <span class="fu">mean</span>(rq3_data<span class="sc">$</span>work_hrs[rq3_data<span class="sc">$</span>multitask <span class="sc">==</span> <span class="st">"No"</span>])</span>
+<span id="cb28-494"><a href="#cb28-494" aria-hidden="true" tabindex="-1"></a>mean_difference <span class="ot">&lt;-</span> mean_yes <span class="sc">-</span> mean_no</span>
+<span id="cb28-495"><a href="#cb28-495" aria-hidden="true" tabindex="-1"></a>t_observed <span class="ot">&lt;-</span> <span class="fu">welch_stat</span>(rq3_data<span class="sc">$</span>work_hrs, rq3_data<span class="sc">$</span>multitask)</span>
+<span id="cb28-496"><a href="#cb28-496" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-497"><a href="#cb28-497" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2002</span>)</span>
+<span id="cb28-498"><a href="#cb28-498" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb28-499"><a href="#cb28-499" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-500"><a href="#cb28-500" aria-hidden="true" tabindex="-1"></a>t_permuted <span class="ot">&lt;-</span> <span class="fu">replicate</span>(</span>
+<span id="cb28-501"><a href="#cb28-501" aria-hidden="true" tabindex="-1"></a>  B,</span>
+<span id="cb28-502"><a href="#cb28-502" aria-hidden="true" tabindex="-1"></a>  <span class="fu">welch_stat</span>(</span>
+<span id="cb28-503"><a href="#cb28-503" aria-hidden="true" tabindex="-1"></a>    rq3_data<span class="sc">$</span>work_hrs,</span>
+<span id="cb28-504"><a href="#cb28-504" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sample</span>(rq3_data<span class="sc">$</span>multitask, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb28-505"><a href="#cb28-505" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb28-506"><a href="#cb28-506" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-507"><a href="#cb28-507" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-508"><a href="#cb28-508" aria-hidden="true" tabindex="-1"></a>n_yes <span class="ot">&lt;-</span> <span class="fu">sum</span>(rq3_data<span class="sc">$</span>multitask <span class="sc">==</span> <span class="st">"Yes"</span>)</span>
+<span id="cb28-509"><a href="#cb28-509" aria-hidden="true" tabindex="-1"></a>n_no  <span class="ot">&lt;-</span> <span class="fu">sum</span>(rq3_data<span class="sc">$</span>multitask <span class="sc">==</span> <span class="st">"No"</span>)</span>
+<span id="cb28-510"><a href="#cb28-510" aria-hidden="true" tabindex="-1"></a>sd_yes <span class="ot">&lt;-</span> <span class="fu">sd</span>(rq3_data<span class="sc">$</span>work_hrs[rq3_data<span class="sc">$</span>multitask <span class="sc">==</span> <span class="st">"Yes"</span>])</span>
+<span id="cb28-511"><a href="#cb28-511" aria-hidden="true" tabindex="-1"></a>sd_no  <span class="ot">&lt;-</span> <span class="fu">sd</span>(rq3_data<span class="sc">$</span>work_hrs[rq3_data<span class="sc">$</span>multitask <span class="sc">==</span> <span class="st">"No"</span>])</span>
+<span id="cb28-512"><a href="#cb28-512" aria-hidden="true" tabindex="-1"></a>pooled_sd <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(</span>
+<span id="cb28-513"><a href="#cb28-513" aria-hidden="true" tabindex="-1"></a>  ((n_yes <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> sd_yes<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (n_no <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> sd_no<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span></span>
+<span id="cb28-514"><a href="#cb28-514" aria-hidden="true" tabindex="-1"></a>    (n_yes <span class="sc">+</span> n_no <span class="sc">-</span> <span class="dv">2</span>)</span>
+<span id="cb28-515"><a href="#cb28-515" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-516"><a href="#cb28-516" aria-hidden="true" tabindex="-1"></a>cohens_d <span class="ot">&lt;-</span> mean_difference <span class="sc">/</span> pooled_sd</span>
+<span id="cb28-517"><a href="#cb28-517" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-518"><a href="#cb28-518" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-521"><a href="#cb28-521" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb28-522"><a href="#cb28-522" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-rq3-permutation</span></span>
+<span id="cb28-523"><a href="#cb28-523" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Permutation null distribution of the Welch t-statistic. Dashed red lines indicate the observed cut-offs at plus and minus the absolute observed statistic."</span></span>
+<span id="cb28-524"><a href="#cb28-524" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-525"><a href="#cb28-525" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">t_permuted =</span> t_permuted) <span class="sc">%&gt;%</span></span>
+<span id="cb28-526"><a href="#cb28-526" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> t_permuted)) <span class="sc">+</span></span>
+<span id="cb28-527"><a href="#cb28-527" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(</span>
+<span id="cb28-528"><a href="#cb28-528" aria-hidden="true" tabindex="-1"></a>    <span class="at">bins =</span> <span class="dv">45</span>,</span>
+<span id="cb28-529"><a href="#cb28-529" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"#8ECAE6"</span>,</span>
+<span id="cb28-530"><a href="#cb28-530" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"white"</span></span>
+<span id="cb28-531"><a href="#cb28-531" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb28-532"><a href="#cb28-532" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(</span>
+<span id="cb28-533"><a href="#cb28-533" aria-hidden="true" tabindex="-1"></a>    <span class="at">xintercept =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fu">abs</span>(t_observed), <span class="fu">abs</span>(t_observed)),</span>
+<span id="cb28-534"><a href="#cb28-534" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"#D62828"</span>,</span>
+<span id="cb28-535"><a href="#cb28-535" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">0.9</span>,</span>
+<span id="cb28-536"><a href="#cb28-536" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="st">"dashed"</span></span>
+<span id="cb28-537"><a href="#cb28-537" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb28-538"><a href="#cb28-538" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb28-539"><a href="#cb28-539" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Permuted Welch t-statistic"</span>,</span>
+<span id="cb28-540"><a href="#cb28-540" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Number of permutations"</span>,</span>
+<span id="cb28-541"><a href="#cb28-541" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Permutation distribution under the null hypothesis"</span></span>
+<span id="cb28-542"><a href="#cb28-542" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb28-543"><a href="#cb28-543" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb28-544"><a href="#cb28-544" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>))</span>
+<span id="cb28-545"><a href="#cb28-545" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-546"><a href="#cb28-546" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-547"><a href="#cb28-547" aria-hidden="true" tabindex="-1"></a>The two-sided permutation p-value is calculated by counting simulated</span>
+<span id="cb28-548"><a href="#cb28-548" aria-hidden="true" tabindex="-1"></a>statistics at least as extreme as the observed statistic in either direction:</span>
+<span id="cb28-549"><a href="#cb28-549" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-552"><a href="#cb28-552" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb28-553"><a href="#cb28-553" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rq3-p-value</span></span>
+<span id="cb28-554"><a href="#cb28-554" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-555"><a href="#cb28-555" aria-hidden="true" tabindex="-1"></a>extreme_count <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">abs</span>(t_permuted) <span class="sc">&gt;=</span> <span class="fu">abs</span>(t_observed))</span>
+<span id="cb28-556"><a href="#cb28-556" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-557"><a href="#cb28-557" aria-hidden="true" tabindex="-1"></a><span class="co"># Plus-one correction for a Monte Carlo permutation p-value</span></span>
+<span id="cb28-558"><a href="#cb28-558" aria-hidden="true" tabindex="-1"></a>p_permutation <span class="ot">&lt;-</span> (extreme_count <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">/</span> (B <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb28-559"><a href="#cb28-559" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-560"><a href="#cb28-560" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb28-561"><a href="#cb28-561" aria-hidden="true" tabindex="-1"></a>  <span class="at">extreme_permutations =</span> extreme_count,</span>
+<span id="cb28-562"><a href="#cb28-562" aria-hidden="true" tabindex="-1"></a>  <span class="at">total_permutations =</span> B,</span>
+<span id="cb28-563"><a href="#cb28-563" aria-hidden="true" tabindex="-1"></a>  <span class="at">permutation_p_value =</span> p_permutation</span>
+<span id="cb28-564"><a href="#cb28-564" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb28-565"><a href="#cb28-565" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb28-566"><a href="#cb28-566" aria-hidden="true" tabindex="-1"></a>    <span class="at">format =</span> <span class="st">"html"</span>,</span>
+<span id="cb28-567"><a href="#cb28-567" aria-hidden="true" tabindex="-1"></a>    <span class="at">digits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">4</span>),</span>
+<span id="cb28-568"><a href="#cb28-568" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(</span>
+<span id="cb28-569"><a href="#cb28-569" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Extreme permutations"</span>,</span>
+<span id="cb28-570"><a href="#cb28-570" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Total permutations"</span>,</span>
+<span id="cb28-571"><a href="#cb28-571" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Permutation p-value"</span></span>
+<span id="cb28-572"><a href="#cb28-572" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb28-573"><a href="#cb28-573" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">"c"</span>, <span class="st">"c"</span>, <span class="st">"c"</span>),</span>
+<span id="cb28-574"><a href="#cb28-574" aria-hidden="true" tabindex="-1"></a>    <span class="at">table.attr =</span> <span class="st">'class="table table-bordered table-striped" style="width: auto; margin-left: auto; margin-right: auto;"'</span></span>
+<span id="cb28-575"><a href="#cb28-575" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb28-576"><a href="#cb28-576" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-577"><a href="#cb28-577" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-578"><a href="#cb28-578" aria-hidden="true" tabindex="-1"></a>We formally test the difference using a two-sided permutation test with the</span>
+<span id="cb28-579"><a href="#cb28-579" aria-hidden="true" tabindex="-1"></a>Welch $t$-statistic as the resampling statistic.</span>
+<span id="cb28-580"><a href="#cb28-580" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-581"><a href="#cb28-581" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Hypotheses:** Let $\mu_Y$ and $\mu_N$ be the population mean weekly</span>
+<span id="cb28-582"><a href="#cb28-582" aria-hidden="true" tabindex="-1"></a>   paid-employment hours for students who do and do not multitask,</span>
+<span id="cb28-583"><a href="#cb28-583" aria-hidden="true" tabindex="-1"></a>   respectively. $H_0:\mu_Y-\mu_N=0$ versus</span>
+<span id="cb28-584"><a href="#cb28-584" aria-hidden="true" tabindex="-1"></a>   $H_A:\mu_Y-\mu_N\neq0$.</span>
+<span id="cb28-585"><a href="#cb28-585" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-586"><a href="#cb28-586" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Assumptions:** Responses from different students are treated as</span>
+<span id="cb28-587"><a href="#cb28-587" aria-hidden="true" tabindex="-1"></a>   independent. Under $H_0$, multitasking labels are assumed exchangeable. A</span>
+<span id="cb28-588"><a href="#cb28-588" aria-hidden="true" tabindex="-1"></a>   normal population is not required for the permutation p-value, although the</span>
+<span id="cb28-589"><a href="#cb28-589" aria-hidden="true" tabindex="-1"></a>   mean-based statistic remains sensitive to large values.</span>
+<span id="cb28-590"><a href="#cb28-590" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-591"><a href="#cb28-591" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Test statistic:**</span>
+<span id="cb28-592"><a href="#cb28-592" aria-hidden="true" tabindex="-1"></a>   $T=(\bar X_Y-\bar X_N)/\sqrt{S_Y^2/n_Y+S_N^2/n_N}$. The observed difference</span>
+<span id="cb28-593"><a href="#cb28-593" aria-hidden="true" tabindex="-1"></a>   is <span class="in">`r sprintf("%.2f", mean_difference)`</span> hours per week and</span>
+<span id="cb28-594"><a href="#cb28-594" aria-hidden="true" tabindex="-1"></a>   $t_0=<span class="in">`r sprintf("%.3f", t_observed)`</span>$.</span>
+<span id="cb28-595"><a href="#cb28-595" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-596"><a href="#cb28-596" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Permutation procedure:** With <span class="in">`set.seed(2002)`</span>, the Yes/No labels were</span>
+<span id="cb28-597"><a href="#cb28-597" aria-hidden="true" tabindex="-1"></a>   randomly reassigned $B=10{,}000$ times while employment hours were held</span>
+<span id="cb28-598"><a href="#cb28-598" aria-hidden="true" tabindex="-1"></a>   fixed. The Welch statistic was recalculated each time to form the null</span>
+<span id="cb28-599"><a href="#cb28-599" aria-hidden="true" tabindex="-1"></a>   distribution in @fig-rq3-permutation.</span>
 <span id="cb28-600"><a href="#cb28-600" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-601"><a href="#cb28-601" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>**Decision:** Since $p&lt;0.05$, we reject $H_0$. There is evidence that mean</span>
-<span id="cb28-602"><a href="#cb28-602" aria-hidden="true" tabindex="-1"></a>   paid-employment hours differ by multitasking status; multitasking students</span>
-<span id="cb28-603"><a href="#cb28-603" aria-hidden="true" tabindex="-1"></a>   worked <span class="in">`r sprintf("%.2f", mean_difference)`</span> more hours per week on average</span>
-<span id="cb28-604"><a href="#cb28-604" aria-hidden="true" tabindex="-1"></a>   in this sample. However, Cohen's $d=<span class="in">`r sprintf("%.2f", cohens_d)`</span>$ indicates</span>
-<span id="cb28-605"><a href="#cb28-605" aria-hidden="true" tabindex="-1"></a>   a small effect, so its practical importance is limited. Both variables are</span>
-<span id="cb28-606"><a href="#cb28-606" aria-hidden="true" tabindex="-1"></a>   self-reported, the 70-hour cleaning threshold is analyst-chosen, and</span>
-<span id="cb28-607"><a href="#cb28-607" aria-hidden="true" tabindex="-1"></a>   confounding may remain. As this is an observational survey of DATA2x02</span>
-<span id="cb28-608"><a href="#cb28-608" aria-hidden="true" tabindex="-1"></a>   students, the result cannot establish causation or automatically generalise</span>
-<span id="cb28-609"><a href="#cb28-609" aria-hidden="true" tabindex="-1"></a>   to other students.</span>
-<span id="cb28-610"><a href="#cb28-610" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-611"><a href="#cb28-611" aria-hidden="true" tabindex="-1"></a><span class="fu"># Conclusion</span></span>
-<span id="cb28-612"><a href="#cb28-612" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-613"><a href="#cb28-613" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Integrate the three findings into one story</span><span class="co">]</span></span>
+<span id="cb28-601"><a href="#cb28-601" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**P-value:** For the two-sided test, permutations satisfying</span>
+<span id="cb28-602"><a href="#cb28-602" aria-hidden="true" tabindex="-1"></a>   $|T_b^*|\geq|t_0|$ were counted. The plus-one estimate is</span>
+<span id="cb28-603"><a href="#cb28-603" aria-hidden="true" tabindex="-1"></a>   $p_{\mathrm{perm}}=<span class="in">`r sprintf("%.4f", p_permutation)`</span>$.</span>
+<span id="cb28-604"><a href="#cb28-604" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-605"><a href="#cb28-605" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>**Decision:** Since $p&lt;0.05$, we reject $H_0$. There is evidence that mean</span>
+<span id="cb28-606"><a href="#cb28-606" aria-hidden="true" tabindex="-1"></a>   paid-employment hours differ by multitasking status; multitasking students</span>
+<span id="cb28-607"><a href="#cb28-607" aria-hidden="true" tabindex="-1"></a>   worked <span class="in">`r sprintf("%.2f", mean_difference)`</span> more hours per week on average</span>
+<span id="cb28-608"><a href="#cb28-608" aria-hidden="true" tabindex="-1"></a>   in this sample. However, Cohen's $d=<span class="in">`r sprintf("%.2f", cohens_d)`</span>$ indicates</span>
+<span id="cb28-609"><a href="#cb28-609" aria-hidden="true" tabindex="-1"></a>   a small effect, so its practical importance is limited. Both variables are</span>
+<span id="cb28-610"><a href="#cb28-610" aria-hidden="true" tabindex="-1"></a>   self-reported, the 70-hour cleaning threshold is analyst-chosen, and</span>
+<span id="cb28-611"><a href="#cb28-611" aria-hidden="true" tabindex="-1"></a>   confounding may remain. As this is an observational survey of DATA2x02</span>
+<span id="cb28-612"><a href="#cb28-612" aria-hidden="true" tabindex="-1"></a>   students, the result cannot establish causation or automatically generalise</span>
+<span id="cb28-613"><a href="#cb28-613" aria-hidden="true" tabindex="-1"></a>   to other students.</span>
 <span id="cb28-614"><a href="#cb28-614" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-615"><a href="#cb28-615" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Implications for client</span><span class="co">]</span></span>
+<span id="cb28-615"><a href="#cb28-615" aria-hidden="true" tabindex="-1"></a><span class="fu"># Conclusion</span></span>
 <span id="cb28-616"><a href="#cb28-616" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-617"><a href="#cb28-617" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Overall limitations / no causal inference</span><span class="co">]</span></span>
+<span id="cb28-617"><a href="#cb28-617" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Integrate the three findings into one story</span><span class="co">]</span></span>
 <span id="cb28-618"><a href="#cb28-618" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-619"><a href="#cb28-619" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-620"><a href="#cb28-620" aria-hidden="true" tabindex="-1"></a><span class="fu"># AI Usage Statement</span></span>
-<span id="cb28-621"><a href="#cb28-621" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-622"><a href="#cb28-622" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">...</span><span class="co">]</span></span>
+<span id="cb28-619"><a href="#cb28-619" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Implications for client</span><span class="co">]</span></span>
+<span id="cb28-620"><a href="#cb28-620" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-621"><a href="#cb28-621" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Overall limitations / no causal inference</span><span class="co">]</span></span>
+<span id="cb28-622"><a href="#cb28-622" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-623"><a href="#cb28-623" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-624"><a href="#cb28-624" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-625"><a href="#cb28-625" aria-hidden="true" tabindex="-1"></a><span class="fu"># ISI Professional Ethics Statement</span></span>
-<span id="cb28-626"><a href="#cb28-626" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-627"><a href="#cb28-627" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">...</span><span class="co">]</span></span>
+<span id="cb28-624"><a href="#cb28-624" aria-hidden="true" tabindex="-1"></a><span class="fu"># AI Usage Statement</span></span>
+<span id="cb28-625"><a href="#cb28-625" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-626"><a href="#cb28-626" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">...</span><span class="co">]</span></span>
+<span id="cb28-627"><a href="#cb28-627" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-628"><a href="#cb28-628" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-629"><a href="#cb28-629" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-630"><a href="#cb28-630" aria-hidden="true" tabindex="-1"></a><span class="fu"># References</span></span>
+<span id="cb28-629"><a href="#cb28-629" aria-hidden="true" tabindex="-1"></a><span class="fu"># ISI Professional Ethics Statement</span></span>
+<span id="cb28-630"><a href="#cb28-630" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-631"><a href="#cb28-631" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">...</span><span class="co">]</span></span>
+<span id="cb28-632"><a href="#cb28-632" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-633"><a href="#cb28-633" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-634"><a href="#cb28-634" aria-hidden="true" tabindex="-1"></a><span class="fu"># References</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
