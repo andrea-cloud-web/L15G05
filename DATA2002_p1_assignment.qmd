@@ -5,7 +5,7 @@ author: "541035662 530029720 540872536 550505479 530210568 550041014"
 format:
   html:
     #embed-resources: true # Creates a single HTML file as output
-    code-fold: false # Show code chunks directly in the rendered HTML
+    code-fold: true # Show code chunks directly in the rendered HTML
     code-tools: true # Includes a menu to download the code file
     # code-tools are particularly important if you use inline R to
     # improve the reproducibility of your report
@@ -35,7 +35,7 @@ Missing values were not removed globally; instead, they were handled on a case-b
 A threshold was applied to the work_hrs variable to remove implausible values above 70 hours per week. This cutoff was chosen because working more than 70 hours per week exceeds a standard full-time workload and leaves insufficient time for sleep, commuting, and university study. Boxplots were generated to compare the distribution of weekly employment hours before and after cleaning, illustrating the impact of this threshold. The cleaned dataset was then saved for subsequent analysis.
 
 ```{r}
-#| label: setup
+#| message: false
 library(tidyverse)
 
 raw <- read_csv("DATA2X02_2026_2_survey_clean.csv", show_col_types = FALSE)
@@ -88,20 +88,19 @@ write_csv(df_clean, "survey_cleaned.csv")
 
 ## RQ1: Work hours and cramming
 
-[Motivation]
+**Research Question:** Is there a difference in weekly paid employment hours between students who cram before assessments and those who do not?
 
-Weekly paid employment may affect the amount of time students have available for assessment preparation. This research question examines whether students who cram before deadlines spend a different amount of time in paid employment compared with students who do not cram. Understanding this relationship could help the teaching team identify whether heavier work commitments are associated with different assessment-preparation behaviours and whether more flexible study support may be beneficial. A Welch two-sample t-test is used to compare mean weekly work hours between Cram and Non-Cram students.
+Weekly paid employment hours are often considered a key factor affecting student engagement. This research question examines whether work hours are associated with students' assessment strategy, specifically whether they tend to cram before deadlines. If time-pressured students are more likely to delay revision until the last minute, this insight could help the teaching team decide whether more flexible study support is needed for students with heavy work commitments. A Welch two-sample t-test is used to compare mean weekly work hours between Cram and Non-Cram students.
+
+### Exploratory data analysis
+
 ```{r}
-#| label: rq1-setup
 rq1_data <- df_clean %>%
   select(assess, work_hrs) %>%
   mutate(is_cram = if_else(assess == "Cram", "Cram", "Non-Cram"))
 ```
 
-[EDA figure + summary statistics]
-
 ```{r}
-#| label: rq1-summary-table
 rq1_data %>%
   group_by(is_cram) %>%
   summarise(
@@ -119,7 +118,6 @@ rq1_data %>%
 ```
 
 ```{r}
-#| label: rq1-eda
 rq1_data %>%
   ggplot(aes(x = is_cram, y = work_hrs)) +
   geom_boxplot(
@@ -173,9 +171,118 @@ rq1_data %>%
 
 Figure 1: Distribution of weekly paid employment hours by cramming status.
 
-[FRIEND: Decision + contextual conclusion]
+### Hypotheses
 
-[FRIEND: Limitations]
+Let $\mu_1$ be the mean weekly work hours for Cram students and $\mu_2$ for Non-Cram students.
+
+$H_0: \mu_1 = \mu_2$ $H_1: \mu_1 \neq \mu_2$
+
+### Assumptions
+
+The Welch two-sample t-test assumes approximate normality within each group. We test this on the raw data using the Shapiro-Wilk test.
+
+```{r}
+cram_raw <- rq1_data %>% filter(is_cram == "Cram") %>% pull(work_hrs)
+noncram_raw <- rq1_data %>% filter(is_cram == "Non-Cram") %>% pull(work_hrs)
+shapiro_cram_raw <- shapiro.test(cram_raw)
+shapiro_noncram_raw <- shapiro.test(noncram_raw)
+ 
+tibble::tibble(
+  Group = c("Cram", "Non-Cram"),
+  Statistic = c(shapiro_cram_raw$statistic, shapiro_noncram_raw$statistic),
+  p_value = c(shapiro_cram_raw$p.value, shapiro_noncram_raw$p.value)
+) %>%
+  mutate(
+    Statistic = round(Statistic, 3),
+    p_value = format.pval(p_value, digits = 3, eps = 0.001)
+  ) %>%
+  knitr::kable(align = c("l", "c", "c"), caption = "Shapiro-Wilk test on raw work hours")
+```
+
+Both groups have Shapiro-Wilk p-values far below 0.05, so the raw data does not satisfy the normality assumption. We apply a log(x+1) transformation and re-check normality below.
+
+```{r}
+cram_log <- log1p(cram_raw)
+noncram_log <- log1p(noncram_raw)
+shapiro_cram_log <- shapiro.test(cram_log)
+shapiro_noncram_log <- shapiro.test(noncram_log)
+ 
+tibble::tibble(
+  Group = c("Cram", "Non-Cram"),
+  Statistic = c(shapiro_cram_log$statistic, shapiro_noncram_log$statistic),
+  p_value = c(shapiro_cram_log$p.value, shapiro_noncram_log$p.value)
+) %>%
+  mutate(
+    Statistic = round(Statistic, 3),
+    p_value = format.pval(p_value, digits = 3, eps = 0.001)
+  ) %>%
+  knitr::kable(align = c("l", "c", "c"), caption = "Shapiro-Wilk test on log-transformed work hours")
+
+manual_skew <- function(x) {
+  n <- length(x)
+  m <- mean(x)
+  (sum((x - m)^3) / n) / (sum((x - m)^2) / n)^(3/2)
+}
+```
+
+Normality is still not fully satisfied after transformation. We compare skewness before and after the transformation to assess whether the distribution shape has nonetheless improved.
+
+```{r}
+skew_cram_raw <- manual_skew(cram_raw)
+skew_noncram_raw <- manual_skew(noncram_raw)
+skew_cram_log <- manual_skew(cram_log)
+skew_noncram_log <- manual_skew(noncram_log)
+tibble::tibble(
+  Group = c("Cram", "Non-Cram"),
+  `Raw skewness` = round(c(skew_cram_raw, skew_noncram_raw), 2),
+  `Log skewness` = round(c(skew_cram_log, skew_noncram_log), 2)
+) %>%
+  knitr::kable(align = c("l", "c", "c"), caption = "Skewness before and after log transformation")
+```
+
+Skewness is substantially reduced after transformation for both groups. The residual non-normality is likely due to zero-inflation in the raw data, as shown by the clustering of points near zero in Figure 1, which no transformation can remove. Given the large sample size in both groups, the Central Limit Theorem still supports using a t-test.
+
+```{r}
+f_test <- var.test(cram_log, noncram_log)
+ 
+tibble::tibble(
+  Statistic = round(f_test$statistic, 3),
+  p_value = format.pval(f_test$p.value, digits = 3, eps = 0.001)
+) %>%
+  knitr::kable(align = c("c", "c"), caption = "F test for equality of variances")
+```
+
+The F test shows no evidence of unequal variances. We proceed with a Welch two-sample t-test given the large sample size in both groups.
+
+### Test statistic
+
+```{r}
+welch_test <- t.test(cram_log, noncram_log, var.equal = FALSE)
+welch_test
+```
+
+The Welch two-sample t-test statistic is $t = 3.60$ (df = 167.28).
+
+### P-value
+
+The corresponding p-value is $p = 0.0004$. We calculate Cohen's d to quantify the size of this effect.
+
+```{r}
+#| label: rq1-effect-size
+pooled_sd <- sqrt(((length(cram_log) - 1) * var(cram_log) +
+                    (length(noncram_log) - 1) * var(noncram_log)) /
+                    (length(cram_log) + length(noncram_log) - 2))
+cohend <- (mean(cram_log) - mean(noncram_log)) / pooled_sd
+cohend
+```
+
+Cohen's d = 0.372, indicating a small-to-medium effect size.
+
+### Conclusion
+
+Since p = 0.0004 \< 0.05, we reject $H_0$. Cram students report significantly higher weekly work hours (on the log scale) than Non-Cram students, with Cohen's d = 0.372, a small-to-medium effect. This provides evidence that paid employment hours are associated with whether a student adopts a cramming strategy before assessments.
+
+### Limitations
 
 ## RQ2
 
