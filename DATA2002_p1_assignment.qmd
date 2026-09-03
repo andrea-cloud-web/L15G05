@@ -90,8 +90,7 @@ write_csv(df_clean, "survey_cleaned.csv")
 
 [Motivation]
 
-Weekly paid employment hours are often considered a key factor affecting student engagement. This research question examines whether work hours are associated with students' assessment strategy, specifically whether they tend to cram before deadlines. If time-pressured students are more likely to delay revision until the last minute, this insight could help the teaching team decide whether more flexible study support is needed for students with heavy work commitments. A Welch two-sample t-test is used to compare mean weekly work hours between Cram and Non-Cram students.
-
+Weekly paid employment may affect the amount of time students have available for assessment preparation. This research question examines whether students who cram before deadlines spend a different amount of time in paid employment compared with students who do not cram. Understanding this relationship could help the teaching team identify whether heavier work commitments are associated with different assessment-preparation behaviours and whether more flexible study support may be beneficial. A Welch two-sample t-test is used to compare mean weekly work hours between Cram and Non-Cram students.
 ```{r}
 #| label: rq1-setup
 rq1_data <- df_clean %>%
