@@ -26,13 +26,12 @@ number-sections: true # (Optional) Puts numbers next to heading/subheadings
 
 ## Data Wrangling
 
-All data processing for this report was conducted in R (R Core Team 2026) within the Rmarkdown environment (Xie, Allaire, and Grolemund 2018) to ensure reproducibility. Data wrangling was performed using base R and the tidyverse (Wickham et al. 2019). Visualisations were produced with ggplot2 (Wickham et al. 2019).
+All data processing for this report was conducted in R (R Core Team 2026) within the Rmarkdown environment (Xie, Allaire, and Grolemund 2018) for reproducibility. Data wrangling was performed using base R and the tidyverse，Visualisations were produced with ggplot2 (Wickham et al. 2019).
 
-The raw survey dataset was imported and variable names were cleaned and shortened to improve readability throughout the analysis. Several categorical variables were recoded for clarity, including the assess variable, where "Other" responses were removed to retain only meaningful categories. The multitask variable was also converted into a binary factor with consistent labels.
+Variables were cleaned and recoded, with missing values handled case-by-case. Import the survey dataset, rename variables for clarity, remove "Other" responses from `assess`, and remove `work_hrs` values above 70 hours per week. equivalent to it exceeding a standard full-time work week
 
-Missing values were not removed globally; instead, they were handled on a case-by-case basis to preserve as much information as possible.
+boxplots comparing distributions before and after cleaning.save as "survey_cleaned.csv".
 
-A threshold was applied to the work_hrs variable to remove implausible values above 70 hours per week. This cutoff was chosen because working more than 70 hours per week exceeds a standard full-time workload and leaves insufficient time for sleep, commuting, and university study. Boxplots were generated to compare the distribution of weekly employment hours before and after cleaning, illustrating the impact of this threshold. The cleaned dataset was then saved for subsequent analysis.
 
 ```{r}
 #| message: false
@@ -279,11 +278,8 @@ cohend
 
 Cohen's d = 0.372, indicating a small-to-medium effect size.
 
-### Conclusion
-
-Since p = 0.0004 \< 0.05, we reject $H_0$. Cram students report significantly higher weekly work hours (on the log scale) than Non-Cram students, with Cohen's d = 0.372, a small-to-medium effect. This provides evidence that paid employment hours are associated with whether a student adopts a cramming strategy before assessments.
-
-### Limitations
+### Conclusion&Limitations
+Since $p = 0.0004 < 0.05$, we reject $H_0$. Cram students report significantly higher weekly work hours (log scale) than Non-Cram students, with a small-to-medium effect (Cohen’s $d = 0.372$), suggesting that paid work is one of several factors associated with cramming. Although zero-inflation remained after log transformation, the large sample size supports the t-test approximation. As the data are observational, this association cannot establish that longer work hours cause cramming.
 
 ## RQ2: Multitasking and cramming
 
