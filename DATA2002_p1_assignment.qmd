@@ -74,7 +74,7 @@ ggplot(bind_rows(
   ),
   aes(x = stage, y = work_hrs, fill = stage)) +
   geom_boxplot() +
-  scale_fill_manual(values = c("Before cleaning" = "#8ecae6", "After cleaning" = "#ffb703")) +
+  scale_fill_manual(values = c("Before cleaning" = "#BFDCEB", "After cleaning" = "#F6D6A8")) +
   labs(
     title = "Weekly employment hours before and after cleaning",
     x = NULL, y = "Weekly employment hours", fill = NULL
@@ -148,11 +148,11 @@ rq1_data %>%
   ) +
   scale_fill_manual(
     name = "Cram status",
-    values = c("Non-Cram" = "#A8DADC", "Cram" = "#E76F51")
+    values = c("Non-Cram" = "#BFE3DB", "Cram" = "#F3B5A7")
   ) +
   scale_colour_manual(
     name = NULL,
-    values = c("Individual observations" = "#457B9D", "Group mean" = "red")
+    values = c("Individual observations" = "#6F8FA3", "Group mean" = "#D9827A")
   ) +
   labs(
     x = NULL,
@@ -175,7 +175,8 @@ Figure 1: Distribution of weekly paid employment hours by cramming status.
 
 Let $\mu_1$ be the mean weekly work hours for Cram students and $\mu_2$ for Non-Cram students.
 
-$H_0: \mu_1 = \mu_2$ $H_1: \mu_1 \neq \mu_2$
+$H_0: \mu_1 = \mu_2$  
+$H_1: \mu_1 \neq \mu_2$
 
 ### Assumptions
 
