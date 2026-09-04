@@ -451,15 +451,9 @@ Since $p < 0.001$, we reject $H_0$. There is strong evidence of an association b
 
 Both variables are self-reported and self-interpreted, so respondents may apply the labels "cram" and "multi-task" inconsistently. Collapsing `assess` from three levels to two also discards some information about the distinction between preparing gradually and preparing immediately. As this is an observational, voluntary-response survey of DATA2x02 students, the association cannot establish causation — a third factor such as overall workload or procrastination tendency could plausibly drive both behaviours — and it may not generalise beyond this cohort.
 
+## RQ3: Do students who multitask in class spend a different time per week on work compared to students who do not?
 
-
-## RQ3: Paid employment and multitasking
-
-**Research question:** Do students who multitask during lectures spend a
-different average number of hours per week in paid employment compared with
-students who do not multitask?
-
-Paid employment represents an external time commitment for students. Students balancing more paid work with university study may exhibit different lecture behaviours. Having examined paid employment in relation to cramming and multitasking in relation to cramming, we investigate whether paid-employment hours also differ between students who do and do not multitask during lectures.
+Paid employment is an external time commitment. Students balancing more work with study may exhibit different lecture behaviours. Following our previous research, we investigate whether paid-employment hours also differ between students who do and do not multitask.
 
 ```{r}
 #| label: rq3-setup
@@ -496,7 +490,7 @@ knitr::kable(
   align = rep("c", ncol(rq3_summary))
 )
 ```
-The boxplot in @fig-work-multitask compares weekly paid-employment hours between students who reported multitasking during lectures and those who did not. Students who reported multitasking had a higher mean weekly paid-employment time (8.02 hours) than those who did not multitask (6.23 hours), giving an observed mean difference of 1.79 hours per week. Both groups show visually right-skewed distributions, with many students reporting few or no hours of paid employment and a smaller number reporting substantially higher working hours. This observed difference in group means is examined formally using a permutation test.
+@tbl-flipper and @fig-work-multitask show that multitasking students averaged 8.02 paid-work hours per week, compared with 6.23 hours for non-multitasking students---a difference of 1.79 hours. Both distributions are visually right-skewed, with many students reporting few or no hours of employment and a smaller number reporting substantially higher working hours.
 ```{r}
 #| label: fig-work-multitask
 #| fig-cap: "Distribution of weekly paid employment hours by multitasking status."
@@ -570,7 +564,6 @@ df_clean %>%
 
 ```{r}
 #| label: rq3-permutation-test
-#| include: false
 
 rq3_data <- df_clean %>%
   filter(!is.na(work_hrs), !is.na(multitask)) %>%
@@ -637,9 +630,8 @@ tibble(t_permuted = t_permuted) %>%
   theme_minimal(base_size = 12) +
   theme(plot.title = element_text(face = "bold", hjust = 0.5))
 ```
-
-The two-sided permutation p-value is calculated by counting simulated
-statistics at least as extreme as the observed statistic in either direction:
+The two-sided permutation p-value is the proportion of simulated statistics at
+least as extreme as the observed statistic:
 
 ```{r}
 #| label: rq3-p-value
@@ -666,43 +658,36 @@ tibble(
     table.attr = 'class="table table-bordered table-striped" style="width: auto; margin-left: auto; margin-right: auto;"'
   )
 ```
-
-We formally test the difference using a two-sided permutation test with the
-Welch $t$-statistic as the resampling statistic.
-
 1. **Hypotheses:** Let $\mu_Y$ and $\mu_N$ be the population mean weekly
    paid-employment hours for students who do and do not multitask,
    respectively. $H_0:\mu_Y-\mu_N=0$ versus
    $H_A:\mu_Y-\mu_N\neq0$.
 
-2. **Assumptions:** Responses from different students are treated as
-   independent. Under $H_0$, multitasking labels are assumed exchangeable. A
-   normal population is not required for the permutation p-value, although the
-   mean-based statistic remains sensitive to large values.
-
+2. **Assumptions:** Student responses are treated as independent, and the
+   multitasking labels are exchangeable under $H_0$. Normality is unnecessary,
+   although a mean-based statistic remains sensitive to large values.
+   
 3. **Test statistic:**
    $T=(\bar X_Y-\bar X_N)/\sqrt{S_Y^2/n_Y+S_N^2/n_N}$. The observed difference
    is `r sprintf("%.2f", mean_difference)` hours per week and
    $t_0=`r sprintf("%.3f", t_observed)`$.
 
-4. **Permutation procedure:** With `set.seed(2002)`, the Yes/No labels were
-   randomly reassigned $B=10{,}000$ times while employment hours were held
-   fixed. The Welch statistic was recalculated each time to form the null
-   distribution in @fig-rq3-permutation.
+4. **Permutation procedure:** With `set.seed(2002)`, the Yes/No labels were 
+   shuffled $B=10{,}000$ times while employment hours were fixed. The Welch 
+   statistic was recalculated to form @fig-rq3-permutation.
 
 5. **P-value:** For the two-sided test, permutations satisfying
    $|T_b^*|\geq|t_0|$ were counted. The plus-one estimate is
    $p_{\mathrm{perm}}=`r sprintf("%.4f", p_permutation)`$.
 
 6. **Decision:** Since $p<0.05$, we reject $H_0$. There is evidence that mean
-   paid-employment hours differ by multitasking status; multitasking students
+   employment hours differ by multitasking status. multitasking students
    worked `r sprintf("%.2f", mean_difference)` more hours per week on average
    in this sample. However, Cohen's $d=`r sprintf("%.2f", cohens_d)`$ indicates
    a small effect, so its practical importance is limited. Both variables are
-   self-reported, the 70-hour cleaning threshold is analyst-chosen, and
-   confounding may remain. As this is an observational survey of DATA2x02
-   students, the result cannot establish causation or automatically generalise
-   to other students.
+   self-reported and confounding may remain. As this is an observational survey 
+   of students, the result cannot establish causation or automatically 
+   generalize to others.
 
 # Conclusion
 
