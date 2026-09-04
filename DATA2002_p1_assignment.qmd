@@ -15,14 +15,7 @@ number-sections: true # (Optional) Puts numbers next to heading/subheadings
 
 # Introduction
 
-[Motivation + client]
-
-[Dataset description]
-
-[Survey questions used]
-
-[Potential biases and limitations of the survey]
-
+This report examines how paid employment and study habits relate to students’ university experience, using survey data from DATA2002/2902 students. Three research questions investigate these relationships, with limitations including self-reported data and sampling bias.
 
 ## Data Wrangling
 
@@ -87,9 +80,10 @@ write_csv(df_clean, "survey_cleaned.csv")
 
 ## RQ1: Work hours and cramming
 
+
 **Research Question:** Is there a difference in weekly paid employment hours between students who cram before assessments and those who do not?
 
-Weekly paid employment hours are often considered a key factor affecting student engagement. This research question examines whether work hours are associated with students' assessment strategy, specifically whether they tend to cram before deadlines. If time-pressured students are more likely to delay revision until the last minute, this insight could help the teaching team decide whether more flexible study support is needed for students with heavy work commitments. A Welch two-sample t-test is used to compare mean weekly work hours between Cram and Non-Cram students.
+Paid employment is a key external time commitment that may shape how students approach assessment preparation (Kember 2004). We compare mean weekly work hours between students who cram before deadlines and those who do not, using a Welch two-sample t-test.
 
 ### Exploratory data analysis
 
@@ -172,15 +166,14 @@ Figure 1: Distribution of weekly paid employment hours by cramming status.
 
 ### Hypotheses
 
-Let $\mu_1$ be the mean weekly work hours for Cram students and $\mu_2$ for Non-Cram students.
+Let $\mu_1$ and $\mu_2$ be the population mean weekly work hours for Cram and Non-Cram students respectively. $H_0: \mu_1 = \mu_2$ vs $H_1: \mu_1 \neq \mu_2$.
 
 $H_0: \mu_1 = \mu_2$  
 $H_1: \mu_1 \neq \mu_2$
 
 ### Assumptions
 
-The Welch two-sample t-test assumes approximate normality within each group. We test this on the raw data using the Shapiro-Wilk test.
-
+The Welch t-test assumes approximate normality within each group. Shapiro-Wilk tests on raw work hours are highly significant for both groups (Table 2), indicating strong right-skew, so we apply a log(x+1) transformation. Skewness falls substantially after transformation (Table 4: Cram 1.12→-0.11, Non-Cram 1.98→0.60), though normality is not fully achieved, likely due to zero-inflation — many students report zero weekly work hours (Figure 1), a pattern no monotonic transform removes. Given the large sample sizes ($n_{cram}=117$, $n_{non\text{-}cram}=544$), the Central Limit Theorem supports t-test validity regardless. An F test shows no evidence of unequal variances ($p=0.749$), though we retain the Welch form for robustness.
 ```{r}
 cram_raw <- rq1_data %>% filter(is_cram == "Cram") %>% pull(work_hrs)
 noncram_raw <- rq1_data %>% filter(is_cram == "Non-Cram") %>% pull(work_hrs)
@@ -196,10 +189,10 @@ tibble::tibble(
     Statistic = round(Statistic, 3),
     p_value = format.pval(p_value, digits = 3, eps = 0.001)
   ) %>%
-  knitr::kable(align = c("l", "c", "c"), caption = "Shapiro-Wilk test on raw work hours")
-```
+  knitr::kable(align = c("l", "c", "c"), caption = "Shapiro-Wilk test on raw work hours")  
+ #Both groups have Shapiro-Wilk p-values far below 0.05, so the raw data does not satisfy the normality assumption. We apply a log(x+1) transformation and re-check normality below.
 
-Both groups have Shapiro-Wilk p-values far below 0.05, so the raw data does not satisfy the normality assumption. We apply a log(x+1) transformation and re-check normality below.
+```
 
 ```{r}
 cram_log <- log1p(cram_raw)
@@ -225,9 +218,8 @@ manual_skew <- function(x) {
 }
 ```
 
-Normality is still not fully satisfied after transformation. We compare skewness before and after the transformation to assess whether the distribution shape has nonetheless improved.
-
 ```{r}
+#Normality is still not fully satisfied after transformation. We compare skewness before and after the transformation to assess whether the distribution shape has nonetheless improved.
 skew_cram_raw <- manual_skew(cram_raw)
 skew_noncram_raw <- manual_skew(noncram_raw)
 skew_cram_log <- manual_skew(cram_log)
@@ -238,9 +230,8 @@ tibble::tibble(
   `Log skewness` = round(c(skew_cram_log, skew_noncram_log), 2)
 ) %>%
   knitr::kable(align = c("l", "c", "c"), caption = "Skewness before and after log transformation")
+  #Skewness is substantially reduced after transformation for both groups. The residual non-normality is likely due to zero-inflation in the raw data, as shown by the clustering of points near zero in Figure 1, which no transformation can remove. Given the large sample size in both groups, the Central Limit Theorem still supports using a t-test.
 ```
-
-Skewness is substantially reduced after transformation for both groups. The residual non-normality is likely due to zero-inflation in the raw data, as shown by the clustering of points near zero in Figure 1, which no transformation can remove. Given the large sample size in both groups, the Central Limit Theorem still supports using a t-test.
 
 ```{r}
 f_test <- var.test(cram_log, noncram_log)
@@ -249,10 +240,10 @@ tibble::tibble(
   Statistic = round(f_test$statistic, 3),
   p_value = format.pval(f_test$p.value, digits = 3, eps = 0.001)
 ) %>%
-  knitr::kable(align = c("c", "c"), caption = "F test for equality of variances")
-```
+  knitr::kable(align = c("c", "c"), caption = "F test for equality of variances")  
+#The F test shows no evidence of unequal variances. We proceed with a Welch two-sample t-test given the large sample size in both groups.
 
-The F test shows no evidence of unequal variances. We proceed with a Welch two-sample t-test given the large sample size in both groups.
+```
 
 ### Test statistic
 
@@ -261,11 +252,9 @@ welch_test <- t.test(cram_log, noncram_log, var.equal = FALSE)
 welch_test
 ```
 
-The Welch two-sample t-test statistic is $t = 3.60$ (df = 167.28).
+Test statistic: $t = 3.60$, $df = 167.28$. P-value: $p = 0.0004$. Cohen's $d = 0.372$, a small-to-medium effect.
 
 ### P-value
-
-The corresponding p-value is $p = 0.0004$. We calculate Cohen's d to quantify the size of this effect.
 
 ```{r}
 #| label: rq1-effect-size
@@ -273,7 +262,8 @@ pooled_sd <- sqrt(((length(cram_log) - 1) * var(cram_log) +
                     (length(noncram_log) - 1) * var(noncram_log)) /
                     (length(cram_log) + length(noncram_log) - 2))
 cohend <- (mean(cram_log) - mean(noncram_log)) / pooled_sd
-cohend
+cohend  
+#Cohen's d = 0.372, indicating a small-to-medium effect size.
 ```
 
 Cohen's d = 0.372, indicating a small-to-medium effect size.
@@ -281,63 +271,75 @@ Cohen's d = 0.372, indicating a small-to-medium effect size.
 ### Conclusion&Limitations
 Since $p = 0.0004 < 0.05$, we reject $H_0$. Cram students report significantly higher weekly work hours (log scale) than Non-Cram students, with a small-to-medium effect (Cohen’s $d = 0.372$), suggesting that paid work is one of several factors associated with cramming. Although zero-inflation remained after log transformation, the large sample size supports the t-test approximation. As the data are observational, this association cannot establish that longer work hours cause cramming.
 
+### Conclusion
+
+Since $p < 0.05$, we reject $H_0$. Cram students report significantly higher weekly work hours (log scale) than Non-Cram students, providing evidence that paid employment is associated with cramming behaviour.  
+
+### Limitations
+
+ **Limitations:** Both variables are self-reported, risking recall or social desirability bias. The 70-hour cleaning threshold is analyst-chosen. Normality was not fully achieved even after the log transformation, and reliance on the Central Limit Theorem for validity — rather than genuine normality — means the result is asymptotic rather than exact. As this is observational, cross-sectional data, the result establishes association, not causation — employment may displace study time, or procrastination-prone students may be more likely to seek work. Unmeasured confounders (course load, financial need) cannot be ruled out.
+
 ## RQ2: Multitasking and cramming
 
-**Research Question:** Is multitasking during lectures associated with whether students cram before assessments?
+**Research Question:** Is multitasking during lectures associated with students' assessment preparation style, specifically whether they tend to cram before deadlines?
 
-Multitasking in lectures is usually read as disengagement. If it also tracks with cramming, the teaching team can treat lecture engagement and time management as one problem rather than two.
+Multitasking during lectures (e.g. using phones or other devices) is often seen as a sign of disengagement or poor time management. This research question examines whether multitasking behaviour is associated with cramming, since students who habitually delay their revision may be more likely to disengage during class as deadlines approach. Understanding this link could help the teaching team judge whether lecture engagement issues are connected to broader time-management or study-habit problems, rather than treating them as separate concerns. A chi-squared test of independence is used to test whether multitasking behaviour and cramming behaviour are associated.
 
 ### Exploratory data analysis
 
 ```{r}
 #| label: rq2-setup
-rq2_data <- df %>%
+#| message: false
+rq2_data <- read_csv("survey_cleaned.csv") %>%
   select(assess, multitask) %>%
   drop_na(assess, multitask) %>%
   mutate(
-    is_cram = factor(
-      if_else(assess == "Cram", "Cram", "Non-Cram"),
-      levels = c("Non-Cram", "Cram")
-    )
+    assess    = factor(assess, levels = c("Gradually", "Immediately", "Cram")),
+    is_cram   = factor(
+      if_else(assess == "Cram", "Cram", "Not Cram"),
+      levels = c("Not Cram", "Cram")
+    ),
+    multitask = factor(multitask, levels = c("No", "Yes"))
   )
 ```
 
+Only `assess` and `multitask` are retained, and rows are dropped only when they are missing on these two variables, so observations that remain usable for the other research questions are not discarded. The three-level `assess` variable is collapsed into a binary `is_cram` variable so that the analysis aligns directly with the research question of cramming versus not cramming.
+
 ```{r}
 #| label: tbl-rq2-table
-#| tbl-cap: "Cramming behaviour by multitasking status, with marginal totals."
+#| tbl-cap: "Contingency table of cramming behaviour by multitasking status."
 cram_tab <- table(rq2_data$is_cram, rq2_data$multitask)
 
-cram_tab %>%
-  addmargins() %>%
-  as.data.frame.matrix() %>%
-  tibble::rownames_to_column("Preparation style") %>%
-  knitr::kable(
-    align = "c",
-    col.names = c("Preparation style", "Does not multitask", "Multitasks", "Total")
-  )
+knitr::kable(
+  cram_tab,
+  align = rep("c", ncol(cram_tab))
+)
 ```
 
 ```{r}
 #| label: rq2-computations
 #| include: false
-chi_test     <- chisq.test(cram_tab, correct = FALSE)
+chi_test <- chisq.test(cram_tab, correct = FALSE)
+
 chi_statistic <- unname(chi_test$statistic)
 chi_df        <- unname(chi_test$parameter)
 chi_p         <- chi_test$p.value
 min_expected  <- min(chi_test$expected)
-n_total       <- sum(cram_tab)
-cramers_v     <- sqrt(chi_statistic / n_total)
 
-yes_counts   <- cram_tab[c("Cram", "Non-Cram"), "Yes"]
-group_totals <- rowSums(cram_tab)[c("Cram", "Non-Cram")]
-prop_test    <- prop.test(x = yes_counts, n = group_totals, correct = FALSE)
+n_total   <- sum(cram_tab)
+cramers_v <- sqrt(chi_statistic / n_total)
 
-pct_cram    <- 100 * unname(prop_test$estimate[1])
-pct_notcram <- 100 * unname(prop_test$estimate[2])
-diff_ci     <- 100 * prop_test$conf.int
+rq2_props <- rq2_data %>%
+  count(is_cram, multitask) %>%
+  group_by(is_cram) %>%
+  mutate(prop = n / sum(n)) %>%
+  filter(multitask == "Yes")
+
+pct_cram    <- 100 * rq2_props$prop[rq2_props$is_cram == "Cram"]
+pct_notcram <- 100 * rq2_props$prop[rq2_props$is_cram == "Not Cram"]
 ```
 
-We use `df` rather than `survey_cleaned.csv`, whose `work_hrs` threshold also removes respondents this question does not need; rows are dropped only for missing `assess` or `multitask`, and `assess` is collapsed into cramming versus not. Multitasking was more common among students who cram (`r sprintf("%.1f", pct_cram)`%) than among those who do not (`r sprintf("%.1f", pct_notcram)`%), a difference of `r sprintf("%.1f", pct_cram - pct_notcram)` percentage points (@fig-rq2-eda). @fig-rq2-3level shows the two non-cramming categories behave similarly, supporting the collapse.
+The stacked bar chart in @fig-rq2-eda compares the proportion of students who reported multitasking during lectures between the two preparation groups. Multitasking was more common among students who cram (`r sprintf("%.1f", pct_cram)`%) than among students who do not cram (`r sprintf("%.1f", pct_notcram)`%), a difference of roughly `r sprintf("%.1f", pct_cram - pct_notcram)` percentage points. This observed difference in proportions is examined formally using a chi-squared test of independence.
 
 ```{r}
 #| label: fig-rq2-eda
@@ -349,61 +351,77 @@ rq2_data %>%
   ggplot(aes(x = is_cram, y = prop, fill = multitask)) +
   geom_col(position = "fill", width = 0.5, alpha = 0.85) +
   scale_y_continuous(labels = scales::percent) +
-  scale_fill_manual(name = "Multitasks?",
-                    values = c("No" = "#A8DADC", "Yes" = "#E76F51")) +
-  labs(x = "Assessment preparation style", y = "Proportion of students",
-       title = "Multitasking by cramming behaviour") +
+  scale_fill_manual(
+    name = "Multitasks?",
+    values = c("No" = "#A8DADC", "Yes" = "#E76F51")
+  ) +
+  labs(
+    x = "Assessment preparation style",
+    y = "Proportion of students",
+    title = "Multitasking by cramming behaviour",
+    caption = "Bars show the within-group proportion of students."
+  ) +
   theme_minimal(base_size = 12) +
-  theme(plot.title = element_text(face = "plain", hjust = 0.5),
-        legend.position = "top",
-        panel.grid.minor = element_blank(),
-        panel.grid.major.x = element_blank())
+  theme(
+    plot.title = element_text(face = "plain", hjust = 0.5),
+    legend.position = "top",
+    panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_blank()
+  )
 ```
+
+@fig-rq2-3level shows the same relationship using the original three-level `assess` variable. The pattern is consistent: the multitasking rate is highest among students who cram, and similar between the two non-cramming groups, which supports collapsing these two categories for the formal test.
 
 ```{r}
 #| label: fig-rq2-3level
-#| fig-cap: "Proportion of students who multitask, by the original three-level preparation style."
-rq2_data %>%
+#| fig-cap: "Proportion of students who multitask, by the original three-level assessment preparation style."
+#| message: false
+read_csv("survey_cleaned.csv") %>%
+  drop_na(assess, multitask) %>%
+  mutate(
+    assess    = factor(assess, levels = c("Gradually", "Immediately", "Cram")),
+    multitask = factor(multitask, levels = c("No", "Yes"))
+  ) %>%
   count(assess, multitask) %>%
   group_by(assess) %>%
   mutate(prop = n / sum(n)) %>%
   ggplot(aes(x = assess, y = prop, fill = multitask)) +
   geom_col(position = "fill", width = 0.5, alpha = 0.85) +
   scale_y_continuous(labels = scales::percent) +
-  scale_fill_manual(name = "Multitasks?",
-                    values = c("No" = "#A8DADC", "Yes" = "#E76F51")) +
-  labs(x = "Assessment preparation style (3 levels)",
-       y = "Proportion of students",
-       title = "Multitasking by assessment preparation style") +
+  scale_fill_manual(
+    name = "Multitasks?",
+    values = c("No" = "#A8DADC", "Yes" = "#E76F51")
+  ) +
+  labs(
+    x = "Assessment preparation style (3 levels)",
+    y = "Proportion of students",
+    title = "Multitasking by assessment preparation style"
+  ) +
   theme_minimal(base_size = 12) +
-  theme(plot.title = element_text(face = "plain", hjust = 0.5),
-        legend.position = "top",
-        panel.grid.minor = element_blank(),
-        panel.grid.major.x = element_blank())
+  theme(
+    plot.title = element_text(face = "plain", hjust = 0.5),
+    legend.position = "top",
+    panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_blank()
+  )
 ```
 
 ### Hypotheses
 
-$H_0$: multitasking is independent of cramming among DATA2x02 students; $H_1$: the two are not independent.
+Let multitasking status and cramming status be the two categorical variables summarised in @tbl-rq2-table.
+
+$H_0$: multitasking behaviour is independent of cramming behaviour. $H_1$: multitasking behaviour is not independent of cramming behaviour.
 
 ### Assumptions
 
-Responses from different students are treated as independent.
+The chi-squared test of independence assumes that observations are independent, with one row per student, which is reasonable here as no student appears twice in the survey. It also requires expected cell counts of at least 5 in every cell of the contingency table.
 
 ```{r}
-#| label: tbl-rq2-expected
-#| tbl-cap: "Expected cell counts under independence."
-chi_test$expected %>%
-  round(1) %>%
-  as.data.frame.matrix() %>%
-  tibble::rownames_to_column("Preparation style") %>%
-  knitr::kable(
-    align = "c",
-    col.names = c("Preparation style", "Does not multitask", "Multitasks")
-  )
+#| label: rq2-assumptions
+chi_test$expected
 ```
 
-The smallest expected count is `r sprintf("%.1f", min_expected)`, so all cells exceed 5 and the approximation is valid; no continuity correction is needed.
+The smallest expected count is `r sprintf("%.1f", min_expected)`, so all expected counts are comfortably above 5 and the chi-squared approximation is valid. Neither Fisher's exact test nor a Yates continuity correction is required.
 
 ### Test statistic
 
@@ -412,33 +430,28 @@ The smallest expected count is `r sprintf("%.1f", min_expected)`, so all cells e
 chi_test
 ```
 
-Under $H_0$, $T=\sum_{i,j}(O_{ij}-E_{ij})^2/E_{ij}$ follows a $\chi^2$ distribution with `r chi_df` degree of freedom; the observed value is $t_0 = `r sprintf("%.2f", chi_statistic)`$.
+The test statistic is $T=\sum_{i,j}(O_{ij}-E_{ij})^2/E_{ij}$, which under $H_0$ follows a $\chi^2$ distribution with $(r-1)(c-1) = `r chi_df`$ degree of freedom. The observed value is $t_0 = `r sprintf("%.2f", chi_statistic)`$.
 
 ### P-value
 
+The corresponding p-value is $P(\chi^2_{`r chi_df`} \geq `r sprintf("%.2f", chi_statistic)`) = `r signif(chi_p, 3)`$. We calculate Cramér's V to quantify the size of this effect.
+
 ```{r}
-#| label: tbl-rq2-effect-size
-#| tbl-cap: "Effect size and confidence interval."
-tibble::tibble(
-  Measure = c("Cramér's V",
-              "Difference in % multitasking (Cram - Non-Cram)"),
-  Estimate = c(sprintf("%.3f", cramers_v),
-               sprintf("%.1f pp", pct_cram - pct_notcram)),
-  `95% CI` = c("-",
-               sprintf("[%.1f, %.1f] pp", diff_ci[1], diff_ci[2]))
-) %>%
-  knitr::kable(align = c("l", "c", "c"))
+#| label: rq2-effect-size
+cramers_v
 ```
 
-The p-value is `r signif(chi_p, 3)`. Cramér's $V = `r sprintf("%.2f", cramers_v)`$ ($n = `r n_total`$); the 95% CI for the difference in multitasking rates is `r sprintf("%.1f", diff_ci[1])` to `r sprintf("%.1f", diff_ci[2])` percentage points.
+Cramér's $V = `r sprintf("%.2f", cramers_v)`$ based on $n = `r n_total`$ complete responses, indicating a small-to-moderate association.
 
 ### Conclusion
 
-We reject $H_0$: multitasking and cramming are associated, though $V = `r sprintf("%.2f", cramers_v)`$ makes it one correlate of cramming rather than a defining feature.
+Since $p < 0.001$, we reject $H_0$. There is strong evidence of an association between multitasking during lectures and cramming: students who cram were substantially more likely to multitask (`r sprintf("%.1f", pct_cram)`%) than students who did not cram (`r sprintf("%.1f", pct_notcram)`%) in this sample. Cramér's $V = `r sprintf("%.2f", cramers_v)`$ indicates that the strength of this association is nonetheless modest, so multitasking should be read as one of several correlates of cramming rather than a defining feature of it.
 
 ### Limitations
 
-Both variables are self-reported, so "cram" and "multi-task" may be applied inconsistently, and collapsing `assess` discards information. This observational, voluntary-response survey cannot establish causation — shared workload or procrastination could drive both — and may not generalise.
+Both variables are self-reported and self-interpreted, so respondents may apply the labels "cram" and "multi-task" inconsistently. Collapsing `assess` from three levels to two also discards some information about the distinction between preparing gradually and preparing immediately. As this is an observational, voluntary-response survey of DATA2x02 students, the association cannot establish causation — a third factor such as overall workload or procrastination tendency could plausibly drive both behaviours — and it may not generalise beyond this cohort.
+
+
 
 ## RQ3: Paid employment and multitasking
 
@@ -693,16 +706,16 @@ Welch $t$-statistic as the resampling statistic.
 
 # Conclusion
 
-[Integrate the three findings into one story]
+Overall, the three analyses show that greater employment commitments were associated with more cramming and lecture multitasking, although the effects were modest.
 
-[Implications for client]
+These findings suggest that students’ employment and study habits may provide useful indicators of academic engagement and help teaching staff understand students’ study behaviours.
 
-[Overall limitations / no causal inference]
+However, as the survey is observational and self-reported, the findings show associations rather than causation, with sampling bias, self-reporting, and confounding factors limiting generalisability.
 
 
 # AI Usage Statement
 
-[...]
+AI was used as a supplementary tool to improve chart formatting and visualisation, help us understand the data, and provide ideas for analysis and presentation.
 
 
 # ISI Professional Ethics Statement
