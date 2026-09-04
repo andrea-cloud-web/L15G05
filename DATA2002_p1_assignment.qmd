@@ -264,9 +264,8 @@ Both variables are self-reported, risking recall or social desirability bias. Th
 
 Our client, a university learning-support team, wants to know whether
 multitasking during lectures is associated with cramming for assessments,
-since students who habitually delay revision may also be more likely to
-disengage in class -- understanding this link would help distinguish an
-engagement problem from a broader time-management one.
+to help distinguish a lecture-engagement problem from a broader
+time-management one.
 
 ```{r}
 #| label: rq2-setup
@@ -280,7 +279,7 @@ rq2_data <- read_csv("survey_cleaned.csv") %>%
       if_else(assess == "Cram", "Cram", "Not Cram"),
       levels = c("Not Cram", "Cram")
     ),
-    multitask = factor(multitask, levels = c("no", "yes"), labels = c("No", "Yes"))
+    multitask = factor(multitask, levels = c("No", "Yes"))
   )
 
 cram_tab <- table(rq2_data$is_cram, rq2_data$multitask)
@@ -332,6 +331,12 @@ association.
   and expected cell counts must be $\geq 5$ in the $2\times2$ table --
   confirmed below (minimum $\approx$ `r sprintf("%.1f", min_expected)`), so
   the chi-squared approximation is valid.
+
+```{r}
+#| label: rq2-assumptions
+chi_test$expected
+```
+
 - **Test statistic:** $T = \sum (O_{ij}-E_{ij})^2/E_{ij}$. Under $H_0$,
   $T \sim \chi^2_{`r chi_df`}$.
 
@@ -351,7 +356,6 @@ chi_test
   interpreted inconsistently across respondents, and the association does
   not imply causation -- a third factor such as overall workload could
   plausibly drive both behaviours.
-
 ## RQ3: Do students who multitask in class spend a different time per week on work compared to students who do not?
 
 Paid employment is an external time commitment. Students balancing more work with study may exhibit different lecture behaviours. Following our previous research, we investigate whether paid-employment hours also differ between students who do and do not multitask.
