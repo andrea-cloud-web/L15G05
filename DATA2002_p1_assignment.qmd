@@ -27,7 +27,10 @@ boxplots comparing distributions before and after cleaning.save as "survey_clean
 
 
 ```{r}
+#| label: fig-cleaning
+#| fig-cap: "Weekly employment hours before and after cleaning"
 #| message: false
+
 library(tidyverse)
 raw <- read_csv("DATA2X02_2026_2_survey_clean.csv", show_col_types = FALSE)
 df <- raw %>%
@@ -64,11 +67,9 @@ ggplot(bind_rows(
   scale_fill_manual(values = c("Before cleaning" = "#BFDCEB", "After cleaning" = "#F6D6A8")) +
   labs(
     title = "Weekly employment hours before and after cleaning",
-    x = NULL, y = "Weekly employment hours", fill = NULL,
-    caption = "Figure 1: Weekly employment hours before and after cleaning"
+    x = NULL, y = "Weekly employment hours", fill = NULL
   ) +
-  theme_minimal() +
-  theme(plot.caption = element_text(hjust = 0.5))
+  theme_minimal()
 write_csv(df_clean, "survey_cleaned.csv")
 ```
 
@@ -79,9 +80,14 @@ Paid employment is a key external time commitment that may shape how students ap
 
 **Exploratory data analysis:**
 ```{r}
+#| label: rq1-setup
 rq1_data <- df_clean %>%
   select(assess, work_hrs) %>%
   mutate(is_cram = if_else(assess == "Cram", "Cram", "Non-Cram"))
+```
+```{r}
+#| label: tbl-summary
+#| tbl-cap: "Summary statistics of weekly work hours by Cram status"
 
 rq1_data %>%
   group_by(is_cram) %>%
@@ -97,6 +103,10 @@ rq1_data %>%
     max = max(work_hrs)
   ) %>%
   knitr::kable(align = rep("c", 9))
+```
+```{r}
+#| label: fig-workhours-cram
+#| fig-cap: "Distribution of weekly paid employment hours by cramming status"
 
 rq1_data %>%
   ggplot(aes(x = is_cram, y = work_hrs)) +
@@ -137,13 +147,11 @@ rq1_data %>%
   labs(
     x = NULL,
     y = "Weekly paid employment hours",
-    title = "Weekly work hours by cramming behaviour",
-    caption = "Figure 2: Distribution of weekly paid employment hours by cramming status"
+    title = "Weekly work hours by cramming behaviour"
   ) +
   theme_minimal(base_size = 12) +
   theme(
     plot.title = element_text(face = "plain", hjust = 0.5),
-    plot.caption = element_text(hjust = 0.5),
     legend.position = "top",
     panel.grid.minor = element_blank(),
     panel.grid.major.x = element_blank()
@@ -159,23 +167,35 @@ $H_1: \mu_1 \neq \mu_2$
 **2. Assumptions:**
 The Welch t-test assumes approximate normality within each group, assessed using Shapiro-Wilk tests and QQ plots. Both p-values are below 0.05 and the QQ plots indicate non-normality, so a $\log(x+1)$ transformation is applied to reduce right-skewness. 
 ```{r}
+#| label: fig-qqplot
+#| fig-cap: "QQ plot of weekly work hours by Cram status"
+
 ggplot(rq1_data, aes(sample = work_hrs, colour = is_cram)) +
   stat_qq() +
   stat_qq_line() +
   facet_wrap(~ is_cram) +
   labs(
     title = "QQ plot of weekly work hours by Cram status",
-    x = "Theoretical quantiles", y = "Sample quantiles",
-    caption = "Figure 3: QQ plot of weekly work hours by Cram status"
+    x = "Theoretical quantiles", y = "Sample quantiles"
   ) +
   theme_minimal() +
-  theme(legend.position = "none",
-        plot.caption = element_text(hjust = 0.5))
+  theme(
+    legend.position = "none",
+    plot.title = element_text(hjust = 0.5)
+  )
+```
+```{r}
+#| label: rq1-shapiro-raw-setup
+
 cram_raw <- rq1_data %>% filter(is_cram == "Cram") %>% pull(work_hrs)
 noncram_raw <- rq1_data %>% filter(is_cram == "Non-Cram") %>% pull(work_hrs)
 shapiro_cram_raw <- shapiro.test(cram_raw)
 shapiro_noncram_raw <- shapiro.test(noncram_raw)
- 
+```
+```{r}
+#| label: tbl-shapiro-raw
+#| tbl-cap: "Shapiro-Wilk test on raw work hours"
+
 tibble::tibble(
   Group = c("Cram", "Non-Cram"),
   Statistic = c(shapiro_cram_raw$statistic, shapiro_noncram_raw$statistic),
@@ -185,12 +205,20 @@ tibble::tibble(
     Statistic = round(Statistic, 3),
     p_value = format.pval(p_value, digits = 3, eps = 0.001)
   ) %>%
-  knitr::kable(align = c("l", "c", "c"), caption = "Shapiro-Wilk test on raw work hours")  
+  knitr::kable(align = c("l", "c", "c"))
+```
+```{r}
+#| label: rq1-shapiro-log-setup
+
 cram_log <- log1p(cram_raw)
 noncram_log <- log1p(noncram_raw)
 shapiro_cram_log <- shapiro.test(cram_log)
 shapiro_noncram_log <- shapiro.test(noncram_log)
- 
+```
+```{r}
+#| label: tbl-shapiro-log
+#| tbl-cap: "Shapiro-Wilk test on log-transformed work hours"
+
 tibble::tibble(
   Group = c("Cram", "Non-Cram"),
   Statistic = c(shapiro_cram_log$statistic, shapiro_noncram_log$statistic),
@@ -200,7 +228,11 @@ tibble::tibble(
     Statistic = round(Statistic, 3),
     p_value = format.pval(p_value, digits = 3, eps = 0.001)
   ) %>%
-  knitr::kable(align = c("l", "c", "c"), caption = "Shapiro-Wilk test on log-transformed work hours")
+  knitr::kable(align = c("l", "c", "c"))
+```
+```{r}
+#| label: rq1-manual-skew
+
 manual_skew <- function(x) {
   n <- length(x)
   m <- mean(x)
@@ -212,16 +244,20 @@ Normality is still not fully satisfied after transformation, although skewness f
 Skewness is calculated as:
 $$\text{skewness} = \frac{\frac{1}{n}\sum(x_i - \bar{x})^3}{\left(\frac{1}{n}\sum(x_i - \bar{x})^2\right)^{3/2}}$$
 ```{r}
+#| label: tbl-skewness
+#| tbl-cap: "Skewness before and after log transformation"
+
 skew_cram_raw <- manual_skew(cram_raw)
 skew_noncram_raw <- manual_skew(noncram_raw)
 skew_cram_log <- manual_skew(cram_log)
 skew_noncram_log <- manual_skew(noncram_log)
+
 tibble::tibble(
   Group = c("Cram", "Non-Cram"),
   `Raw skewness` = round(c(skew_cram_raw, skew_noncram_raw), 2),
   `Log skewness` = round(c(skew_cram_log, skew_noncram_log), 2)
 ) %>%
-  knitr::kable(align = c("l", "c", "c"), caption = "Skewness before and after log transformation")
+  knitr::kable(align = c("l", "c", "c"))
 ```
 
 **3. Test statistic:**
