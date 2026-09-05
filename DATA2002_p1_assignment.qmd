@@ -91,7 +91,7 @@ write_csv(df_clean, "survey_cleaned.csv")
 
 **Research Question:** Is there a difference in weekly paid employment hours between students who cram before assessments and those who do not?
 
-Paid employment is a key external time commitment that may shape how students approach assessment preparation (Kember 2004). We compare mean weekly work hours between students who cram before deadlines and those who do not, using a Welch two-sample t-test.
+Paid employment is a key external time commitment that may shape assessment preparation (Kember 2004). We compare mean weekly work hours between students who cram before deadlines and those who do not, using a Welch two-sample t-test.
 
 ### Exploratory data analysis
 
@@ -176,19 +176,18 @@ rq1_data %>%
   )
 ```
 
-Figure @fig-rq1-eda confirms right-skew with a long tail.
-This motivates a formal mean comparison.
+Figure @fig-rq1-eda confirms right-skew with a long tail, motivating a formal mean comparison.
 
 ### Hypotheses
 
-Let $\mu_1$ and $\mu_2$ be the population mean weekly work hours for students who cram before deadlines (Yes) and those who do not (No), respectively. $H_0: \mu_1 = \mu_2$ vs $H_1: \mu_1 \neq \mu_2$.
+Let $\mu_1$ and $\mu_2$ be the population mean weekly work hours for students who cram (Yes) and those who do not (No), respectively.
 
 $H_0: \mu_1 = \mu_2$  
 $H_1: \mu_1 \neq \mu_2$
 
 ### Assumptions
 
-The Welch t-test assumes approximate normality. Raw hours fail Shapiro-Wilk tests (@tbl-rq1-shapiro-raw), so we use log(x+1). Skewness improves (@tbl-rq1-skewness), but zero-inflation remains (@fig-rq1-eda). Large samples ($n_{yes}=`r nrow(filter(rq1_data, is_cram == "Yes"))`$, $n_{no}=`r nrow(filter(rq1_data, is_cram == "No"))`$) support the CLT. The F test finds no unequal variances; Welch's test is retained.
+The Welch t-test assumes approximate normality. Raw hours fail Shapiro-Wilk tests (@tbl-rq1-shapiro-raw), so we log(x+1)-transform. Skewness improves (@tbl-rq1-skewness) but zero-inflation remains (@fig-rq1-eda). Large samples ($n_{yes}=`r nrow(filter(rq1_data, is_cram == "Yes"))`$, $n_{no}=`r nrow(filter(rq1_data, is_cram == "No"))`$) support the CLT. The F test finds no unequal variances, so Welch's test is retained.
 ```{r}
 #| label: tbl-rq1-shapiro-raw
 #| tbl-cap: "Shapiro-Wilk test on raw work hours."
@@ -275,7 +274,7 @@ cohend <- (mean(cram_log) - mean(noncram_log)) / pooled_sd
 welch_test
 ```
 
-Test statistic: $t = `r unname(welch_test$statistic)`$, $df = `r welch_test$parameter`$. P-value: $p = `r format.pval(welch_test$p.value, digits = 3)`$.
+Test statistic: $t = `r unname(welch_test$statistic)`$, $df = `r welch_test$parameter`$, $p = `r format.pval(welch_test$p.value, digits = 3)`$.
 
 ### Effect size
 
@@ -289,12 +288,11 @@ cohend
 
 ### Conclusion
 
-Since $p < 0.05$, we reject $H_0$. Yes students report significantly higher weekly work hours (log scale) than No students, providing evidence that paid employment is associated with cramming behaviour.
+Since $p < 0.05$, we reject $H_0$. Yes students report significantly higher weekly work hours (log scale) than No students, evidencing an association with cramming behaviour.
 
 ### Limitations
 
- **Limitations:** Both variables are self-reported, risking recall or social desirability bias. The 70-hour cleaning threshold is analyst-chosen. Normality was not fully achieved even after the log transformation, and reliance on the Central Limit Theorem for validity — rather than genuine normality — means the result is asymptotic rather than exact. As this is observational, cross-sectional data, the result establishes association, not causation — employment may displace study time, or procrastination-prone students may be more likely to seek work. Unmeasured confounders (course load, financial need) cannot be ruled out.
-
+**Limitations:** Both variables are self-reported, risking recall bias. The 70-hour cleaning threshold is analyst-chosen. Normality was not fully achieved, so validity relies on the CLT. As this is observational, the result shows association, not causation — employment may displace study time, or procrastination-prone students may work more. Unmeasured confounders (course load, financial need) remain possible.
 ## RQ2: Multitasking and cramming
 
 **Research Question:** Is multitasking during lectures associated with students' assessment preparation style, specifically whether they tend to cram before deadlines?
