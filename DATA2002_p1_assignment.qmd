@@ -102,7 +102,10 @@ rq1_data <- df_clean %>%
 ```
 
 ```{r}
+#| label: tbl-rq1-table
+#| tbl-cap: "Summary statistics of weekly paid employment hours by cramming status."
 rq1_data %>%
+  mutate(is_cram = recode(is_cram, "Cram" = "Yes", "Non-Cram" = "No")) %>%
   group_by(is_cram) %>%
   summarise(
     n = n(),
@@ -118,7 +121,11 @@ rq1_data %>%
   knitr::kable(align = rep("c", 9))
 ```
 
+Mean > median in both groups — right-skew.
+
 ```{r}
+#| label: fig-rq1-eda
+#| fig-cap: "Distribution of weekly paid employment hours by cramming status."
 rq1_data %>%
   ggplot(aes(x = is_cram, y = work_hrs)) +
   geom_boxplot(
@@ -170,7 +177,8 @@ rq1_data %>%
   )
 ```
 
-Figure 1: Distribution of weekly paid employment hours by cramming status.
+Figure 1 confirms right-skew with a long tail.
+This motivates a formal mean comparison.
 
 ### Hypotheses
 
@@ -181,7 +189,7 @@ $H_1: \mu_1 \neq \mu_2$
 
 ### Assumptions
 
-The Welch t-test assumes approximate normality within each group. Shapiro-Wilk tests on raw work hours are highly significant for both groups (Table 2), indicating strong right-skew, so we apply a log(x+1) transformation. Skewness falls substantially after transformation (Table 4: Cram 1.12→-0.11, Non-Cram 1.98→0.60), though normality is not fully achieved, likely due to zero-inflation — many students report zero weekly work hours (Figure 1), a pattern no monotonic transform removes. Given the large sample sizes ($n_{cram}=117$, $n_{non\text{-}cram}=544$), the Central Limit Theorem supports t-test validity regardless. An F test shows no evidence of unequal variances ($p=0.749$), though we retain the Welch form for robustness.
+The Welch t-test assumes approximate normality. Shapiro-Wilk tests reject normality for raw hours in both groups (Table 2), so we log(x+1)-transform. Skewness drops substantially (Table 4: Cram 1.12→-0.11, Non-Cram 1.98→0.60), though normality isn't fully achieved due to zero-inflation (Figure 1), which no transform removes. Given large samples ($n_{cram}=117$, $n_{non\text{-}cram}=544$), the CLT supports t-test validity regardless. An F test shows no unequal variances ($p=0.749$), so we retain Welch form for robustness.
 ```{r}
 cram_raw <- rq1_data %>% filter(is_cram == "Cram") %>% pull(work_hrs)
 noncram_raw <- rq1_data %>% filter(is_cram == "Non-Cram") %>% pull(work_hrs)
