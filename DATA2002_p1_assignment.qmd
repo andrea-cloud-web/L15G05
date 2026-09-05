@@ -596,11 +596,11 @@ tibble(
 
 # Conclusion
 
-Overall, the three analyses show that greater employment commitments were associated with more cramming and lecture multitasking, although the effects were modest.
+Overall, the three analyses show consistent links between students’ employment commitments and study behaviours. Students who crammed reported significantly more weekly paid-employment hours, while multitasking was associated with both cramming and higher employment hours. However, the observed effects were modest, suggesting these factors are related but not decisive.
 
-These findings suggest that students’ employment and study habits may provide useful indicators of academic engagement and help teaching staff understand students’ study behaviours.
+These findings may help the teaching team recognise how students’ external commitments and study habits interact, particularly when considering cramming and lecture multitasking.
 
-However, as the survey is observational and self-reported, the findings show associations rather than causation, with sampling bias, self-reporting, and confounding factors limiting generalisability.
+However, the survey is observational and relies on self-reported data, limiting causal interpretation. The 70-hour cleaning threshold and categorisation of preparation styles may also affect results. Potential confounding factors, such as workload or other commitments, and voluntary sampling may limit generalisability. Therefore, the findings should be interpreted as associations rather than evidence of causation.
 
 
 # AI Usage Statement
@@ -610,7 +610,7 @@ AI was used as a supplementary tool to improve chart formatting and visualisatio
 
 # ISI Professional Ethics Statement
 
-[...]
+We conducted the analysis responsibly by maintaining data integrity, applying appropriate statistical methods, and transparently reporting limitations. We avoided causal claims beyond the evidence and protected participants’ privacy by using survey data only for the intended academic analysis.
 
 
 # References
