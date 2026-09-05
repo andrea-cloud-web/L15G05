@@ -29,9 +29,7 @@ boxplots comparing distributions before and after cleaning.save as "survey_clean
 ```{r}
 #| message: false
 library(tidyverse)
-
 raw <- read_csv("DATA2X02_2026_2_survey_clean.csv", show_col_types = FALSE)
-
 df <- raw %>%
   rename(
     age          = `What is your age? (years)`,
@@ -55,11 +53,8 @@ df <- raw %>%
   filter(assess != "Other") %>%
   mutate(assess = factor(assess, levels = c("Immediately", "Gradually", "Cram")),
          multitask = factor(multitask, levels = c("no", "yes"), labels = c("No", "Yes")))
-
 threshold <- 70
-
 df_clean <- df %>% filter(work_hrs <= threshold)
-
 ggplot(bind_rows(
     df %>% mutate(stage = "Before cleaning"),
     df_clean %>% mutate(stage = "After cleaning")
@@ -69,10 +64,11 @@ ggplot(bind_rows(
   scale_fill_manual(values = c("Before cleaning" = "#BFDCEB", "After cleaning" = "#F6D6A8")) +
   labs(
     title = "Weekly employment hours before and after cleaning",
-    x = NULL, y = "Weekly employment hours", fill = NULL
+    x = NULL, y = "Weekly employment hours", fill = NULL,
+    caption = "Figure 1: Weekly employment hours before and after cleaning"
   ) +
-  theme_minimal()
-
+  theme_minimal() +
+  theme(plot.caption = element_text(hjust = 0.5))
 write_csv(df_clean, "survey_cleaned.csv")
 ```
 
@@ -81,13 +77,12 @@ write_csv(df_clean, "survey_cleaned.csv")
 ## RQ1: Is there a difference in weekly paid employment hours between students who cram before assessments and those who do not?
 Paid employment is a key external time commitment that may shape how students approach assessment preparation (Kember 2004). We compare mean weekly work hours between students who cram before deadlines and those who do not, using a Welch two-sample t-test.
 
-### Exploratory data analysis
+**Exploratory data analysis:**
 ```{r}
 rq1_data <- df_clean %>%
   select(assess, work_hrs) %>%
   mutate(is_cram = if_else(assess == "Cram", "Cram", "Non-Cram"))
-```
-```{r}
+
 rq1_data %>%
   group_by(is_cram) %>%
   summarise(
@@ -102,9 +97,7 @@ rq1_data %>%
     max = max(work_hrs)
   ) %>%
   knitr::kable(align = rep("c", 9))
-```
 
-```{r}
 rq1_data %>%
   ggplot(aes(x = is_cram, y = work_hrs)) +
   geom_boxplot(
@@ -145,26 +138,25 @@ rq1_data %>%
     x = NULL,
     y = "Weekly paid employment hours",
     title = "Weekly work hours by cramming behaviour",
-    caption = "Diamonds and labels indicate group means."
+    caption = "Figure 2: Distribution of weekly paid employment hours by cramming status"
   ) +
   theme_minimal(base_size = 12) +
   theme(
     plot.title = element_text(face = "plain", hjust = 0.5),
+    plot.caption = element_text(hjust = 0.5),
     legend.position = "top",
     panel.grid.minor = element_blank(),
     panel.grid.major.x = element_blank()
   )
 ```
 
-Figure 1: Distribution of weekly paid employment hours by cramming status.
-
-1. **Hypotheses:**
+**1. Hypotheses:**
 Let $\mu_1$ and $\mu_2$ be the population mean weekly work hours for Cram and Non-Cram students respectively. $H_0: \mu_1 = \mu_2$ vs $H_1: \mu_1 \neq \mu_2$.
 
 $H_0: \mu_1 = \mu_2$  
 $H_1: \mu_1 \neq \mu_2$
 
-2. **Assumptions:**
+**2. Assumptions:**
 The Welch t-test assumes approximate normality within each group, assessed using Shapiro-Wilk tests and QQ plots. Both p-values are below 0.05 and the QQ plots indicate non-normality, so a $\log(x+1)$ transformation is applied to reduce right-skewness. 
 ```{r}
 ggplot(rq1_data, aes(sample = work_hrs, colour = is_cram)) +
@@ -173,12 +165,12 @@ ggplot(rq1_data, aes(sample = work_hrs, colour = is_cram)) +
   facet_wrap(~ is_cram) +
   labs(
     title = "QQ plot of weekly work hours by Cram status",
-    x = "Theoretical quantiles", y = "Sample quantiles"
+    x = "Theoretical quantiles", y = "Sample quantiles",
+    caption = "Figure 3: QQ plot of weekly work hours by Cram status"
   ) +
   theme_minimal() +
-  theme(legend.position = "none")
-```
-```{r}
+  theme(legend.position = "none",
+        plot.caption = element_text(hjust = 0.5))
 cram_raw <- rq1_data %>% filter(is_cram == "Cram") %>% pull(work_hrs)
 noncram_raw <- rq1_data %>% filter(is_cram == "Non-Cram") %>% pull(work_hrs)
 shapiro_cram_raw <- shapiro.test(cram_raw)
@@ -194,9 +186,6 @@ tibble::tibble(
     p_value = format.pval(p_value, digits = 3, eps = 0.001)
   ) %>%
   knitr::kable(align = c("l", "c", "c"), caption = "Shapiro-Wilk test on raw work hours")  
-```
-
-```{r}
 cram_log <- log1p(cram_raw)
 noncram_log <- log1p(noncram_raw)
 shapiro_cram_log <- shapiro.test(cram_log)
@@ -212,7 +201,6 @@ tibble::tibble(
     p_value = format.pval(p_value, digits = 3, eps = 0.001)
   ) %>%
   knitr::kable(align = c("l", "c", "c"), caption = "Shapiro-Wilk test on log-transformed work hours")
-
 manual_skew <- function(x) {
   n <- length(x)
   m <- mean(x)
@@ -220,6 +208,7 @@ manual_skew <- function(x) {
 }
 ```
 Normality is still not fully satisfied after transformation, although skewness falls substantially. The remaining non-normality is partly attributable to the large number of zero work-hour responses. Given the large sample sizes, the Central Limit Theorem supports the t-test approximation despite this departure, which is acknowledged as a limitation.
+
 Skewness is calculated as:
 $$\text{skewness} = \frac{\frac{1}{n}\sum(x_i - \bar{x})^3}{\left(\frac{1}{n}\sum(x_i - \bar{x})^2\right)^{3/2}}$$
 ```{r}
@@ -235,14 +224,14 @@ tibble::tibble(
   knitr::kable(align = c("l", "c", "c"), caption = "Skewness before and after log transformation")
 ```
 
-3. **Test statistic:**
+**3. Test statistic:**
 ```{r}
 welch_test <- t.test(cram_log, noncram_log, var.equal = FALSE)
 welch_test
 ```
 Test statistic: $t = 3.60$, $df = 167.28$. P-value: $p = 0.0004$. Cohen's $d = 0.372$, a small-to-medium effect.
 
-4. **P-value:**
+**4. P-value:**
 ```{r}
 #| label: rq1-effect-size
 pooled_sd <- sqrt(((length(cram_log) - 1) * var(cram_log) +
@@ -250,15 +239,11 @@ pooled_sd <- sqrt(((length(cram_log) - 1) * var(cram_log) +
                     (length(cram_log) + length(noncram_log) - 2))
 cohend <- (mean(cram_log) - mean(noncram_log)) / pooled_sd
 cohend  
-#Cohen's d = 0.372, indicating a small-to-medium effect size.
 ```
 Cohen's d = 0.372, indicating a small-to-medium effect size.
 
-5. **Conclusion:**
-Since $p < 0.05$, we reject $H_0$. Cram students report significantly higher weekly work hours (log scale) than Non-Cram students, providing evidence that paid employment is associated with cramming behaviour.  
-
-6. **Limitations:**
-Both variables are self-reported, risking recall or social desirability bias. The 70-hour cleaning threshold is analyst-chosen. Normality was not fully achieved even after the log transformation, and reliance on the Central Limit Theorem for validity — rather than genuine normality — means the result is asymptotic rather than exact. As this is observational, cross-sectional data, the result establishes association, not causation — employment may displace study time, or procrastination-prone students may be more likely to seek work. Unmeasured confounders (course load, financial need) cannot be ruled out.
+**5. Decision:**
+Since $p = 0.0004 < 0.05$, we reject $H_0$: Cram students report significantly higher weekly work hours (log scale) than Non-Cram students. Both variables are self-reported, and the 70-hour threshold is analyst-chosen. Normality was not fully achieved, so validity relies on the CLT, making the result asymptotic rather than exact. As this is observational data, the result establishes association, not causation, and unmeasured confounders (e.g., course load and financial need) cannot be ruled out.
 
 ## RQ2: Multitasking and cramming
 
