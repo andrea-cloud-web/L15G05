@@ -345,8 +345,8 @@ chi_test
 **4. P-value:** $P(\chi^2_{`r chi_df`} \geq `r sprintf("%.2f", chi_statistic)`) = `r signif(chi_p, 3)`$. Cramér's $V = `r sprintf("%.2f", cramers_v)`$ ($n = `r n_total`$), and the 95% CI for the difference in multitasking rates is `r sprintf("%.1f", diff_ci[1])` to `r sprintf("%.1f", diff_ci[2])` percentage points.
 
 **5. Decision:** Reject $H_0$ ($p < 0.001$): students who cram are considerably more likely to multitask. The effect is modest, so multitasking is one correlate of cramming rather than a defining feature. As a self-selected, self-reported survey, "cram" and "multitask" may be interpreted inconsistently, and the association does not imply causation — overall workload could drive both.
-## RQ3: Do students who multitask in class spend a different time per week on work compared to students who do not?
 
+## RQ3: Do students who multitask in class spend a different time per week on work compared to students who do not?
 Paid employment is an external time commitment. Students balancing more work with study may exhibit different lecture behaviours. Following our previous research, we investigate whether paid-employment hours also differ between students who do and do not multitask.
 
 ```{r}
