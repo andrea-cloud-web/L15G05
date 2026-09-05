@@ -245,27 +245,23 @@ Cohen's d = 0.372, indicating a small-to-medium effect size.
 **5. Decision:**
 Since $p = 0.0004 < 0.05$, we reject $H_0$: Cram students report significantly higher weekly work hours (log scale) than Non-Cram students. Both variables are self-reported, and the 70-hour threshold is analyst-chosen. Normality was not fully achieved, so validity relies on the CLT, making the result asymptotic rather than exact. As this is observational data, the result establishes association, not causation, and unmeasured confounders (e.g., course load and financial need) cannot be ruled out.
 
-## RQ2: Multitasking and cramming
+## RQ2: Is multitasking during lectures associated with whether students cram before assessments?
 
-Our client, a university learning-support team, wants to know whether
-multitasking during lectures is associated with cramming for assessments,
-to help distinguish a lecture-engagement problem from a broader
-time-management one.
+Our client, a university learning-support team, wants to distinguish a lecture-engagement problem from a broader time-management one. Multitasking in lectures is usually read as disengagement, making it a plausible correlate of poor preparation habits, which we test with a chi-squared test of independence.
+
+**Exploratory data analysis:**
+
+Rows are dropped only for missing `assess` or `multitask`; the `work_hrs` threshold is not applied here, as neither variable involves paid employment.
 
 ```{r}
 #| label: rq2-setup
-#| message: false
-rq2_data <- read_csv("survey_cleaned.csv") %>%
+rq2_data <- df %>%
   select(assess, multitask) %>%
   drop_na(assess, multitask) %>%
-  mutate(
-    assess    = factor(assess, levels = c("Gradually", "Immediately", "Cram")),
-    is_cram   = factor(
-      if_else(assess == "Cram", "Cram", "Not Cram"),
-      levels = c("Not Cram", "Cram")
-    ),
-    multitask = factor(multitask, levels = c("No", "Yes"))
-  )
+  mutate(is_cram = factor(
+    if_else(assess == "Cram", "Cram", "Non-Cram"),
+    levels = c("Non-Cram", "Cram")
+  ))
 
 cram_tab <- table(rq2_data$is_cram, rq2_data$multitask)
 chi_test <- chisq.test(cram_tab, correct = FALSE)
@@ -277,13 +273,32 @@ min_expected  <- min(chi_test$expected)
 n_total       <- sum(cram_tab)
 cramers_v     <- sqrt(chi_statistic / n_total)
 
-rq2_props <- rq2_data %>%
-  count(is_cram, multitask) %>%
-  group_by(is_cram) %>%
-  mutate(prop = n / sum(n)) %>%
+yes_counts   <- cram_tab[c("Cram", "Non-Cram"), "Yes"]
+group_totals <- rowSums(cram_tab)[c("Cram", "Non-Cram")]
+prop_test    <- prop.test(x = yes_counts, n = group_totals, correct = FALSE)
+pct_cram     <- 100 * unname(prop_test$estimate[1])
+pct_notcram  <- 100 * unname(prop_test$estimate[2])
+diff_ci      <- 100 * prop_test$conf.int
+
+by_assess <- rq2_data %>%
+  count(assess, multitask) %>%
+  group_by(assess) %>%
+  mutate(prop = 100 * n / sum(n)) %>%
   filter(multitask == "Yes")
-pct_cram    <- 100 * rq2_props$prop[rq2_props$is_cram == "Cram"]
-pct_notcram <- 100 * rq2_props$prop[rq2_props$is_cram == "Not Cram"]
+pct_imm  <- by_assess$prop[by_assess$assess == "Immediately"]
+pct_grad <- by_assess$prop[by_assess$assess == "Gradually"]
+```
+
+```{r}
+#| label: tbl-rq2-table
+#| tbl-cap: "Cramming behaviour by multitasking status, with marginal totals."
+cram_tab %>%
+  addmargins() %>%
+  as.data.frame.matrix() %>%
+  tibble::rownames_to_column("Preparation style") %>%
+  knitr::kable(align = "c",
+               col.names = c("Preparation style", "Does not multitask",
+                             "Multitasks", "Total"))
 ```
 
 ```{r}
@@ -296,51 +311,40 @@ rq2_data %>%
   ggplot(aes(x = is_cram, y = prop, fill = multitask)) +
   geom_col(position = "fill", width = 0.5, alpha = 0.85) +
   scale_y_continuous(labels = scales::percent) +
-  scale_fill_manual(
-    name = "Multitasks?",
-    values = c("No" = "#A8DADC", "Yes" = "#E76F51")
-  ) +
+  scale_fill_manual(name = "Multitasks?",
+                    values = c("No" = "#BFE3DB", "Yes" = "#F3B5A7")) +
   labs(x = "Assessment preparation style", y = "Proportion of students") +
   theme_minimal(base_size = 12) +
   theme(legend.position = "top", panel.grid.minor = element_blank())
 ```
 
-@fig-rq2-eda shows multitasking is more common among students who cram
-(`r sprintf("%.1f", pct_cram)`%) than those who don't
-(`r sprintf("%.1f", pct_notcram)`%), motivating a formal test of this
-association.
+@tbl-rq2-table and @fig-rq2-eda show multitasking is more common among students who cram (`r sprintf("%.1f", pct_cram)`%) than among those who do not (`r sprintf("%.1f", pct_notcram)`%). The two non-cramming categories multitask at similar rates (Immediately `r sprintf("%.1f", pct_imm)`%, Gradually `r sprintf("%.1f", pct_grad)`%), justifying their collapse into one group.
 
-- **Hypothesis:** $H_0$: multitasking is independent of cramming vs
-  $H_1$: multitasking is not independent of cramming.
-- **Assumptions:** Observations are independent (one response per student),
-  and expected cell counts must be $\geq 5$ in the $2\times2$ table --
-  confirmed below (minimum $\approx$ `r sprintf("%.1f", min_expected)`), so
-  the chi-squared approximation is valid.
+**1. Hypotheses:** $H_0$: multitasking is independent of cramming among DATA2x02 students, versus $H_1$: the two are not independent.
+
+**2. Assumptions:** Observations are independent (one response per student) and every expected cell count must be at least 5. The minimum is `r sprintf("%.1f", min_expected)` (@tbl-rq2-expected), so the chi-squared approximation is valid and no continuity correction is applied; had any count fallen below 5, Fisher's exact test would be used instead.
 
 ```{r}
-#| label: rq2-assumptions
-chi_test$expected
+#| label: tbl-rq2-expected
+#| tbl-cap: "Expected cell counts under independence."
+chi_test$expected %>%
+  round(1) %>%
+  as.data.frame.matrix() %>%
+  tibble::rownames_to_column("Preparation style") %>%
+  knitr::kable(align = "c",
+               col.names = c("Preparation style", "Does not multitask", "Multitasks"))
 ```
 
-- **Test statistic:** $T = \sum (O_{ij}-E_{ij})^2/E_{ij}$. Under $H_0$,
-  $T \sim \chi^2_{`r chi_df`}$.
+**3. Test statistic:** $$T=\sum_{i,j}\frac{(O_{ij}-E_{ij})^2}{E_{ij}} \sim \chi^2_{`r chi_df`} \text{ under } H_0$$ The observed value is $t_0 = `r sprintf("%.2f", chi_statistic)`$.
 
 ```{r}
 #| label: rq2-test
 chi_test
 ```
 
-- **Observed test statistic:** $t_0 =$ `r sprintf("%.2f", chi_statistic)`
-  with `r chi_df` degree of freedom.
-- **p-value:** $P(\chi^2_{`r chi_df`} \geq$ `r sprintf("%.2f", chi_statistic)`$)
-  =$ `r signif(chi_p, 3)`.
-- **Decision:** Reject $H_0$ in favour of $H_1$ ($p < 0.001$). Students who
-  cram are considerably more likely to multitask (Cramér's
-  $V =$ `r sprintf("%.2f", cramers_v)`, a small-to-moderate effect). As this
-  is a self-selected, self-reported survey, "cram" and "multitask" may be
-  interpreted inconsistently across respondents, and the association does
-  not imply causation -- a third factor such as overall workload could
-  plausibly drive both behaviours.
+**4. P-value:** $P(\chi^2_{`r chi_df`} \geq `r sprintf("%.2f", chi_statistic)`) = `r signif(chi_p, 3)`$. Cramér's $V = `r sprintf("%.2f", cramers_v)`$ ($n = `r n_total`$), and the 95% CI for the difference in multitasking rates is `r sprintf("%.1f", diff_ci[1])` to `r sprintf("%.1f", diff_ci[2])` percentage points.
+
+**5. Decision:** Reject $H_0$ ($p < 0.001$): students who cram are considerably more likely to multitask. The effect is modest, so multitasking is one correlate of cramming rather than a defining feature. As a self-selected, self-reported survey, "cram" and "multitask" may be interpreted inconsistently, and the association does not imply causation — overall workload could drive both.
 ## RQ3: Do students who multitask in class spend a different time per week on work compared to students who do not?
 
 Paid employment is an external time commitment. Students balancing more work with study may exhibit different lecture behaviours. Following our previous research, we investigate whether paid-employment hours also differ between students who do and do not multitask.
