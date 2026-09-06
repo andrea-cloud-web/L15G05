@@ -77,7 +77,7 @@ write_csv(df_clean, "survey_cleaned.csv")
 
 **Research Question:** Is there a difference in weekly paid employment hours between students who cram before assessments and those who do not?
 
-Paid employment may shape assessment preparation (Kember 1999). We compare mean weekly work hours between students who cram and those who do not, using a Welch two-sample t-test.
+Paid employment may shape assessment preparation (Kember, 1999). We compare mean weekly work hours between students who cram and those who do not, using a Welch two-sample t-test.
 
 **Exploratory data analysis:**
 ```{r}
@@ -160,7 +160,7 @@ rq1_data %>%
     panel.grid.major.x = element_blank()
   )
 ```
-Figure @fig-rq1-eda confirms right-skew.
+@fig-rq1-eda confirms right-skew.
 
 **1. Hypotheses:**
 Let $\mu_1$ and $\mu_2$ be the population mean weekly work hours for students who cram (Yes) and those who do not (No), respectively.
@@ -254,7 +254,9 @@ tibble::tibble(
 ```
 
 **3. Test statistic:**
+
 ```{r}
+#| label: rq1-welch-test
 welch_test <- t.test(cram_log, noncram_log, var.equal = FALSE)
 pooled_sd <- sqrt(((length(cram_log) - 1) * var(cram_log) +
                     (length(noncram_log) - 1) * var(noncram_log)) /
@@ -262,18 +264,18 @@ pooled_sd <- sqrt(((length(cram_log) - 1) * var(cram_log) +
 cohend <- (mean(cram_log) - mean(noncram_log)) / pooled_sd
 welch_test
 ```
-Test statistic: $t = `r unname(welch_test$statistic)`$, $df = `r welch_test$parameter`$. P-value: $p = `r format.pval(welch_test$p.value, digits = 3)`$.
+
+Test statistic: $t = `r round(unname(welch_test$statistic), 2)`$, $df = `r round(welch_test$parameter, 2)`$.
 
 **4. P-value:**
-```{r}
-#| label: rq1-effect-size
-#| include: false
-cohend
-```
+
+$p = `r format(round(welch_test$p.value, 4), scientific = FALSE)`$
+
+**5. Effect size:**
+
 Cohen's $d = `r sprintf("%.3f", cohend)`$, indicating a small-to-medium effect.
 
-**5. Decision:**
-
+**6. Decision:**
 Since $p = `r format.pval(welch_test$p.value, digits = 3)` < 0.05$, we reject $H_0$: students who cram report significantly higher weekly work hours (log scale) than students who do not cram. Both variables are self-reported, and the 70-hour threshold is analyst-chosen. Normality was not fully achieved, so validity relies on the CLT, making the result asymptotic rather than exact. As this is observational data, the result establishes association, not causation, and unmeasured confounders (e.g., course load and financial need) cannot be ruled out.
 
 ## RQ2: Is multitasking during lectures associated with whether students cram before assessments?
@@ -646,6 +648,7 @@ Kember, D. (1999). Integrating part-time study with family, work and social obli
 
 R Core Team. (2026). *R: A language and environment for statistical computing*. R Foundation for Statistical Computing.
 
-Wickham, H., Averick, M., Bryan, J., Chang, W., McGowan, L. D., François, R., Grolemund, G., Hayes, A., Henry, L., Hester, J., Kuhn, M., Pedersen, T. L., Miller, E., Bacher, R., Müller, K., Ooms, J., Robinson, D., Seidel, D. P., Spinu, V., Takahashi, K., Vaughan, D., Wilke, C., Woo, K., and Yutani, H. (2019). Welcome to the tidyverse. *Journal of Open Source Software*, 4(43), 1686.
+Wickham, H., Averick, M., Bryan, J., Chang, W., McGowan, L. D., François, R., Grolemund, G., Hayes, A., Henry, L., Hester, J., Kuhn, M., Pedersen, T. L., Miller, E., Bache, S. M., Müller, K., Ooms, J., Robinson, D., Seidel, D. P., Spinu, V., Takahashi, K., Vaughan, D., Wilke, C., Woo, K., and Yutani, H. (2019). Welcome to the tidyverse. *Journal of Open Source Software*, 4(43), 1686.
 
 Xie, Y., Allaire, J. J., and Grolemund, G. (2018). *R Markdown: The Definitive Guide*. Chapman and Hall/CRC.
+Kember, D. (1999). Integrating part-time study with family, work and social obligations. Studies in Higher Education, 24(1), 109–124.
