@@ -639,9 +639,8 @@ We conducted the analysis responsibly by maintaining data integrity, applying ap
 
 Kember, D. (1999). Integrating part-time study with family, work and social obligations. *Studies in Higher Education*, 24(1), 109–124.
 
-Xie, Y., Allaire, J. J., and Grolemund, G. (2018). *R Markdown: The Definitive Guide*. Chapman and Hall/CRC.
-
 R Core Team. (2026). *R: A language and environment for statistical computing*. R Foundation for Statistical Computing.
 
 Wickham, H., Averick, M., Bryan, J., Chang, W., McGowan, L. D., François, R., Grolemund, G., Hayes, A., Henry, L., Hester, J., Kuhn, M., Pedersen, T. L., Miller, E., Bacher, R., Müller, K., Ooms, J., Robinson, D., Seidel, D. P., Spinu, V., Takahashi, K., Vaughan, D., Wilke, C., Woo, K., and Yutani, H. (2019). Welcome to the tidyverse. *Journal of Open Source Software*, 4(43), 1686.
 
+Xie, Y., Allaire, J. J., and Grolemund, G. (2018). *R Markdown: The Definitive Guide*. Chapman and Hall/CRC.
