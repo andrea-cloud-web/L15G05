@@ -15,13 +15,13 @@ number-sections: true # (Optional) Puts numbers next to heading/subheadings
 
 # Introduction
 
-This report examines how paid employment and study habits relate to students’ university experience, using survey data from DATA2002/2902 students. Three research questions investigate these relationships, with limitations including self-reported data and sampling bias.
+This report examines how paid employment relates to students’ study habits using survey data from DATA2002/2902 students. The teaching team is the client. Three research questions investigate employment, cramming, and lecture multitasking, while recognising limitations including self-reported responses and sampling bias.
 
 ## Data Wrangling
 
-All data processing for this report was conducted in R (R Core Team 2026) within the R Markdown environment (Xie, Allaire, and Grolemund 2018) for reproducibility. Data wrangling was performed using base R and the tidyverse, and visualisations were produced with ggplot2 (Wickham et al. 2019).
+All data processing for this report was conducted in R (R Core Team 2026) within the Rmarkdown environment (Xie, Allaire, and Grolemund 2018) for reproducibility. Data wrangling was performed using base R and the tidyverse (Wickham et al. 2019). Visualisations were produced with ggplot2 (Wickham et al. 2019).
 
-Variables were cleaned and recoded, with missing values handled case-by-case. The survey dataset was imported, variables were renamed for clarity, "Other" responses were removed from `assess`, and `work_hrs` values above 70 hours per week were removed because they exceed a standard full-time work week. A boxplot compares the distributions before and after cleaning, and the cleaned data are saved as `survey_cleaned.csv`.
+The survey dataset was imported, variables renamed for clarity, "Other" responses removed from assess, and work_hrs values above 70 hours per week excluded, since this exceeds a standard full-time work week. Boxplots compare the distribution before and after cleaning, and the cleaned dataset was saved as survey_cleaned.csv.
 
 
 ```{r}
@@ -73,22 +73,19 @@ write_csv(df_clean, "survey_cleaned.csv")
 
 # Results
 
-## RQ1: Work hours and cramming
-
-**Research Question:** Is there a difference in weekly paid employment hours between students who cram before assessments and those who do not?
-
-Paid employment may shape assessment preparation (Kember 2004). We compare mean weekly work hours between students who cram and those who do not, using a Welch two-sample t-test.
+## RQ1: Is there a difference in weekly paid employment hours between students who cram before assessments and those who do not?
+Paid employment is a key external time commitment that may shape how students approach assessment preparation (Kember 2004). We compare mean weekly work hours between students who cram before deadlines and those who do not, using a Welch two-sample t-test.
 
 **Exploratory data analysis:**
 ```{r}
 #| label: rq1-setup
 rq1_data <- df_clean %>%
   select(assess, work_hrs) %>%
-  mutate(is_cram = if_else(assess == "Cram", "Yes", "No"))
+  mutate(is_cram = if_else(assess == "Cram", "Cram", "Non-Cram"))
 ```
 ```{r}
-#| label: tbl-rq1-table
-#| tbl-cap: "Summary statistics of weekly paid employment hours by cramming status."
+#| label: tbl-summary
+#| tbl-cap: "Summary statistics of weekly work hours by Cram status"
 
 rq1_data %>%
   group_by(is_cram) %>%
@@ -105,10 +102,9 @@ rq1_data %>%
   ) %>%
   knitr::kable(align = rep("c", 9))
 ```
-Means exceed medians: right-skew.
 ```{r}
-#| label: fig-rq1-eda
-#| fig-cap: "Distribution of weekly paid employment hours by cramming status."
+#| label: fig-workhours-cram
+#| fig-cap: "Distribution of weekly paid employment hours by cramming status"
 
 rq1_data %>%
   ggplot(aes(x = is_cram, y = work_hrs)) +
@@ -139,8 +135,8 @@ rq1_data %>%
     size = 3.5
   ) +
   scale_fill_manual(
-    name = "Crams before deadlines?",
-    values = c("No" = "#BFE3DB", "Yes" = "#F3B5A7")
+    name = "Cram status",
+    values = c("Non-Cram" = "#BFE3DB", "Cram" = "#F3B5A7")
   ) +
   scale_colour_manual(
     name = NULL,
@@ -149,8 +145,7 @@ rq1_data %>%
   labs(
     x = NULL,
     y = "Weekly paid employment hours",
-    title = "Weekly work hours by cramming behaviour",
-    caption = "Diamonds and labels indicate group means."
+    title = "Weekly work hours by cramming behaviour"
   ) +
   theme_minimal(base_size = 12) +
   theme(
@@ -160,27 +155,47 @@ rq1_data %>%
     panel.grid.major.x = element_blank()
   )
 ```
-Figure @fig-rq1-eda confirms right-skew.
 
 **1. Hypotheses:**
-Let $\mu_1$ and $\mu_2$ be the population mean weekly work hours for students who cram (Yes) and those who do not (No), respectively.
+Let $\mu_1$ and $\mu_2$ be the population mean weekly work hours for Cram and Non-Cram students respectively. $H_0: \mu_1 = \mu_2$ vs $H_1: \mu_1 \neq \mu_2$.
 
 $H_0: \mu_1 = \mu_2$  
 $H_1: \mu_1 \neq \mu_2$
 
 **2. Assumptions:**
-The Welch test assumes approximate normality. Raw hours fail Shapiro-Wilk tests (@tbl-rq1-shapiro-raw), so we log(x+1)-transform them. Skewness improves (@tbl-rq1-skewness), but zero-inflation remains (@fig-rq1-eda). Large samples ($n_{yes}=`r nrow(filter(rq1_data, is_cram == "Yes"))`$, $n_{no}=`r nrow(filter(rq1_data, is_cram == "No"))`$) support the CLT. The variance test provides no evidence of unequal variances (@tbl-rq1-variance), but Welch's test is retained as the more robust default.
+The Welch t-test assumes approximate normality within each group, assessed using Shapiro-Wilk tests and QQ plots. Both p-values are below 0.05 and the QQ plots indicate non-normality, so a $\log(x+1)$ transformation is applied to reduce right-skewness. 
 ```{r}
-#| label: tbl-rq1-shapiro-raw
-#| tbl-cap: "Shapiro-Wilk test on raw work hours."
+#| label: fig-qqplot
+#| fig-cap: "QQ plot of weekly work hours by Cram status"
 
-cram_raw <- rq1_data %>% filter(is_cram == "Yes") %>% pull(work_hrs)
-noncram_raw <- rq1_data %>% filter(is_cram == "No") %>% pull(work_hrs)
+ggplot(rq1_data, aes(sample = work_hrs, colour = is_cram)) +
+  stat_qq() +
+  stat_qq_line() +
+  facet_wrap(~ is_cram) +
+  labs(
+    title = "QQ plot of weekly work hours by Cram status",
+    x = "Theoretical quantiles", y = "Sample quantiles"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    plot.title = element_text(hjust = 0.5)
+  )
+```
+```{r}
+#| label: rq1-shapiro-raw-setup
+
+cram_raw <- rq1_data %>% filter(is_cram == "Cram") %>% pull(work_hrs)
+noncram_raw <- rq1_data %>% filter(is_cram == "Non-Cram") %>% pull(work_hrs)
 shapiro_cram_raw <- shapiro.test(cram_raw)
 shapiro_noncram_raw <- shapiro.test(noncram_raw)
+```
+```{r}
+#| label: tbl-shapiro-raw
+#| tbl-cap: "Shapiro-Wilk test on raw work hours"
 
 tibble::tibble(
-  Group = c("Yes", "No"),
+  Group = c("Cram", "Non-Cram"),
   Statistic = c(shapiro_cram_raw$statistic, shapiro_noncram_raw$statistic),
   p_value = c(shapiro_cram_raw$p.value, shapiro_noncram_raw$p.value)
 ) %>%
@@ -191,17 +206,19 @@ tibble::tibble(
   knitr::kable(align = c("l", "c", "c"))
 ```
 ```{r}
+#| label: rq1-shapiro-log-setup
+
 cram_log <- log1p(cram_raw)
 noncram_log <- log1p(noncram_raw)
 shapiro_cram_log <- shapiro.test(cram_log)
 shapiro_noncram_log <- shapiro.test(noncram_log)
 ```
 ```{r}
-#| label: tbl-rq1-shapiro-log
-#| tbl-cap: "Shapiro-Wilk test on log-transformed work hours."
+#| label: tbl-shapiro-log
+#| tbl-cap: "Shapiro-Wilk test on log-transformed work hours"
 
 tibble::tibble(
-  Group = c("Yes", "No"),
+  Group = c("Cram", "Non-Cram"),
   Statistic = c(shapiro_cram_log$statistic, shapiro_noncram_log$statistic),
   p_value = c(shapiro_cram_log$p.value, shapiro_noncram_log$p.value)
 ) %>%
@@ -212,15 +229,21 @@ tibble::tibble(
   knitr::kable(align = c("l", "c", "c"))
 ```
 ```{r}
+#| label: rq1-manual-skew
+
 manual_skew <- function(x) {
   n <- length(x)
   m <- mean(x)
   (sum((x - m)^3) / n) / (sum((x - m)^2) / n)^(3/2)
 }
 ```
+Normality is still not fully satisfied after transformation, although skewness falls substantially. The remaining non-normality is partly attributable to the large number of zero work-hour responses. Given the large sample sizes, the Central Limit Theorem supports the t-test approximation despite this departure, which is acknowledged as a limitation.
+
+Skewness is calculated as:
+$$\text{skewness} = \frac{\frac{1}{n}\sum(x_i - \bar{x})^3}{\left(\frac{1}{n}\sum(x_i - \bar{x})^2\right)^{3/2}}$$
 ```{r}
-#| label: tbl-rq1-skewness
-#| tbl-cap: "Skewness before and after log transformation."
+#| label: tbl-skewness
+#| tbl-cap: "Skewness before and after log transformation"
 
 skew_cram_raw <- manual_skew(cram_raw)
 skew_noncram_raw <- manual_skew(noncram_raw)
@@ -228,48 +251,33 @@ skew_cram_log <- manual_skew(cram_log)
 skew_noncram_log <- manual_skew(noncram_log)
 
 tibble::tibble(
-  Group = c("Yes", "No"),
+  Group = c("Cram", "Non-Cram"),
   `Raw skewness` = round(c(skew_cram_raw, skew_noncram_raw), 2),
   `Log skewness` = round(c(skew_cram_log, skew_noncram_log), 2)
 ) %>%
   knitr::kable(align = c("l", "c", "c"))
 ```
 
-```{r}
-#| label: tbl-rq1-variance
-#| tbl-cap: "F test for equality of variances."
-
-f_test <- var.test(cram_log, noncram_log)
-
-tibble::tibble(
-  Statistic = round(f_test$statistic, 3),
-  p_value = format.pval(f_test$p.value, digits = 3, eps = 0.001)
-) %>%
-  knitr::kable(align = c("c", "c"))
-```
-
 **3. Test statistic:**
 ```{r}
 welch_test <- t.test(cram_log, noncram_log, var.equal = FALSE)
-pooled_sd <- sqrt(((length(cram_log) - 1) * var(cram_log) +
-                    (length(noncram_log) - 1) * var(noncram_log)) /
-                    (length(cram_log) + length(noncram_log) - 2))
-cohend <- (mean(cram_log) - mean(noncram_log)) / pooled_sd
 welch_test
 ```
-Test statistic: $t = `r unname(welch_test$statistic)`$, $df = `r welch_test$parameter`$. P-value: $p = `r format.pval(welch_test$p.value, digits = 3)`$.
+Test statistic: $t = 3.60$, $df = 167.28$. P-value: $p = 0.0004$. Cohen's $d = 0.372$, a small-to-medium effect.
 
 **4. P-value:**
 ```{r}
 #| label: rq1-effect-size
-#| include: false
-cohend
+pooled_sd <- sqrt(((length(cram_log) - 1) * var(cram_log) +
+                    (length(noncram_log) - 1) * var(noncram_log)) /
+                    (length(cram_log) + length(noncram_log) - 2))
+cohend <- (mean(cram_log) - mean(noncram_log)) / pooled_sd
+cohend  
 ```
-Cohen's $d = `r sprintf("%.3f", cohend)`$, indicating a small-to-medium effect.
+Cohen's d = 0.372, indicating a small-to-medium effect size.
 
 **5. Decision:**
-
-Since $p = `r format.pval(welch_test$p.value, digits = 3)` < 0.05$, we reject $H_0$: students who cram report significantly higher weekly work hours (log scale) than students who do not cram. Both variables are self-reported, and the 70-hour threshold is analyst-chosen. Normality was not fully achieved, so validity relies on the CLT, making the result asymptotic rather than exact. As this is observational data, the result establishes association, not causation, and unmeasured confounders (e.g., course load and financial need) cannot be ruled out.
+Since $p = 0.0004 < 0.05$, we reject $H_0$: Cram students report significantly higher weekly work hours (log scale) than Non-Cram students. Both variables are self-reported, and the 70-hour threshold is analyst-chosen. Normality was not fully achieved, so validity relies on the CLT, making the result asymptotic rather than exact. As this is observational data, the result establishes association, not causation, and unmeasured confounders (e.g., course load and financial need) cannot be ruled out.
 
 ## RQ2: Is multitasking during lectures associated with whether students cram before assessments?
 
@@ -285,8 +293,8 @@ rq2_data <- df %>%
   select(assess, multitask) %>%
   drop_na(assess, multitask) %>%
   mutate(is_cram = factor(
-    if_else(assess == "Cram", "Yes", "No"),
-    levels = c("No", "Yes")
+    if_else(assess == "Cram", "Cram", "Non-Cram"),
+    levels = c("Non-Cram", "Cram")
   ))
 
 cram_tab <- table(rq2_data$is_cram, rq2_data$multitask)
@@ -299,8 +307,8 @@ min_expected  <- min(chi_test$expected)
 n_total       <- sum(cram_tab)
 cramers_v     <- sqrt(chi_statistic / n_total)
 
-yes_counts   <- cram_tab[c("Yes", "No"), "Yes"]
-group_totals <- rowSums(cram_tab)[c("Yes", "No")]
+yes_counts   <- cram_tab[c("Cram", "Non-Cram"), "Yes"]
+group_totals <- rowSums(cram_tab)[c("Cram", "Non-Cram")]
 prop_test    <- prop.test(x = yes_counts, n = group_totals, correct = FALSE)
 pct_cram     <- 100 * unname(prop_test$estimate[1])
 pct_notcram  <- 100 * unname(prop_test$estimate[2])
@@ -337,11 +345,8 @@ rq2_data %>%
   ggplot(aes(x = is_cram, y = prop, fill = multitask)) +
   geom_col(position = "fill", width = 0.5, alpha = 0.85) +
   scale_y_continuous(labels = scales::percent) +
-  scale_fill_manual(
-    name = "Multitasking",
-    labels = c("No" = "Does not multitask", "Yes" = "Multitasks"),
-    values = c("No" = "#BFE3DB", "Yes" = "#F3B5A7")
-  ) +
+  scale_fill_manual(name = "Multitasks?",
+                    values = c("No" = "#BFE3DB", "Yes" = "#F3B5A7")) +
   labs(x = "Assessment preparation style", y = "Proportion of students") +
   theme_minimal(base_size = 12) +
   theme(legend.position = "top", panel.grid.minor = element_blank())
@@ -381,19 +386,19 @@ Paid employment is an external time commitment. Students balancing more work wit
 ```{r}
 #| label: rq3-setup
 #| message: false
-df_rq3 <- read_csv("survey_cleaned.csv") %>%
+df_clean <- read_csv("survey_cleaned.csv") %>%
   mutate(
     work_hrs = as.numeric(work_hrs),
     multitask = factor(multitask, levels = c("No", "Yes"))
   ) %>%
-  filter(work_hrs <= 70)
+  filter(is.na(work_hrs) | work_hrs <= 70)
 ```
 
 ```{r}
-#| label: tbl-rq3-summary
+#| label: tbl-flipper
 #| tbl-cap: "Summary statistics of weekly paid employment hours by multitasking status."
 
-rq3_summary <- df_rq3 %>%
+rq3_summary <- df_clean %>%
   filter(!is.na(work_hrs), !is.na(multitask)) %>%
   group_by(multitask) %>%
   summarise(
@@ -412,17 +417,13 @@ knitr::kable(
   rq3_summary,
   align = rep("c", ncol(rq3_summary))
 )
-
-rq3_mean_no <- rq3_summary$mean[rq3_summary$multitask == "No"]
-rq3_mean_yes <- rq3_summary$mean[rq3_summary$multitask == "Yes"]
-rq3_mean_difference <- rq3_mean_yes - rq3_mean_no
 ```
-@tbl-rq3-summary and @fig-work-multitask show that multitasking students averaged `r sprintf("%.2f", rq3_mean_yes)` paid-work hours per week, compared with `r sprintf("%.2f", rq3_mean_no)` hours for non-multitasking students---a difference of `r sprintf("%.2f", rq3_mean_difference)` hours. Both distributions are visually right-skewed, with many students reporting few or no hours of employment and a smaller number reporting substantially higher working hours.
+@tbl-flipper and @fig-work-multitask show that multitasking students averaged 8.02 paid-work hours per week, compared with 6.23 hours for non-multitasking students---a difference of 1.79 hours. Both distributions are visually right-skewed, with many students reporting few or no hours of employment and a smaller number reporting substantially higher working hours.
 ```{r}
 #| label: fig-work-multitask
 #| fig-cap: "Distribution of weekly paid employment hours by multitasking status."
 
-df_rq3 %>%
+df_clean %>%
   filter(!is.na(work_hrs), !is.na(multitask)) %>%
   ggplot(aes(x = multitask, y = work_hrs)) +
 
@@ -492,7 +493,7 @@ df_rq3 %>%
 ```{r}
 #| label: rq3-permutation-test
 
-rq3_data <- df_rq3 %>%
+rq3_data <- df_clean %>%
   filter(!is.na(work_hrs), !is.na(multitask)) %>%
   mutate(multitask = factor(multitask, levels = c("No", "Yes")))
 
@@ -607,7 +608,7 @@ tibble(
    $|T_b^*|\geq|t_0|$ were counted. The plus-one estimate is
    $p_{\mathrm{perm}}=`r sprintf("%.4f", p_permutation)`$.
 
-6. **Decision:** Since $p=`r sprintf("%.4f", p_permutation)`<0.05$, we reject $H_0$. There is evidence that mean
+6. **Decision:** Since $p<0.05$, we reject $H_0$. There is evidence that mean
    employment hours differ by multitasking status. multitasking students
    worked `r sprintf("%.2f", mean_difference)` more hours per week on average
    in this sample. However, Cohen's $d=`r sprintf("%.2f", cohens_d)`$ indicates
@@ -636,10 +637,3 @@ We conducted the analysis responsibly by maintaining data integrity, applying ap
 
 
 # References
-
-Kember, D. (2004). Interpreting the many dimensions of the approaches to learning inventory. *Studies in Higher Education*, 29(3), 333--349.
-
-R Core Team. (2026). *R: A language and environment for statistical computing*. R Foundation for Statistical Computing.
-
-Wickham, H., Averick, M., Bryan, J., Chang, W., McGowan, L. D., François, R., Grolemund, G., Hayes, A., Henry, L., Hester, J., Kuhn, M., Pedersen, T. L., Miller, E., Bacher, R., Müller, K., Ooms, J., Robinson, D., Seidel, D. P., Spinu, V., Takahashi, K., Vaughan, D., Wilke, C., Woo, K., and Yutani, H. (2019). Welcome to the tidyverse. *Journal of Open Source Software*, 4(43), 1686.
-
