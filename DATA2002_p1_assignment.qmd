@@ -15,15 +15,13 @@ number-sections: true # (Optional) Puts numbers next to heading/subheadings
 
 # Introduction
 
-This report examines how paid employment and study habits relate to students’ university experience, using survey data from DATA2002/2902 students. Three research questions investigate these relationships, with limitations including self-reported data and sampling bias.
+This report examines how paid employment relates to students’ study habits using survey data from DATA2002/2902 students. The teaching team is the client. Three research questions investigate employment, cramming, and lecture multitasking, while recognising limitations including self-reported responses and sampling bias.
 
 ## Data Wrangling
 
-All data processing for this report was conducted in R (R Core Team 2026) within the Rmarkdown environment (Xie, Allaire, and Grolemund 2018) for reproducibility. Data wrangling was performed using base R and the tidyverse，Visualisations were produced with ggplot2 (Wickham et al. 2019).
+All data processing for this report was conducted in R (R Core Team 2026) within the Rmarkdown environment (Xie, Allaire, and Grolemund 2018) for reproducibility. Data wrangling was performed using base R and the tidyverse (Wickham et al. 2019). Visualisations were produced with ggplot2 (Wickham et al. 2019).
 
-Variables were cleaned and recoded, with missing values handled case-by-case. Import the survey dataset, rename variables for clarity, remove "Other" responses from `assess`, and remove `work_hrs` values above 70 hours per week. equivalent to it exceeding a standard full-time work week
-
-boxplots comparing distributions before and after cleaning.save as "survey_cleaned.csv".
+The survey dataset was imported, variables renamed for clarity, "Other" responses removed from assess, and work_hrs values above 70 hours per week excluded, since this exceeds a standard full-time work week. Boxplots compare the distribution before and after cleaning, and the cleaned dataset was saved as survey_cleaned.csv.
 
 
 ```{r}
