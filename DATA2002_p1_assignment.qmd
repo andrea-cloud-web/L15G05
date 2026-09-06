@@ -169,7 +169,25 @@ $H_0: \mu_1 = \mu_2$
 $H_1: \mu_1 \neq \mu_2$
 
 **2. Assumptions:**
-The Welch test assumes approximate normality. Raw hours fail Shapiro-Wilk tests (@tbl-rq1-shapiro-raw), so we log(x+1)-transform them. Skewness improves (@tbl-rq1-skewness), but zero-inflation remains (@fig-rq1-eda). Large samples ($n_{yes}=`r nrow(filter(rq1_data, is_cram == "Yes"))`$, $n_{no}=`r nrow(filter(rq1_data, is_cram == "No"))`$) support the CLT. The variance test provides no evidence of unequal variances (@tbl-rq1-variance), but Welch's test is retained as the more robust default.
+The Welch test assumes approximate normality. Raw hours fail Shapiro-Wilk tests (@tbl-rq1-shapiro-raw), so we log(x+1)-transform them. The QQ plots (@fig-qqplot) show upper-tail departure and a flat lower segment from zero-inflated responses. Skewness improves (@tbl-rq1-skewness), but zero-inflation remains (@fig-rq1-eda). Large samples ($n_{yes}=`r nrow(filter(rq1_data, is_cram == "Yes"))`$, $n_{no}=`r nrow(filter(rq1_data, is_cram == "No"))`$) support the CLT.
+```{r}
+#| label: fig-qqplot
+#| fig-cap: "QQ plot of weekly work hours by cramming status"
+
+ggplot(rq1_data, aes(sample = work_hrs, colour = is_cram)) +
+  stat_qq() +
+  stat_qq_line() +
+  facet_wrap(~ is_cram) +
+  labs(
+    title = "QQ plot of weekly work hours by cramming status",
+    x = "Theoretical quantiles", y = "Sample quantiles"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    plot.title = element_text(hjust = 0.5)
+  )
+```
 ```{r}
 #| label: tbl-rq1-shapiro-raw
 #| tbl-cap: "Shapiro-Wilk test on raw work hours."
@@ -233,19 +251,6 @@ tibble::tibble(
   `Log skewness` = round(c(skew_cram_log, skew_noncram_log), 2)
 ) %>%
   knitr::kable(align = c("l", "c", "c"))
-```
-
-```{r}
-#| label: tbl-rq1-variance
-#| tbl-cap: "F test for equality of variances."
-
-f_test <- var.test(cram_log, noncram_log)
-
-tibble::tibble(
-  Statistic = round(f_test$statistic, 3),
-  p_value = format.pval(f_test$p.value, digits = 3, eps = 0.001)
-) %>%
-  knitr::kable(align = c("c", "c"))
 ```
 
 **3. Test statistic:**
