@@ -280,8 +280,7 @@ Since $p = `r format.pval(welch_test$p.value, digits = 3)` < 0.05$, we reject $H
 
 ## RQ2: Is multitasking during lectures associated with whether students cram before assessments?
 
-Our client, a university learning-support team, wants to distinguish a lecture-engagement problem from a broader time-management one. Multitasking in lectures is usually read as disengagement, making it a plausible correlate of poor preparation habits, which we test with a chi-squared test of independence.
-
+Our client, a university learning-support team, wants to distinguish a lecture-engagement problem from a broader time-management one. Divided attention during study has been linked to weaker academic outcomes (Junco & Cotten, 2012), so multitasking is unlikely to be a neutral habit. If it also travels with cramming, the two may be one behavioural pattern rather than two, which we test with a chi-squared test of independence.
 **Exploratory data analysis:**
 
 Rows are dropped only for missing `assess` or `multitask`; the `work_hrs` threshold is not applied here, as neither variable involves paid employment.
@@ -354,7 +353,7 @@ rq2_data %>%
   theme(legend.position = "top", panel.grid.minor = element_blank())
 ```
 
-@tbl-rq2-table and @fig-rq2-eda show multitasking is more common among students who cram (`r sprintf("%.1f", pct_cram)`%) than among those who do not (`r sprintf("%.1f", pct_notcram)`%). The two non-cramming categories multitask at similar rates (Immediately `r sprintf("%.1f", pct_imm)`%, Gradually `r sprintf("%.1f", pct_grad)`%), justifying their collapse into one group.
+@tbl-rq2-table and @fig-rq2-eda show multitasking is more common among students who cram (`r sprintf("%.1f", pct_cram)`%) than among those who do not (`r sprintf("%.1f", pct_notcram)`%). Both non-cramming categories sit far below the cramming group (Immediately `r sprintf("%.1f", pct_imm)`%, Gradually `r sprintf("%.1f", pct_grad)`%), so they are collapsed into one.
 
 **1. Hypotheses:** $H_0$: multitasking is independent of cramming among DATA2x02 students, versus $H_1$: the two are not independent.
 
@@ -643,3 +642,5 @@ R Core Team. (2026). *R: A language and environment for statistical computing*. 
 Wickham, H., Averick, M., Bryan, J., Chang, W., McGowan, L. D., François, R., Grolemund, G., Hayes, A., Henry, L., Hester, J., Kuhn, M., Pedersen, T. L., Miller, E., Bache, S. M., Müller, K., Ooms, J., Robinson, D., Seidel, D. P., Spinu, V., Takahashi, K., Vaughan, D., Wilke, C., Woo, K., and Yutani, H. (2019). Welcome to the tidyverse. *Journal of Open Source Software*, 4(43), 1686.
 
 Xie, Y., Allaire, J. J., and Grolemund, G. (2018). *R Markdown: The Definitive Guide*. Chapman and Hall/CRC.
+
+Junco, R., & Cotten, S. R. (2012). No A 4 U: The relationship between multitasking and academic performance. *Computers & Education, 59*(2), 505–514. https://doi.org/10.1016/j.compedu.2011.12.023
