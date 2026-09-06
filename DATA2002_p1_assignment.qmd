@@ -77,7 +77,7 @@ write_csv(df_clean, "survey_cleaned.csv")
 
 **Research Question:** Is there a difference in weekly paid employment hours between students who cram before assessments and those who do not?
 
-Paid employment may shape assessment preparation (Kember 2004). We compare mean weekly work hours between students who cram and those who do not, using a Welch two-sample t-test.
+Paid employment may shape assessment preparation (Kember 1999). We compare mean weekly work hours between students who cram and those who do not, using a Welch two-sample t-test.
 
 **Exploratory data analysis:**
 ```{r}
@@ -637,7 +637,9 @@ We conducted the analysis responsibly by maintaining data integrity, applying ap
 
 # References
 
-Kember, D. (2004). Interpreting the many dimensions of the approaches to learning inventory. *Studies in Higher Education*, 29(3), 333--349.
+Kember, D. (1999). Integrating part-time study with family, work and social obligations. *Studies in Higher Education*, 24(1), 109–124.
+
+Xie, Y., Allaire, J. J., and Grolemund, G. (2018). *R Markdown: The Definitive Guide*. Chapman and Hall/CRC.
 
 R Core Team. (2026). *R: A language and environment for statistical computing*. R Foundation for Statistical Computing.
 
