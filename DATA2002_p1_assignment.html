@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -14,13 +14,10 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
+code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: 1.5em;}
-div.column{flex: auto;}
-@media screen {
-div.columns{gap: min(4vw, 1.5em);}
-div.column{overflow-x: auto;}
-}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -73,13 +70,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="DATA2002_p1_assignment_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="DATA2002_p1_assignment_files/libs/quarto-html/anchor.min.js"></script>
 <link href="DATA2002_p1_assignment_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="DATA2002_p1_assignment_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="DATA2002_p1_assignment_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="DATA2002_p1_assignment_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="DATA2002_p1_assignment_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="DATA2002_p1_assignment_files/libs/bootstrap/bootstrap-215b371544c282197b31c8aa00ce3677.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="DATA2002_p1_assignment_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -1095,19 +1092,21 @@ Figure&nbsp;6: Permutation null distribution of the Welch t-statistic. Dashed re
 <span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
 <span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">extreme_permutations =</span> extreme_count,</span>
 <span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">total_permutations =</span> B,</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">permutation_p_value =</span> p_permutation</span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">format =</span> <span class="st">"html"</span>,</span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">digits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">4</span>),</span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(</span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Extreme permutations"</span>,</span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Total permutations"</span>,</span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Permutation p-value"</span></span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">"c"</span>, <span class="st">"c"</span>, <span class="st">"c"</span>),</span>
-<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">table.attr =</span> <span class="st">'class="table table-bordered table-striped" style="width: auto; margin-left: auto; margin-right: auto;"'</span></span>
-<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">permutation_p_value =</span> p_permutation,</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">cohens_d =</span> cohens_d</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">format =</span> <span class="st">"html"</span>,</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">digits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">2</span>),</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Extreme permutations"</span>,</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Total permutations"</span>,</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Permutation p-value"</span>,</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Cohen's d"</span></span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">"c"</span>, <span class="st">"c"</span>, <span class="st">"c"</span>, <span class="st">"c"</span>),</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">table.attr =</span> <span class="st">'class="table table-bordered table-striped" style="width: auto; margin-left: auto; margin-right: auto;"'</span></span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="table table-bordered table-striped caption-top table-sm small">
@@ -1116,6 +1115,7 @@ Figure&nbsp;6: Permutation null distribution of the Welch t-statistic. Dashed re
 <th style="text-align: center;" data-quarto-table-cell-role="th">Extreme permutations</th>
 <th style="text-align: center;" data-quarto-table-cell-role="th">Total permutations</th>
 <th style="text-align: center;" data-quarto-table-cell-role="th">Permutation p-value</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Cohen's d</th>
 </tr>
 </thead>
 <tbody>
@@ -1123,6 +1123,7 @@ Figure&nbsp;6: Permutation null distribution of the Welch t-statistic. Dashed re
 <td style="text-align: center;">316</td>
 <td style="text-align: center;">10000</td>
 <td style="text-align: center;">0.0317</td>
+<td style="text-align: center;">0.17</td>
 </tr>
 </tbody>
 </table>
@@ -1134,7 +1135,7 @@ Figure&nbsp;6: Permutation null distribution of the Welch t-statistic. Dashed re
 <li><p><strong>Test statistic:</strong> <span class="math inline">\(T=(\bar X_Y-\bar X_N)/\sqrt{S_Y^2/n_Y+S_N^2/n_N}\)</span>. The observed difference is 1.79 hours per week and <span class="math inline">\(t_0=2.172\)</span>.</p></li>
 <li><p><strong>Permutation procedure:</strong> With <code>set.seed(2002)</code>, the Yes/No labels were shuffled <span class="math inline">\(B=10{,}000\)</span> times while employment hours were fixed. The Welch statistic was recalculated to form <a href="#fig-rq3-permutation" class="quarto-xref">Figure&nbsp;6</a>.</p></li>
 <li><p><strong>P-value:</strong> For the two-sided test, permutations satisfying <span class="math inline">\(|T_b^*|\geq|t_0|\)</span> were counted. The plus-one estimate is <span class="math inline">\(p_{\mathrm{perm}}=0.0317\)</span>.</p></li>
-<li><p><strong>Decision:</strong> Since <span class="math inline">\(p=0.0317&lt;0.05\)</span>, we reject <span class="math inline">\(H_0\)</span>. There is evidence that mean employment hours differ by multitasking status. multitasking students worked 1.79 more hours per week on average in this sample. However, Cohen’s <span class="math inline">\(d=0.17\)</span> indicates a small effect, so its practical importance is limited. Both variables are self-reported and confounding may remain. As this is an observational survey of students, the result cannot establish causation or automatically generalize to others.</p></li>
+<li><p><strong>Decision:</strong> Since <span class="math inline">\(p=0.0317&lt;0.05\)</span>(Phipson and Smyth, 2010), we reject <span class="math inline">\(H_0\)</span>. There is evidence that mean employment hours differ by multitasking status. multitasking students worked 1.79 more hours per week on average in this sample. However, Cohen’s <span class="math inline">\(d=0.17\)</span> indicates a small effect, so its practical importance is limited. Both variables are self-reported and confounding may remain. As this is an observational survey of students, the result cannot establish causation or automatically generalize to others.</p></li>
 </ol>
 </section>
 </section>
@@ -1155,6 +1156,7 @@ Figure&nbsp;6: Permutation null distribution of the Welch t-statistic. Dashed re
 <section id="references" class="level1" data-number="6">
 <h1 data-number="6"><span class="header-section-number">6</span> References</h1>
 <p>Kember, D. (1999). Integrating part-time study with family, work and social obligations. <em>Studies in Higher Education</em>, 24(1), 109–124.</p>
+<p>Phipson, B., &amp; Smyth, G. K. (2010). Permutation p-values should never be zero: Calculating exact p-values when permutations are randomly drawn. <em>Statistical Applications in Genetics and Molecular Biology</em>, 9(1), Article 39. https://doi.org/10.2202/1544-6115.1585</p>
 <p>R Core Team. (2026). <em>R: A language and environment for statistical computing</em>. R Foundation for Statistical Computing.</p>
 <p>Wickham, H., Averick, M., Bryan, J., Chang, W., McGowan, L. D., François, R., Grolemund, G., Hayes, A., Henry, L., Hester, J., Kuhn, M., Pedersen, T. L., Miller, E., Bache, S. M., Müller, K., Ooms, J., Robinson, D., Seidel, D. P., Spinu, V., Takahashi, K., Vaughan, D., Wilke, C., Woo, K., and Yutani, H. (2019). Welcome to the tidyverse. <em>Journal of Open Source Software</em>, 4(43), 1686.</p>
 <p>Xie, Y., Allaire, J. J., and Grolemund, G. (2018). <em>R Markdown: The Definitive Guide</em>. Chapman and Hall/CRC.</p>
@@ -1257,16 +1259,16 @@ Figure&nbsp;6: Permutation null distribution of the Welch t-statistic. Dashed re
     }
     function toggleCodeHandler(show) {
       return function(e) {
-        const cellDetails = window.document.querySelectorAll(".cell details.code-fold");
-        for (let i=0; i<cellDetails.length; i++) {
-          const details = cellDetails[i];
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
           if (show) {
             details.open = true;
           } else {
             details.removeAttribute("open");
           }
         }
-        const cellCodeDivs = window.document.querySelectorAll(".cell div.sourceCode.cell-code");
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
         const fromCls = show ? "hidden" : "unhidden";
         const toCls = show ? "unhidden" : "hidden";
         for (let i=0; i<cellCodeDivs.length; i++) {
@@ -2187,81 +2189,79 @@ Figure&nbsp;6: Permutation null distribution of the Welch t-statistic. Dashed re
 <span id="cb25-613"><a href="#cb25-613" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
 <span id="cb25-614"><a href="#cb25-614" aria-hidden="true" tabindex="-1"></a>  <span class="at">extreme_permutations =</span> extreme_count,</span>
 <span id="cb25-615"><a href="#cb25-615" aria-hidden="true" tabindex="-1"></a>  <span class="at">total_permutations =</span> B,</span>
-<span id="cb25-616"><a href="#cb25-616" aria-hidden="true" tabindex="-1"></a>  <span class="at">permutation_p_value =</span> p_permutation</span>
-<span id="cb25-617"><a href="#cb25-617" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb25-618"><a href="#cb25-618" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb25-619"><a href="#cb25-619" aria-hidden="true" tabindex="-1"></a>    <span class="at">format =</span> <span class="st">"html"</span>,</span>
-<span id="cb25-620"><a href="#cb25-620" aria-hidden="true" tabindex="-1"></a>    <span class="at">digits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">4</span>),</span>
-<span id="cb25-621"><a href="#cb25-621" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(</span>
-<span id="cb25-622"><a href="#cb25-622" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Extreme permutations"</span>,</span>
-<span id="cb25-623"><a href="#cb25-623" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Total permutations"</span>,</span>
-<span id="cb25-624"><a href="#cb25-624" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Permutation p-value"</span></span>
-<span id="cb25-625"><a href="#cb25-625" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb25-626"><a href="#cb25-626" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">"c"</span>, <span class="st">"c"</span>, <span class="st">"c"</span>),</span>
-<span id="cb25-627"><a href="#cb25-627" aria-hidden="true" tabindex="-1"></a>    <span class="at">table.attr =</span> <span class="st">'class="table table-bordered table-striped" style="width: auto; margin-left: auto; margin-right: auto;"'</span></span>
-<span id="cb25-628"><a href="#cb25-628" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb25-629"><a href="#cb25-629" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-630"><a href="#cb25-630" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Hypotheses:** Let $\mu_Y$ and $\mu_N$ be the population mean weekly</span>
-<span id="cb25-631"><a href="#cb25-631" aria-hidden="true" tabindex="-1"></a>   paid-employment hours for students who do and do not multitask,</span>
-<span id="cb25-632"><a href="#cb25-632" aria-hidden="true" tabindex="-1"></a>   respectively. $H_0:\mu_Y-\mu_N=0$ versus</span>
-<span id="cb25-633"><a href="#cb25-633" aria-hidden="true" tabindex="-1"></a>   $H_A:\mu_Y-\mu_N\neq0$.</span>
-<span id="cb25-634"><a href="#cb25-634" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-635"><a href="#cb25-635" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Assumptions:** Student responses are treated as independent, and the</span>
-<span id="cb25-636"><a href="#cb25-636" aria-hidden="true" tabindex="-1"></a>   multitasking labels are exchangeable under $H_0$. Normality is unnecessary,</span>
-<span id="cb25-637"><a href="#cb25-637" aria-hidden="true" tabindex="-1"></a>   although a mean-based statistic remains sensitive to large values.</span>
-<span id="cb25-638"><a href="#cb25-638" aria-hidden="true" tabindex="-1"></a>   </span>
-<span id="cb25-639"><a href="#cb25-639" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Test statistic:**</span>
-<span id="cb25-640"><a href="#cb25-640" aria-hidden="true" tabindex="-1"></a>   $T=(\bar X_Y-\bar X_N)/\sqrt{S_Y^2/n_Y+S_N^2/n_N}$. The observed difference</span>
-<span id="cb25-641"><a href="#cb25-641" aria-hidden="true" tabindex="-1"></a>   is <span class="in">`r sprintf("%.2f", mean_difference)`</span> hours per week and</span>
-<span id="cb25-642"><a href="#cb25-642" aria-hidden="true" tabindex="-1"></a>   $t_0=<span class="in">`r sprintf("%.3f", t_observed)`</span>$.</span>
-<span id="cb25-643"><a href="#cb25-643" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-644"><a href="#cb25-644" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Permutation procedure:** With <span class="in">`set.seed(2002)`</span>, the Yes/No labels were </span>
-<span id="cb25-645"><a href="#cb25-645" aria-hidden="true" tabindex="-1"></a>   shuffled $B=10{,}000$ times while employment hours were fixed. The Welch </span>
-<span id="cb25-646"><a href="#cb25-646" aria-hidden="true" tabindex="-1"></a>   statistic was recalculated to form @fig-rq3-permutation.</span>
-<span id="cb25-647"><a href="#cb25-647" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-648"><a href="#cb25-648" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**P-value:** For the two-sided test, permutations satisfying</span>
-<span id="cb25-649"><a href="#cb25-649" aria-hidden="true" tabindex="-1"></a>   $|T_b^*|\geq|t_0|$ were counted. The plus-one estimate is</span>
-<span id="cb25-650"><a href="#cb25-650" aria-hidden="true" tabindex="-1"></a>   $p_{\mathrm{perm}}=<span class="in">`r sprintf("%.4f", p_permutation)`</span>$.</span>
-<span id="cb25-651"><a href="#cb25-651" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-652"><a href="#cb25-652" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>**Decision:** Since $p=<span class="in">`r sprintf("%.4f", p_permutation)`</span>&lt;0.05$, we reject $H_0$. There is evidence that mean</span>
-<span id="cb25-653"><a href="#cb25-653" aria-hidden="true" tabindex="-1"></a>   employment hours differ by multitasking status. multitasking students</span>
-<span id="cb25-654"><a href="#cb25-654" aria-hidden="true" tabindex="-1"></a>   worked <span class="in">`r sprintf("%.2f", mean_difference)`</span> more hours per week on average</span>
-<span id="cb25-655"><a href="#cb25-655" aria-hidden="true" tabindex="-1"></a>   in this sample. However, Cohen's $d=<span class="in">`r sprintf("%.2f", cohens_d)`</span>$ indicates</span>
-<span id="cb25-656"><a href="#cb25-656" aria-hidden="true" tabindex="-1"></a>   a small effect, so its practical importance is limited. Both variables are</span>
-<span id="cb25-657"><a href="#cb25-657" aria-hidden="true" tabindex="-1"></a>   self-reported and confounding may remain. As this is an observational survey </span>
-<span id="cb25-658"><a href="#cb25-658" aria-hidden="true" tabindex="-1"></a>   of students, the result cannot establish causation or automatically </span>
-<span id="cb25-659"><a href="#cb25-659" aria-hidden="true" tabindex="-1"></a>   generalize to others.</span>
+<span id="cb25-616"><a href="#cb25-616" aria-hidden="true" tabindex="-1"></a>  <span class="at">permutation_p_value =</span> p_permutation,</span>
+<span id="cb25-617"><a href="#cb25-617" aria-hidden="true" tabindex="-1"></a>  <span class="at">cohens_d =</span> cohens_d</span>
+<span id="cb25-618"><a href="#cb25-618" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-619"><a href="#cb25-619" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb25-620"><a href="#cb25-620" aria-hidden="true" tabindex="-1"></a>    <span class="at">format =</span> <span class="st">"html"</span>,</span>
+<span id="cb25-621"><a href="#cb25-621" aria-hidden="true" tabindex="-1"></a>    <span class="at">digits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">2</span>),</span>
+<span id="cb25-622"><a href="#cb25-622" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(</span>
+<span id="cb25-623"><a href="#cb25-623" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Extreme permutations"</span>,</span>
+<span id="cb25-624"><a href="#cb25-624" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Total permutations"</span>,</span>
+<span id="cb25-625"><a href="#cb25-625" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Permutation p-value"</span>,</span>
+<span id="cb25-626"><a href="#cb25-626" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Cohen's d"</span></span>
+<span id="cb25-627"><a href="#cb25-627" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb25-628"><a href="#cb25-628" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">"c"</span>, <span class="st">"c"</span>, <span class="st">"c"</span>, <span class="st">"c"</span>),</span>
+<span id="cb25-629"><a href="#cb25-629" aria-hidden="true" tabindex="-1"></a>    <span class="at">table.attr =</span> <span class="st">'class="table table-bordered table-striped" style="width: auto; margin-left: auto; margin-right: auto;"'</span></span>
+<span id="cb25-630"><a href="#cb25-630" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb25-631"><a href="#cb25-631" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-632"><a href="#cb25-632" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Hypotheses:** Let $\mu_Y$ and $\mu_N$ be the population mean weekly</span>
+<span id="cb25-633"><a href="#cb25-633" aria-hidden="true" tabindex="-1"></a>   paid-employment hours for students who do and do not multitask,</span>
+<span id="cb25-634"><a href="#cb25-634" aria-hidden="true" tabindex="-1"></a>   respectively. $H_0:\mu_Y-\mu_N=0$ versus</span>
+<span id="cb25-635"><a href="#cb25-635" aria-hidden="true" tabindex="-1"></a>   $H_A:\mu_Y-\mu_N\neq0$.</span>
+<span id="cb25-636"><a href="#cb25-636" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-637"><a href="#cb25-637" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Assumptions:** Student responses are treated as independent, and the</span>
+<span id="cb25-638"><a href="#cb25-638" aria-hidden="true" tabindex="-1"></a>   multitasking labels are exchangeable under $H_0$. Normality is unnecessary,</span>
+<span id="cb25-639"><a href="#cb25-639" aria-hidden="true" tabindex="-1"></a>   although a mean-based statistic remains sensitive to large values.</span>
+<span id="cb25-640"><a href="#cb25-640" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb25-641"><a href="#cb25-641" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Test statistic:**</span>
+<span id="cb25-642"><a href="#cb25-642" aria-hidden="true" tabindex="-1"></a>   $T=(\bar X_Y-\bar X_N)/\sqrt{S_Y^2/n_Y+S_N^2/n_N}$. The observed difference</span>
+<span id="cb25-643"><a href="#cb25-643" aria-hidden="true" tabindex="-1"></a>   is <span class="in">`r sprintf("%.2f", mean_difference)`</span> hours per week and</span>
+<span id="cb25-644"><a href="#cb25-644" aria-hidden="true" tabindex="-1"></a>   $t_0=<span class="in">`r sprintf("%.3f", t_observed)`</span>$.</span>
+<span id="cb25-645"><a href="#cb25-645" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-646"><a href="#cb25-646" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Permutation procedure:** With <span class="in">`set.seed(2002)`</span>, the Yes/No labels were </span>
+<span id="cb25-647"><a href="#cb25-647" aria-hidden="true" tabindex="-1"></a>   shuffled $B=10{,}000$ times while employment hours were fixed. The Welch </span>
+<span id="cb25-648"><a href="#cb25-648" aria-hidden="true" tabindex="-1"></a>   statistic was recalculated to form @fig-rq3-permutation.</span>
+<span id="cb25-649"><a href="#cb25-649" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-650"><a href="#cb25-650" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**P-value:** For the two-sided test, permutations satisfying</span>
+<span id="cb25-651"><a href="#cb25-651" aria-hidden="true" tabindex="-1"></a>   $|T_b^*|\geq|t_0|$ were counted. The plus-one estimate is</span>
+<span id="cb25-652"><a href="#cb25-652" aria-hidden="true" tabindex="-1"></a>   $p_{\mathrm{perm}}=<span class="in">`r sprintf("%.4f", p_permutation)`</span>$.</span>
+<span id="cb25-653"><a href="#cb25-653" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-654"><a href="#cb25-654" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>**Decision:** Since $p=<span class="in">`r sprintf("%.4f", p_permutation)`</span>&lt;0.05$(Phipson and Smyth, 2010), we reject $H_0$. There is evidence that mean employment hours differ by multitasking status. multitasking students worked <span class="in">`r sprintf("%.2f", mean_difference)`</span> more hours per week on average in this sample. However, Cohen's $d=<span class="in">`r sprintf("%.2f", cohens_d)`</span>$ indicates a small effect, so its practical importance is limited. Both variables are self-reported and confounding may remain. As this is an observational survey of students, the result cannot establish causation or automatically generalize to others.</span>
+<span id="cb25-655"><a href="#cb25-655" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-656"><a href="#cb25-656" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-657"><a href="#cb25-657" aria-hidden="true" tabindex="-1"></a><span class="fu"># Conclusion</span></span>
+<span id="cb25-658"><a href="#cb25-658" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-659"><a href="#cb25-659" aria-hidden="true" tabindex="-1"></a>Overall, the three analyses show consistent links between students’ employment commitments and study behaviours. Students who crammed reported significantly more weekly paid-employment hours, while multitasking was associated with both cramming and higher employment hours. However, the observed effects were modest, suggesting these factors are related but not decisive.</span>
 <span id="cb25-660"><a href="#cb25-660" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-661"><a href="#cb25-661" aria-hidden="true" tabindex="-1"></a><span class="fu"># Conclusion</span></span>
+<span id="cb25-661"><a href="#cb25-661" aria-hidden="true" tabindex="-1"></a>These findings may help the teaching team recognise how students’ external commitments and study habits interact, particularly when considering cramming and lecture multitasking.</span>
 <span id="cb25-662"><a href="#cb25-662" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-663"><a href="#cb25-663" aria-hidden="true" tabindex="-1"></a>Overall, the three analyses show consistent links between students’ employment commitments and study behaviours. Students who crammed reported significantly more weekly paid-employment hours, while multitasking was associated with both cramming and higher employment hours. However, the observed effects were modest, suggesting these factors are related but not decisive.</span>
+<span id="cb25-663"><a href="#cb25-663" aria-hidden="true" tabindex="-1"></a>However, the survey is observational and relies on self-reported data, limiting causal interpretation. The 70-hour cleaning threshold and categorisation of preparation styles may also affect results. Potential confounding factors, such as workload or other commitments, and voluntary sampling may limit generalisability. Therefore, the findings should be interpreted as associations rather than evidence of causation.</span>
 <span id="cb25-664"><a href="#cb25-664" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-665"><a href="#cb25-665" aria-hidden="true" tabindex="-1"></a>These findings may help the teaching team recognise how students’ external commitments and study habits interact, particularly when considering cramming and lecture multitasking.</span>
-<span id="cb25-666"><a href="#cb25-666" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-667"><a href="#cb25-667" aria-hidden="true" tabindex="-1"></a>However, the survey is observational and relies on self-reported data, limiting causal interpretation. The 70-hour cleaning threshold and categorisation of preparation styles may also affect results. Potential confounding factors, such as workload or other commitments, and voluntary sampling may limit generalisability. Therefore, the findings should be interpreted as associations rather than evidence of causation.</span>
-<span id="cb25-668"><a href="#cb25-668" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-665"><a href="#cb25-665" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-666"><a href="#cb25-666" aria-hidden="true" tabindex="-1"></a><span class="fu"># AI Usage Statement</span></span>
+<span id="cb25-667"><a href="#cb25-667" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-668"><a href="#cb25-668" aria-hidden="true" tabindex="-1"></a>AI was used as a supplementary tool to improve chart formatting and visualisation, help us understand the data, and provide ideas for analysis and presentation.</span>
 <span id="cb25-669"><a href="#cb25-669" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-670"><a href="#cb25-670" aria-hidden="true" tabindex="-1"></a><span class="fu"># AI Usage Statement</span></span>
-<span id="cb25-671"><a href="#cb25-671" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-672"><a href="#cb25-672" aria-hidden="true" tabindex="-1"></a>AI was used as a supplementary tool to improve chart formatting and visualisation, help us understand the data, and provide ideas for analysis and presentation.</span>
-<span id="cb25-673"><a href="#cb25-673" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-670"><a href="#cb25-670" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-671"><a href="#cb25-671" aria-hidden="true" tabindex="-1"></a><span class="fu"># ISI Professional Ethics Statement</span></span>
+<span id="cb25-672"><a href="#cb25-672" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-673"><a href="#cb25-673" aria-hidden="true" tabindex="-1"></a>We conducted the analysis responsibly by maintaining data integrity, applying appropriate statistical methods, and transparently reporting limitations. We avoided causal claims beyond the evidence and protected participants’ privacy by using survey data only for the intended academic analysis.</span>
 <span id="cb25-674"><a href="#cb25-674" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-675"><a href="#cb25-675" aria-hidden="true" tabindex="-1"></a><span class="fu"># ISI Professional Ethics Statement</span></span>
-<span id="cb25-676"><a href="#cb25-676" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-677"><a href="#cb25-677" aria-hidden="true" tabindex="-1"></a>We conducted the analysis responsibly by maintaining data integrity, applying appropriate statistical methods, and transparently reporting limitations. We avoided causal claims beyond the evidence and protected participants’ privacy by using survey data only for the intended academic analysis.</span>
-<span id="cb25-678"><a href="#cb25-678" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-675"><a href="#cb25-675" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-676"><a href="#cb25-676" aria-hidden="true" tabindex="-1"></a><span class="fu"># References</span></span>
+<span id="cb25-677"><a href="#cb25-677" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-678"><a href="#cb25-678" aria-hidden="true" tabindex="-1"></a>Kember, D. (1999). Integrating part-time study with family, work and social obligations. *Studies in Higher Education*, 24(1), 109–124.</span>
 <span id="cb25-679"><a href="#cb25-679" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-680"><a href="#cb25-680" aria-hidden="true" tabindex="-1"></a><span class="fu"># References</span></span>
+<span id="cb25-680"><a href="#cb25-680" aria-hidden="true" tabindex="-1"></a>Phipson, B., &amp; Smyth, G. K. (2010). Permutation p-values should never be zero: Calculating exact p-values when permutations are randomly drawn. *Statistical Applications in Genetics and Molecular Biology*, 9(1), Article 39. https://doi.org/10.2202/1544-6115.1585</span>
 <span id="cb25-681"><a href="#cb25-681" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-682"><a href="#cb25-682" aria-hidden="true" tabindex="-1"></a>Kember, D. (1999). Integrating part-time study with family, work and social obligations. *Studies in Higher Education*, 24(1), 109–124.</span>
+<span id="cb25-682"><a href="#cb25-682" aria-hidden="true" tabindex="-1"></a>R Core Team. (2026). *R: A language and environment for statistical computing*. R Foundation for Statistical Computing.</span>
 <span id="cb25-683"><a href="#cb25-683" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-684"><a href="#cb25-684" aria-hidden="true" tabindex="-1"></a>R Core Team. (2026). *R: A language and environment for statistical computing*. R Foundation for Statistical Computing.</span>
+<span id="cb25-684"><a href="#cb25-684" aria-hidden="true" tabindex="-1"></a>Wickham, H., Averick, M., Bryan, J., Chang, W., McGowan, L. D., François, R., Grolemund, G., Hayes, A., Henry, L., Hester, J., Kuhn, M., Pedersen, T. L., Miller, E., Bache, S. M., Müller, K., Ooms, J., Robinson, D., Seidel, D. P., Spinu, V., Takahashi, K., Vaughan, D., Wilke, C., Woo, K., and Yutani, H. (2019). Welcome to the tidyverse. *Journal of Open Source Software*, 4(43), 1686.</span>
 <span id="cb25-685"><a href="#cb25-685" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-686"><a href="#cb25-686" aria-hidden="true" tabindex="-1"></a>Wickham, H., Averick, M., Bryan, J., Chang, W., McGowan, L. D., François, R., Grolemund, G., Hayes, A., Henry, L., Hester, J., Kuhn, M., Pedersen, T. L., Miller, E., Bache, S. M., Müller, K., Ooms, J., Robinson, D., Seidel, D. P., Spinu, V., Takahashi, K., Vaughan, D., Wilke, C., Woo, K., and Yutani, H. (2019). Welcome to the tidyverse. *Journal of Open Source Software*, 4(43), 1686.</span>
+<span id="cb25-686"><a href="#cb25-686" aria-hidden="true" tabindex="-1"></a>Xie, Y., Allaire, J. J., and Grolemund, G. (2018). *R Markdown: The Definitive Guide*. Chapman and Hall/CRC.</span>
 <span id="cb25-687"><a href="#cb25-687" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-688"><a href="#cb25-688" aria-hidden="true" tabindex="-1"></a>Xie, Y., Allaire, J. J., and Grolemund, G. (2018). *R Markdown: The Definitive Guide*. Chapman and Hall/CRC.</span>
-<span id="cb25-689"><a href="#cb25-689" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-690"><a href="#cb25-690" aria-hidden="true" tabindex="-1"></a>Junco, R., &amp; Cotten, S. R. (2012). No A 4 U: The relationship between multitasking and academic performance. *Computers &amp; Education, 59*(2), 505–514. https://doi.org/10.1016/j.compedu.2011.12.023</span>
+<span id="cb25-688"><a href="#cb25-688" aria-hidden="true" tabindex="-1"></a>Junco, R., &amp; Cotten, S. R. (2012). No A 4 U: The relationship between multitasking and academic performance. *Computers &amp; Education, 59*(2), 505–514. https://doi.org/10.1016/j.compedu.2011.12.023</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

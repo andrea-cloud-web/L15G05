@@ -569,17 +569,19 @@ p_permutation <- (extreme_count + 1) / (B + 1)
 tibble(
   extreme_permutations = extreme_count,
   total_permutations = B,
-  permutation_p_value = p_permutation
+  permutation_p_value = p_permutation,
+  cohens_d = cohens_d
 ) %>%
   knitr::kable(
     format = "html",
-    digits = c(0, 0, 4),
+    digits = c(0, 0, 4, 2),
     col.names = c(
       "Extreme permutations",
       "Total permutations",
-      "Permutation p-value"
+      "Permutation p-value",
+      "Cohen's d"
     ),
-    align = c("c", "c", "c"),
+    align = c("c", "c", "c", "c"),
     table.attr = 'class="table table-bordered table-striped" style="width: auto; margin-left: auto; margin-right: auto;"'
   )
 ```
@@ -605,14 +607,8 @@ tibble(
    $|T_b^*|\geq|t_0|$ were counted. The plus-one estimate is
    $p_{\mathrm{perm}}=`r sprintf("%.4f", p_permutation)`$.
 
-6. **Decision:** Since $p=`r sprintf("%.4f", p_permutation)`<0.05$, we reject $H_0$. There is evidence that mean
-   employment hours differ by multitasking status. multitasking students
-   worked `r sprintf("%.2f", mean_difference)` more hours per week on average
-   in this sample. However, Cohen's $d=`r sprintf("%.2f", cohens_d)`$ indicates
-   a small effect, so its practical importance is limited. Both variables are
-   self-reported and confounding may remain. As this is an observational survey 
-   of students, the result cannot establish causation or automatically 
-   generalize to others.
+6. **Decision:** Since $p=`r sprintf("%.4f", p_permutation)`<0.05$(Phipson and Smyth, 2010), we reject $H_0$. There is evidence that mean employment hours differ by multitasking status. multitasking students worked `r sprintf("%.2f", mean_difference)` more hours per week on average in this sample. However, Cohen's $d=`r sprintf("%.2f", cohens_d)`$ indicates a small effect, so its practical importance is limited. Both variables are self-reported and confounding may remain. As this is an observational survey of students, the result cannot establish causation or automatically generalize to others.
+
 
 # Conclusion
 
@@ -636,6 +632,8 @@ We conducted the analysis responsibly by maintaining data integrity, applying ap
 # References
 
 Kember, D. (1999). Integrating part-time study with family, work and social obligations. *Studies in Higher Education*, 24(1), 109–124.
+
+Phipson, B., & Smyth, G. K. (2010). Permutation p-values should never be zero: Calculating exact p-values when permutations are randomly drawn. *Statistical Applications in Genetics and Molecular Biology*, 9(1), Article 39. https://doi.org/10.2202/1544-6115.1585
 
 R Core Team. (2026). *R: A language and environment for statistical computing*. R Foundation for Statistical Computing.
 
