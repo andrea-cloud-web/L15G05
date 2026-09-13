@@ -226,7 +226,7 @@ r_rb <- 1 - (2 * unname(wilcox_test$statistic)) / (n1 * n2)
 
 **4. P-value:**
 
-Since $p = `r format.pval(wilcox_test$p.value, digits = 3)` < 0.05$, we reject $H_0$. The rank-biserial effect size is $r = `r round(r_rb, 3)`$, indicating a small effect with Cram students tending toward higher work hours.
+The observed $p = `r format.pval(wilcox_test$p.value, digits = 3)`$. The rank-biserial effect size is $r = `r round(r_rb, 3)`$, indicating a small effect with Cram students tending toward higher work hours.
 
 **5. Decision:**
 
