@@ -17,7 +17,7 @@ number-sections: true # (Optional) Puts numbers next to heading/subheadings
 
 This report examines how paid employment and study habits relate to students’ university experience, using survey data from DATA2002/2902 students. Three research questions investigate these relationships, with limitations including self-reported data and sampling bias.
 
-## Data Wrangling
+# Data Wrangling
 
 All data processing for this report was conducted in R (R Core Team 2026) within the R Markdown environment (Xie, Allaire, and Grolemund 2018) for reproducibility. Data wrangling was performed using base R and the tidyverse, and visualisations were produced with ggplot2 (Wickham et al. 2019).
 
@@ -75,7 +75,7 @@ write_csv(df_clean, "survey_cleaned.csv")
 
 ## RQ1: Work hours and cramming
 
-**Research Question:** Is there a difference in weekly paid employment hours between students who cram before assessments and those who do not?
+**Research Question :** Is there a difference in weekly paid employment hours between students who cram before assessments and those who do not?
 
 Paid employment may shape assessment preparation (Kember, 1999). We compare work hours between students who cram and those who do not, using the Wilcoxon rank-sum test.
 
@@ -233,7 +233,9 @@ Rank-biserial $r = `r round(r_rb, 3)`$: a small effect, with Cram students tendi
 Since $p = `r format.pval(wilcox_test$p.value, digits = 3)` < 0.05$, we reject $H_0$: Cram students report significantly higher weekly work hours. Ties at zero reduce the precision of the rank-based test, though the large sample size still supports the conclusion. As this is observational data, the result reflects association, not causation, and unmeasured confounders (e.g., course load, financial need) remain possible.
 
 
-## RQ2: Is multitasking during lectures associated with whether students cram before assessments?
+## RQ2: Multitasking and cramming
+
+**Research Question:** Is multitasking during lectures associated with cramming before assessments?
 
 Our client, a university learning-support team, wants to distinguish a lecture-engagement problem from a broader time-management one. Divided attention during study has been linked to weaker academic outcomes (Junco & Cotten, 2012), so multitasking is unlikely to be a neutral habit. If it also travels with cramming, the two may be one behavioural pattern rather than two, which we test with a chi-squared test of independence.
 
@@ -337,7 +339,9 @@ chi_test
 
 **5. Decision:** Reject $H_0$ ($p < 0.001$): students who cram are considerably more likely to multitask. The effect is modest, so multitasking is one correlate of cramming rather than a defining feature. As a self-selected, self-reported survey, "cram" and "multitask" may be interpreted inconsistently, and the association does not imply causation — overall workload could drive both.
 
-## RQ3: Do students who multitask in class spend a different time per week on work compared to students who do not?
+## RQ3: Multitasking and employment hours
+
+**Research Question:** Do students who multitask in class spend different amounts of time in paid employment?
 
 Paid employment is an external time commitment. Students balancing more work with study may exhibit different lecture behaviours. Following our previous research, we investigate whether paid-employment hours also differ between students who do and do not multitask.
 
