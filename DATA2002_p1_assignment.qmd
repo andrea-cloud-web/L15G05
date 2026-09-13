@@ -206,7 +206,7 @@ tibble::tibble(
   knitr::kable(align = c("c", "c"))
 ```
 
-The observed Wilcoxon rank-sum statistic was W=`r round(unname(wilcox_test$statistic), 1)` (@tbl-rq1-wilcox).
+The observed Mann-Whitney statistic was `r round(unname(wilcox_test$statistic), 1)` (@tbl-rq1-wilcox).
 
 ```{r}
 #| label: rq1-effect-size
@@ -218,12 +218,11 @@ r_rb <- 1 - (2 * unname(wilcox_test$statistic)) / (n1 * n2)
 
 **4. P-value:**
 
-The observed \(p=0.000458\), with a small rank-biserial effect (\(|r|=0.189\)).
+The observed \(p=`r format.pval(wilcox_test$p.value, digits = 3, eps = 0.001)`\), with a small rank-biserial effect (\(|r|=`r sprintf("%.3f", abs(r_rb))`\)).
 
 **5. Decision:**
 
-We reject \(H_0\) (\(p<0.001\)), providing evidence that weekly paid-employment hours differ between Cram and Non-Cram students, with Cram students tending to report higher hours. The effect was small (\(|r|=0.189\)). As the data are observational, this indicates association rather than causation.
-
+We reject \(H_0\) (\(p<0.001\)), providing evidence that weekly paid-employment hours differ between Cram and Non-Cram students, with Cram students tending to report higher hours. The effect was small (\(|r|=`r sprintf("%.3f", abs(r_rb))`\)). As the data are observational, this indicates association rather than causation.
 
 ## RQ2: Multitasking and cramming
 
