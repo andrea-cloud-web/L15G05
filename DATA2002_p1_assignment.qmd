@@ -13,11 +13,11 @@ number-sections: true
 
 # Introduction
 
-This report examines relationships among paid employment, cramming, and multitasking to understand how students' work commitments may relate to study habits. Data come from a voluntary survey of DATA2002/2902 students rather than a random sample of the broader student population, potentially over-representing more engaged students and limiting generalisability. Self-reported work hours and study behaviours may be subject to recall and social-desirability bias. Questions requiring students to estimate average work hours and categorise study behaviours may also be interpreted inconsistently due to imprecise reference periods or behavioural definitions.
+This report examines relationships among paid employment, cramming, and multitasking to understand how students' work commitments may relate to study habits. Data come from a voluntary survey of DATA2002/2902 students rather than a random sample of the broader student population, potentially over-representing more engaged students and limiting generalisability. Self-reported work hours and study behaviours may be subject to recall and social-desirability bias. Questions requiring students to estimate average work hours and categorise study behaviours may also be interpreted inconsistently due to subjective estimates or imprecise behavioural definitions.
 
 # Data Wrangling
 
-All analyses were conducted in R (R Core Team, 2026) using the tidyverse (Wickham et al., 2019). Missing values were removed separately for variables required in each analysis. Responses selecting “Other” for assessment preparation were excluded because they could not be consistently classified. Weekly paid-employment hours above 70 were excluded as extreme responses, with the threshold informed by the Australian standard of 38 weekly hours plus reasonable additional hours (Fair Work Act 2009 (Cth) s 62). @fig-cleaning compares work-hour distributions before and after this exclusion.
+All analyses were conducted in R (R Core Team, 2026) using the tidyverse (Wickham et al., 2019). Missing values were removed where required for each analysis. Responses selecting "Other" for assessment preparation were excluded because they could not be consistently classified. Weekly paid-employment hours above 70 were excluded as extreme responses, with the threshold informed by the Australian standard of 38 weekly hours plus reasonable additional hours under the Fair Work Act 2009. @fig-cleaning compares work-hour distributions before and after this exclusion.
 
 ```{r}
 #| label: fig-cleaning
