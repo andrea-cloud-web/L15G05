@@ -13,13 +13,11 @@ number-sections: true
 
 # Introduction
 
-This report examines how paid employment and study habits relate to students’ university experience, using survey data from DATA2002/2902 students. Three research questions investigate these relationships, with limitations including self-reported data and sampling bias.
+This report examines relationships among paid employment, cramming, and multitasking to better understand how students’ work commitments may relate to study habits. The data come from a survey of DATA2002/2902 students. As participation was limited to students in these units rather than based on random sampling from the broader student population, the sample may be affected by selection bias and may not be representative of university students generally. Self-reported work hours and study behaviours may also be subject to recall and social-desirability biases.
 
 # Data Wrangling
 
-All data processing for this report was conducted in R (R Core Team, 2026) within the R Markdown environment (Xie, Allaire, & Grolemund, 2018) for reproducibility. Data wrangling was performed using base R and the tidyverse, and visualisations were produced with ggplot2 (Wickham et al., 2019).
-
-Variables were cleaned and recoded, with missing values handled case-by-case. The survey dataset was imported, variables were renamed for clarity, "Other" responses were removed from `assess`, and `work_hrs` values above 70 hours per week were removed because they exceed a standard full-time work week. A boxplot compares the distributions before and after cleaning, and the cleaned data are saved as `survey_cleaned.csv`.
+All analyses were conducted in R (R Core Team, 2026) using the tidyverse (Wickham et al., 2019). Survey questions requiring students to estimate weekly work hours and categorise study behaviours may be affected by recall and subjective interpretation. Missing values in variables required for each analysis were removed. Weekly paid-employment hours above 70 were excluded as extreme responses, informed by Australian working-hour standards of 38 hours per week plus reasonable additional hours (Fair Work Act 2009 (Cth) s 62).
 
 
 ```{r}
@@ -521,6 +519,7 @@ tibble(
 **1. Hypotheses:** $\mu_Y$, $\mu_N$: population mean weekly paid-employment hours for multitasking vs non-multitasking students. $H_0: \mu_Y = \mu_N$ versus $H_1: \mu_Y \neq \mu_N$.
 
 **2. Assumptions:** Responses are independent. The studentized permutation test using the Welch statistic reduces reliance on normality and is more robust to unequal variances, although extreme observations may still influence the result.
+
 **3. Test statistic:** $T=(\bar X_Y-\bar X_N)/\sqrt{S_Y^2/n_Y+S_N^2/n_N}$; observed $t_0=`r sprintf("%.3f", t_observed)`$.
 
 ```{r}
@@ -556,12 +555,7 @@ tibble(t_permuted = t_permuted) %>%
 
 # Conclusion
 
-Overall, the three analyses show consistent links between students’ employment commitments and study behaviours. Students who crammed reported significantly higher weekly paid-employment hours, while multitasking was associated with both cramming and higher employment hours. However, the observed effects were modest, suggesting these factors are related but not decisive.
-
-These findings may help the teaching team recognise how students’ external commitments and study habits interact, particularly when considering cramming and lecture multitasking.
-
-However, the survey is observational and relies on self-reported data, limiting causal interpretation. The 70-hour cleaning threshold and categorisation of preparation styles may also affect results. Potential confounding factors, such as workload or other commitments, and voluntary sampling may limit generalisability. Therefore, the findings should be interpreted as associations rather than evidence of causation.
-
+Overall, paid employment, cramming, and multitasking were associated. Cram students tended to report higher weekly work hours and were more likely to multitask, while multitasking students reported 1.79 more work hours per week on average. However, effect sizes were small to modest. As the data are observational and self-reported, these findings indicate association rather than causation, and unmeasured confounding and the 70-hour cleaning threshold may affect the results.
 
 # AI Usage Statement
 
