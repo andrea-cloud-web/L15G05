@@ -226,7 +226,7 @@ The observed $p = `r format.pval(wilcox_test$p.value, digits = 3)`$. The rank-bi
 
 **5. Decision:**
 
-We reject $H_0$ ($p < 0.05$): Cram students report significantly higher weekly work hours. Although ties at zero reduce test precision, the large sample size supports this finding. As observational data, the result reflects association only; unmeasured confounders (e.g., course load, financial need) remain possible.
+We reject $H_0$ ($p < 0.05$): Cram students report significantly higher weekly work hours. Although ties at zero reduce test precision, the large sample size supports the normal approximation. As observational data, the result reflects association only; unmeasured confounders (e.g., course load, financial need) remain possible.
 
 
 ## RQ2: Multitasking and cramming
@@ -523,7 +523,7 @@ tibble(
 
 **2. Assumptions:** Responses are independent, and multitasking labels are exchangeable under $H_0$; normality is unnecessary, though the statistic remains sensitive to outliers.
 
-**3. Test statistic:** $T=(\bar X_Y-\bar X_N)/\sqrt{S_Y^2/n_Y+S_N^2/n_N}$; observed $t_0=`r sprintf("%.3f", t_observed)`$, a difference of `r sprintf("%.2f", mean_difference)` hours per week.
+**3. Test statistic:** $T=(\bar X_Y-\bar X_N)/\sqrt{S_Y^2/n_Y+S_N^2/n_N}$; observed $t_0=`r sprintf("%.3f", t_observed)`$.
 
 ```{r}
 #| label: fig-rq3-permutation
