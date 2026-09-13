@@ -13,12 +13,11 @@ number-sections: true
 
 # Introduction
 
-This report examines relationships among paid employment, cramming, and multitasking to better understand how students’ work commitments may relate to study habits. The data come from a survey of DATA2002/2902 students. As participation was limited to students in these units rather than based on random sampling from the broader student population, the sample may be affected by selection bias and may not be representative of university students generally. Self-reported work hours and study behaviours may also be subject to recall and social-desirability biases.
+This report examines relationships among paid employment, cramming, and multitasking to understand how students’ work commitments relate to study habits. Data come from a survey of DATA2002/2902 students. Because students were not randomly sampled from the broader university population, selection bias limits generalisability. Self-reported work hours and study behaviours may also be affected by recall and social-desirability biases.
 
 # Data Wrangling
 
-All analyses were conducted in R (R Core Team, 2026) using the tidyverse (Wickham et al., 2019). Survey questions requiring students to estimate weekly work hours and categorise study behaviours may be affected by recall and subjective interpretation. Missing values in variables required for each analysis were removed. Weekly paid-employment hours above 70 were excluded as extreme responses, informed by Australian working-hour standards of 38 hours per week plus reasonable additional hours (Fair Work Act 2009 (Cth) s 62).
-
+All analyses were conducted in R (R Core Team, 2026) using the tidyverse (Wickham et al., 2019). Questions asking students to report “average” work hours and categorise study behaviours may be interpreted inconsistently because no reference period or precise behavioural definitions are provided. Missing values were removed separately for variables required in each analysis. Responses selecting “Other” for assessment preparation were excluded because they could not be consistently classified. Weekly paid-employment hours above 70 were excluded as extreme responses, informed by Australian working-hour standards of 38 hours plus reasonable additional hours (Fair Work Act 2009 (Cth) s 62).
 
 ```{r}
 #| label: fig-cleaning
@@ -568,6 +567,8 @@ We conducted the analysis responsibly by maintaining data integrity, applying ap
 
 
 # References
+
+Fair Work Act 2009 (Cth) s 62 (Austl.).
 
 Junco, R., & Cotten, S. R. (2012). No A 4 U: The relationship between multitasking and academic performance. *Computers & Education, 59*(2), 505–514. https://doi.org/10.1016/j.compedu.2011.12.023
 
