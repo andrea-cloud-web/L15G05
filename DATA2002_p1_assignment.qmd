@@ -77,15 +77,17 @@ write_csv(df_clean, "survey_cleaned.csv")
 
 **Research Question:** Is there a difference in weekly paid employment hours between students who cram before assessments and those who do not?
 
-Paid employment may shape assessment preparation (Kember, 1999). We compare mean weekly work hours between students who cram and those who do not, using a Welch two-sample t-test.
+Paid employment may shape assessment preparation (Kember, 1999). We compare weekly work hours between students who cram and those who do not, using the Wilcoxon rank-sum test.
 
 **Exploratory data analysis:**
+
 ```{r}
 #| label: rq1-setup
 rq1_data <- df_clean %>%
   select(assess, work_hrs) %>%
   mutate(is_cram = if_else(assess == "Cram", "Yes", "No"))
 ```
+
 ```{r}
 #| label: tbl-rq1-table
 #| tbl-cap: "Summary statistics of weekly paid employment hours by cramming status."
@@ -105,7 +107,9 @@ rq1_data %>%
   ) %>%
   knitr::kable(align = rep("c", 9))
 ```
-Means exceed medians: right-skew.
+
+Means exceed medians for both groups, and the Non-Cram median is zero: both distributions are right-skewed with heavy zero-inflation.
+
 ```{r}
 #| label: fig-rq1-eda
 #| fig-cap: "Distribution of weekly paid employment hours by cramming status."
@@ -125,32 +129,32 @@ rq1_data %>%
     size = 1.5
   ) +
   stat_summary(
-    aes(colour = "Group mean"),
-    fun = mean,
+    aes(colour = "Group median"),
+    fun = median,
     geom = "point",
     shape = 18,
     size = 4
   ) +
   stat_summary(
-    fun = mean,
+    fun = median,
     geom = "text",
     aes(label = after_stat(round(y, 2))),
     vjust = -0.75,
     size = 3.5
   ) +
   scale_fill_manual(
-    name = "Crams before deadlines?",
+    name = "Cram status",
     values = c("No" = "#BFE3DB", "Yes" = "#F3B5A7")
   ) +
   scale_colour_manual(
     name = NULL,
-    values = c("Individual observations" = "#6F8FA3", "Group mean" = "#D9827A")
+    values = c("Individual observations" = "#6F8FA3", "Group median" = "#D9827A")
   ) +
   labs(
     x = NULL,
     y = "Weekly paid employment hours",
     title = "Weekly work hours by cramming behaviour",
-    caption = "Diamonds and labels indicate group means."
+    caption = "Diamonds and labels indicate group medians."
   ) +
   theme_minimal(base_size = 12) +
   theme(
@@ -160,123 +164,74 @@ rq1_data %>%
     panel.grid.major.x = element_blank()
   )
 ```
-@fig-rq1-eda confirms right-skew.
+
+@fig-rq1-eda confirms both groups are strongly right-skewed with a large proportion of zero responses, so normality cannot reasonably be assumed. We therefore use the Wilcoxon rank-sum test, a non-parametric method that does not require normality, to compare work hours between the two groups.
 
 **1. Hypotheses:**
-Let $\mu_1$ and $\mu_2$ be the population mean weekly work hours for students who cram (Yes) and those who do not (No), respectively.
 
-$H_0: \mu_1 = \mu_2$  
-$H_1: \mu_1 \neq \mu_2$
+Let $\theta_1$ and $\theta_2$ denote the population median weekly work hours for students who cram (Yes) and those who do not (No), respectively.
+
+$H_0:$ the distributions of work hours are identical between the two groups ($\theta_1 = \theta_2$)
+$H_1:$ the distributions differ, with one group tending toward higher values ($\theta_1 \neq \theta_2$)
 
 **2. Assumptions:**
-The Welch test assumes approximate normality. Raw hours fail Shapiro-Wilk tests (@tbl-rq1-shapiro-raw), so we log(x+1)-transform them. The QQ plots (@fig-qqplot) show upper-tail departure and a flat lower segment from zero-inflated responses. Skewness improves (@tbl-rq1-skewness), but zero-inflation remains (@fig-rq1-eda). Large samples ($n_{yes}=`r nrow(filter(rq1_data, is_cram == "Yes"))`$, $n_{no}=`r nrow(filter(rq1_data, is_cram == "No"))`$) support the CLT.
-```{r}
-#| label: fig-qqplot
-#| fig-cap: "QQ plot of weekly work hours by cramming status"
 
-ggplot(rq1_data, aes(sample = work_hrs, colour = is_cram)) +
-  stat_qq() +
-  stat_qq_line() +
-  facet_wrap(~ is_cram) +
-  labs(
-    title = "QQ plot of weekly work hours by cramming status",
-    x = "Theoretical quantiles", y = "Sample quantiles"
-  ) +
-  theme_minimal() +
-  theme(
-    legend.position = "none",
-    plot.title = element_text(hjust = 0.5)
-  )
-```
+The Wilcoxon rank-sum test requires independent samples, satisfied here since Cram and Non-Cram students are distinct individuals. It does not require normality. To interpret a significant result as a difference in medians (rather than a more general difference in distribution), the two groups should have similarly shaped distributions.
+
 ```{r}
-#| label: tbl-rq1-shapiro-raw
-#| tbl-cap: "Shapiro-Wilk test on raw work hours."
+#| label: tbl-rq1-skewness
+#| tbl-cap: "Skewness and proportion of zero responses by cramming status."
 
 cram_raw <- rq1_data %>% filter(is_cram == "Yes") %>% pull(work_hrs)
 noncram_raw <- rq1_data %>% filter(is_cram == "No") %>% pull(work_hrs)
-shapiro_cram_raw <- shapiro.test(cram_raw)
-shapiro_noncram_raw <- shapiro.test(noncram_raw)
 
-tibble::tibble(
-  Group = c("Yes", "No"),
-  Statistic = c(shapiro_cram_raw$statistic, shapiro_noncram_raw$statistic),
-  p_value = c(shapiro_cram_raw$p.value, shapiro_noncram_raw$p.value)
-) %>%
-  mutate(
-    Statistic = round(Statistic, 3),
-    p_value = format.pval(p_value, digits = 3, eps = 0.001)
-  ) %>%
-  knitr::kable(align = c("l", "c", "c"))
-```
-```{r}
-cram_log <- log1p(cram_raw)
-noncram_log <- log1p(noncram_raw)
-shapiro_cram_log <- shapiro.test(cram_log)
-shapiro_noncram_log <- shapiro.test(noncram_log)
-```
-```{r}
-#| label: tbl-rq1-shapiro-log
-#| tbl-cap: "Shapiro-Wilk test on log-transformed work hours."
-
-tibble::tibble(
-  Group = c("Yes", "No"),
-  Statistic = c(shapiro_cram_log$statistic, shapiro_noncram_log$statistic),
-  p_value = c(shapiro_cram_log$p.value, shapiro_noncram_log$p.value)
-) %>%
-  mutate(
-    Statistic = round(Statistic, 3),
-    p_value = format.pval(p_value, digits = 3, eps = 0.001)
-  ) %>%
-  knitr::kable(align = c("l", "c", "c"))
-```
-```{r}
 manual_skew <- function(x) {
   n <- length(x)
   m <- mean(x)
   (sum((x - m)^3) / n) / (sum((x - m)^2) / n)^(3/2)
 }
-```
-```{r}
-#| label: tbl-rq1-skewness
-#| tbl-cap: "Skewness before and after log transformation."
-
-skew_cram_raw <- manual_skew(cram_raw)
-skew_noncram_raw <- manual_skew(noncram_raw)
-skew_cram_log <- manual_skew(cram_log)
-skew_noncram_log <- manual_skew(noncram_log)
 
 tibble::tibble(
   Group = c("Yes", "No"),
-  `Raw skewness` = round(c(skew_cram_raw, skew_noncram_raw), 2),
-  `Log skewness` = round(c(skew_cram_log, skew_noncram_log), 2)
+  Skewness = round(c(manual_skew(cram_raw), manual_skew(noncram_raw)), 2),
+  `% zero` = round(c(mean(cram_raw == 0), mean(noncram_raw == 0)) * 100, 1)
 ) %>%
   knitr::kable(align = c("l", "c", "c"))
 ```
 
-**3. Test statistic:**
+Both groups show similar skewness and a high proportion of zero responses, supporting similarly shaped distributions and interpretation of the test as a comparison of medians. A large proportion of tied values (particularly zeros) may reduce the precision of the rank-based test, which is addressed further in the limitations.
+
+**3. Test statistic and p-value:**
 
 ```{r}
-#| label: rq1-welch-test
-welch_test <- t.test(cram_log, noncram_log, var.equal = FALSE)
-pooled_sd <- sqrt(((length(cram_log) - 1) * var(cram_log) +
-                    (length(noncram_log) - 1) * var(noncram_log)) /
-                    (length(cram_log) + length(noncram_log) - 2))
-cohend <- (mean(cram_log) - mean(noncram_log)) / pooled_sd
-welch_test
+#| label: tbl-rq1-wilcox
+#| tbl-cap: "Wilcoxon rank-sum test comparing weekly paid employment hours by cramming status."
+
+wilcox_test <- wilcox.test(cram_raw, noncram_raw, exact = FALSE, correct = TRUE)
+
+tibble::tibble(
+  Statistic = round(unname(wilcox_test$statistic), 1),
+  p_value = format.pval(wilcox_test$p.value, digits = 3, eps = 0.001)
+) %>%
+  knitr::kable(align = c("c", "c"))
 ```
 
-Test statistic: $t = `r round(unname(welch_test$statistic), 2)`$, $df = `r round(welch_test$parameter, 2)`$.
+**4. Effect size:**
 
-**4. P-value:**
+```{r}
+#| label: rq1-effect-size
 
-$p = `r format(round(welch_test$p.value, 4), scientific = FALSE)`$
+n1 <- length(cram_raw)
+n2 <- length(noncram_raw)
+r_rb <- 1 - (2 * unname(wilcox_test$statistic)) / (n1 * n2)
+```
 
-**5. Effect size:**
+Rank-biserial $r = `r round(r_rb, 3)`$, indicating a small effect, with Cram students tending toward higher work hours.
 
-Cohen's $d = `r sprintf("%.3f", cohend)`$, indicating a small-to-medium effect.
+**5. Decision:**
 
-**6. Decision:**
-Since $p = `r format.pval(welch_test$p.value, digits = 3)` < 0.05$, we reject $H_0$: students who cram report significantly higher weekly work hours (log scale) than students who do not cram. Both variables are self-reported, and the 70-hour threshold is analyst-chosen. Normality was not fully achieved, so validity relies on the CLT, making the result asymptotic rather than exact. As this is observational data, the result establishes association, not causation, and unmeasured confounders (e.g., course load and financial need) cannot be ruled out.
+Since $p = `r format.pval(wilcox_test$p.value, digits = 3)` < 0.05$, we reject $H_0$: students who cram tend to report significantly higher weekly work hours than students who do not cram. Both variables are self-reported, and the 70-hour cleaning threshold is analyst-chosen. Over half of all observations are tied at zero, which reduces the precision of the rank-based test, though the large sample size still supports a reliable conclusion. As this is observational data, the result establishes association, not causation, and unmeasured confounders (e.g., course load and financial need) cannot be ruled out.
+
 
 ## RQ2: Is multitasking during lectures associated with whether students cram before assessments?
 
