@@ -13,11 +13,11 @@ number-sections: true
 
 # Introduction
 
-This report examines relationships among paid employment, cramming, and multitasking to understand how students' work commitments may relate to study habits. Data come from a voluntary survey of DATA2002/2902 students rather than a random sample of the broader student population, potentially over-representing more engaged students and limiting generalisability. Self-reported work hours and study behaviours may be subject to recall and social-desirability bias. Questions requiring students to estimate average work hours and categorise study behaviours may also be interpreted inconsistently due to subjective estimates or imprecise behavioural definitions.
+This report, commissioned by the DATA2002/2902 teaching team, examines relationships among paid employment, cramming, and multitasking to understand how students' work commitments may relate to study habits. Data come from a voluntary survey of DATA2002/2902 students rather than a random sample of the broader student population, potentially over-representing more engaged students and limiting generalisability. Self-reported work hours and study behaviours may be subject to recall and social-desirability bias. Questions requiring students to estimate average work hours and categorise study behaviours may also be interpreted inconsistently due to subjective estimates or imprecise behavioural definitions.
 
 # Data Wrangling
 
-All analyses were conducted in R (R Core Team, 2026) using the tidyverse (Wickham et al., 2019). Missing values were removed where required for each analysis. Responses selecting "Other" for assessment preparation were excluded because they could not be consistently classified. Weekly paid-employment hours above 70 were excluded as extreme responses, with the threshold informed by the Australian standard of 38 weekly hours plus reasonable additional hours under the Fair Work Act 2009. @fig-cleaning compares work-hour distributions before and after this exclusion.
+All analyses were conducted in R (R Core Team, 2026) using the tidyverse (Wickham et al., 2019). Missing values were removed where required for each analysis. Responses selecting "Other" for assessment preparation were excluded because they could not be consistently classified. Weekly paid-employment hours above 70 were excluded as extreme responses, with the 70-hour threshold loosely informed by the Fair Work Act 2009 standard of 38 weekly hours plus reasonable additional hours. @fig-cleaning compares work-hour distributions before and after this exclusion.
 
 ```{r}
 #| label: fig-cleaning
@@ -553,7 +553,7 @@ tibble(t_permuted = t_permuted) %>%
 
 # Conclusion
 
-Overall, paid employment, cramming, and multitasking were associated. Cram students tended to report higher weekly work hours and were more likely to multitask, while multitasking students reported 1.79 more work hours per week on average. However, effect sizes were small to modest. As the data are observational and self-reported, these findings indicate association rather than causation, and unmeasured confounding and the 70-hour cleaning threshold may affect the results.
+Overall, paid employment, cramming, and multitasking were associated. Cram students tended to report higher weekly work hours and were more likely to multitask, while multitasking students reported `r sprintf("%.2f", mean_difference)` more work hours per week on average. However, effect sizes were small to modest. As the data are observational and self-reported, these findings indicate association rather than causation, and unmeasured confounding and the 70-hour cleaning threshold may affect the results, though the pattern may still help the teaching team identify students who could benefit from time-management support.
 
 # AI Usage Statement
 
@@ -567,7 +567,7 @@ We conducted the analysis responsibly by maintaining data integrity, applying ap
 
 # References
 
-Fair Work Act 2009 (Cth) s 62 (Austl.).
+*Fair Work Act 2009* (Cth) s 62 (Austl.).
 
 Junco, R., & Cotten, S. R. (2012). No A 4 U: The relationship between multitasking and academic performance. *Computers & Education, 59*(2), 505–514. https://doi.org/10.1016/j.compedu.2011.12.023
 
