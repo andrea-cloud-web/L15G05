@@ -229,7 +229,7 @@ We reject \(H_0\) (\(p<0.001\)), providing evidence that weekly paid-employment 
 
 **Research Question:** Is multitasking during lectures associated with cramming before assessments?
 
-Our client, a university learning-support team, wants to distinguish a lecture-engagement problem from a broader time-management one. Divided attention during study has been linked to weaker academic outcomes (Junco & Cotten, 2012), so multitasking is unlikely to be a neutral habit. If it also travels with cramming, the two may be one behavioural pattern rather than two, which we test with a chi-squared test of independence.
+Our client, a university learning-support team, wants to distinguish a lecture-engagement problem from a broader time-management one. Divided attention has been linked to weaker academic outcomes (Junco & Cotten, 2012), so we test whether it also travels with cramming using a chi-squared test of independence.
 
 **Exploratory data analysis:**
 
