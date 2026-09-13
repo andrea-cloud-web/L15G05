@@ -303,7 +303,7 @@ rq2_data %>%
   theme(legend.position = "top", panel.grid.minor = element_blank())
 ```
 
-@tbl-rq2-table and @fig-rq2-eda show multitasking is more common among students who cram (`r sprintf("%.1f", pct_cram)`%) than among those who do not (`r sprintf("%.1f", pct_notcram)`%). Because the research question focuses on cramming, "Immediately" and "Gradually" were combined as Non-Cram. The similar observed multitasking rates between these two groups (@tbl-rq2-eda) suggest that this grouping does not conceal a substantial difference between them.
+@tbl-rq2-table and @fig-rq2-eda show multitasking is more common among students who cram (`r sprintf("%.1f", pct_cram)`%) than among those who do not (`r sprintf("%.1f", pct_notcram)`%). Because the research question focuses on cramming, "Immediately" and "Gradually" were combined as Non-Cram. The similar observed multitasking rates between these two groups (@fig-rq2-eda) suggest that this grouping does not conceal a substantial difference between them.
 
 **1. Hypotheses:** $H_0$: multitasking is independent of cramming among DATA2x02 students, versus $H_1$: the two are not independent.
 
