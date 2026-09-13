@@ -307,7 +307,7 @@ rq2_data %>%
 
 **1. Hypotheses:** $H_0$: multitasking is independent of cramming among DATA2x02 students, versus $H_1$: the two are not independent.
 
-**2. Assumptions:** Observations are independent (one response per student) and every expected cell count must be at least 5. The minimum is `r sprintf("%.1f", min_expected)` (@tbl-rq2-expected), so the chi-squared approximation is valid and no continuity correction is applied; had any count fallen below 5, Fisher's exact test would be used instead.
+**2. Assumptions:** Observations are independent and every expected cell count must exceed 5; the minimum here is 51.5, so the approximation is valid without continuity correction (otherwise Fisher's exact test would apply).
 
 ```{r}
 #| label: tbl-rq2-expected
