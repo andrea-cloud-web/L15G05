@@ -72,7 +72,7 @@ write_csv(df_clean, "survey_cleaned.csv")
 
 **Research Question:** Is there a difference in weekly paid employment hours between students who cram before assessments and those who do not?
 
-Paid employment may affect study habits (Kember, 1999). We compare work hours between cram and non-cram students using the Wilcoxon rank-sum test.
+Paid employment may affect study habits (Kember, 1999), which the teaching team could use to flag at-risk students. We compare work hours between cram and non-cram students using the Wilcoxon rank-sum test.
 
 **Exploratory data analysis:**
 
