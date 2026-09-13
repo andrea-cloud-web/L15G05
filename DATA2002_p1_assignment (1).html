@@ -237,7 +237,7 @@ Figure&nbsp;1: Weekly employment hours before and after cleaning
 <section id="rq1-work-hours-and-cramming" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="rq1-work-hours-and-cramming"><span class="header-section-number">3.1</span> RQ1: Work hours and cramming</h2>
 <p><strong>Research Question:</strong> Is there a difference in weekly paid employment hours between students who cram before assessments and those who do not?</p>
-<p>Paid employment may shape assessment preparation (Kember, 1999). We compare work hours between students who cram and those who do not, using the Wilcoxon rank-sum test.</p>
+<p>Paid employment may affect study habits (Kember, 1999). We compare work hours between students who cram and those who do not.</p>
 <p><strong>Exploratory data analysis:</strong></p>
 <div class="cell">
 <details class="code-fold">
@@ -398,13 +398,13 @@ Figure&nbsp;2: Distribution of weekly paid employment hours by cramming status.
 </div>
 </div>
 </div>
-<p><a href="#fig-rq1-eda" class="quarto-xref">Figure&nbsp;2</a> confirms strong right-skew and zero-inflation, so normality cannot be assumed; we use the Wilcoxon rank-sum test instead.</p>
+<p><a href="#fig-rq1-eda" class="quarto-xref">Figure&nbsp;2</a> confirms strong right-skew and zero-inflation, so normality cannot be assumed.</p>
 <p><strong>1. Hypotheses:</strong></p>
 <p>Let <span class="math inline">\(\theta_1\)</span>, <span class="math inline">\(\theta_2\)</span> denote population median weekly work hours for Cram (Yes) and Non-Cram (No) students.</p>
 <p><span class="math inline">\(H_0: \theta_1 = \theta_2\)</span><br>
 <span class="math inline">\(H_1: \theta_1 \neq \theta_2\)</span></p>
 <p><strong>2. Assumptions:</strong></p>
-<p>Samples are independent. Interpreting a difference as a median shift requires similarly shaped distributions: both groups show comparable skewness and zero-proportions (<a href="#tbl-rq1-skewness" class="quarto-xref">Table&nbsp;2</a>), supporting this. Heavy tying at zero makes the exact null distribution unavailable, so a normal approximation with continuity correction is used.</p>
+<p>Samples are independent. Interpreting a difference as a median shift requires similarly shaped distributions; both groups show comparable skewness and zero-proportions (<a href="#tbl-rq1-skewness" class="quarto-xref">Table&nbsp;2</a>). Heavy tying at zero makes the exact null distribution unavailable, so a normal approximation with continuity correction is used.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -495,7 +495,7 @@ Table&nbsp;3: Wilcoxon rank-sum test comparing weekly paid employment hours by c
 </figure>
 </div>
 </div>
-<p>R reports the Mann-Whitney statistic; observed <span class="math inline">\(w = 3.7831\times 10^{4}\)</span>, giving <span class="math inline">\(p = &lt;0.001\)</span> (<a href="#tbl-rq1-wilcox" class="quarto-xref">Table&nbsp;3</a>).</p>
+<p>R reports the Mann-Whitney statistic; observed <span class="math inline">\(w = 3.7831\times 10^{4}\)</span> (<a href="#tbl-rq1-wilcox" class="quarto-xref">Table&nbsp;3</a>).</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -505,9 +505,9 @@ Table&nbsp;3: Wilcoxon rank-sum test comparing weekly paid employment hours by c
 </details>
 </div>
 <p><strong>4. P-value:</strong></p>
-<p>Since <span class="math inline">\(p = 0.000458 &lt; 0.05\)</span>, we reject <span class="math inline">\(H_0\)</span>. The rank-biserial effect size is <span class="math inline">\(r = -0.189\)</span>, indicating a small effect with Cram students tending toward higher work hours.</p>
+<p>The observed <span class="math inline">\(p = 0.000458\)</span>. The rank-biserial effect size is <span class="math inline">\(r = -0.189\)</span>, indicating a small effect with Cram students tending toward higher work hours.</p>
 <p><strong>5. Decision:</strong></p>
-<p>Since <span class="math inline">\(p = 0.000458 &lt; 0.05\)</span>, we reject <span class="math inline">\(H_0\)</span>: Cram students report significantly higher weekly work hours. Ties at zero reduce the precision of the rank-based test, though the large sample size still supports the conclusion. As this is observational data, the result reflects association, not causation, and unmeasured confounders (e.g., course load, financial need) remain possible.</p>
+<p>We reject <span class="math inline">\(H_0\)</span> (<span class="math inline">\(p &lt; 0.05\)</span>): Cram students report significantly higher weekly work hours. Although ties at zero reduce test precision, the large sample size supports this finding. As observational data, the result reflects association only; unmeasured confounders (e.g., course load, financial need) remain possible.</p>
 </section>
 <section id="rq2-multitasking-and-cramming" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="rq2-multitasking-and-cramming"><span class="header-section-number">3.2</span> RQ2: Multitasking and cramming</h2>
@@ -1577,7 +1577,7 @@ Figure&nbsp;5: Permutation null distribution of the Welch t-statistic. Dashed re
 <span id="cb20-79"><a href="#cb20-79" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-80"><a href="#cb20-80" aria-hidden="true" tabindex="-1"></a>**Research Question:** Is there a difference in weekly paid employment hours between students who cram before assessments and those who do not?</span>
 <span id="cb20-81"><a href="#cb20-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-82"><a href="#cb20-82" aria-hidden="true" tabindex="-1"></a>Paid employment may shape assessment preparation (Kember, 1999). We compare work hours between students who cram and those who do not, using the Wilcoxon rank-sum test.</span>
+<span id="cb20-82"><a href="#cb20-82" aria-hidden="true" tabindex="-1"></a>Paid employment may affect study habits (Kember, 1999). We compare work hours between students who cram and those who do not.</span>
 <span id="cb20-83"><a href="#cb20-83" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-84"><a href="#cb20-84" aria-hidden="true" tabindex="-1"></a>**Exploratory data analysis:**</span>
 <span id="cb20-85"><a href="#cb20-85" aria-hidden="true" tabindex="-1"></a></span>
@@ -1665,7 +1665,7 @@ Figure&nbsp;5: Permutation null distribution of the Welch t-statistic. Dashed re
 <span id="cb20-173"><a href="#cb20-173" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb20-174"><a href="#cb20-174" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb20-175"><a href="#cb20-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-176"><a href="#cb20-176" aria-hidden="true" tabindex="-1"></a>@fig-rq1-eda confirms strong right-skew and zero-inflation, so normality cannot be assumed; we use the Wilcoxon rank-sum test instead.</span>
+<span id="cb20-176"><a href="#cb20-176" aria-hidden="true" tabindex="-1"></a>@fig-rq1-eda confirms strong right-skew and zero-inflation, so normality cannot be assumed.</span>
 <span id="cb20-177"><a href="#cb20-177" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-178"><a href="#cb20-178" aria-hidden="true" tabindex="-1"></a>**1. Hypotheses:**</span>
 <span id="cb20-179"><a href="#cb20-179" aria-hidden="true" tabindex="-1"></a></span>
@@ -1676,7 +1676,7 @@ Figure&nbsp;5: Permutation null distribution of the Welch t-statistic. Dashed re
 <span id="cb20-184"><a href="#cb20-184" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-185"><a href="#cb20-185" aria-hidden="true" tabindex="-1"></a>**2. Assumptions:**</span>
 <span id="cb20-186"><a href="#cb20-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-187"><a href="#cb20-187" aria-hidden="true" tabindex="-1"></a>Samples are independent. Interpreting a difference as a median shift requires similarly shaped distributions: both groups show comparable skewness and zero-proportions (@tbl-rq1-skewness), supporting this. Heavy tying at zero makes the exact null distribution unavailable, so a normal approximation with continuity correction is used.</span>
+<span id="cb20-187"><a href="#cb20-187" aria-hidden="true" tabindex="-1"></a>Samples are independent. Interpreting a difference as a median shift requires similarly shaped distributions; both groups show comparable skewness and zero-proportions (@tbl-rq1-skewness). Heavy tying at zero makes the exact null distribution unavailable, so a normal approximation with continuity correction is used.</span>
 <span id="cb20-188"><a href="#cb20-188" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-191"><a href="#cb20-191" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb20-192"><a href="#cb20-192" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-rq1-skewness</span></span>
@@ -1714,7 +1714,7 @@ Figure&nbsp;5: Permutation null distribution of the Welch t-statistic. Dashed re
 <span id="cb20-226"><a href="#cb20-226" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">align =</span> <span class="fu">c</span>(<span class="st">"c"</span>, <span class="st">"c"</span>))</span>
 <span id="cb20-227"><a href="#cb20-227" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb20-228"><a href="#cb20-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-229"><a href="#cb20-229" aria-hidden="true" tabindex="-1"></a>R reports the Mann-Whitney statistic; observed $w = <span class="in">`r round(unname(wilcox_test$statistic), 1)`</span>$, giving $p = <span class="in">`r format.pval(wilcox_test$p.value, digits = 3, eps = 0.001)`</span>$ (@tbl-rq1-wilcox).</span>
+<span id="cb20-229"><a href="#cb20-229" aria-hidden="true" tabindex="-1"></a>R reports the Mann-Whitney statistic; observed $w = <span class="in">`r round(unname(wilcox_test$statistic), 1)`</span>$ (@tbl-rq1-wilcox).</span>
 <span id="cb20-230"><a href="#cb20-230" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-233"><a href="#cb20-233" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb20-234"><a href="#cb20-234" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rq1-effect-size</span></span>
@@ -1726,11 +1726,11 @@ Figure&nbsp;5: Permutation null distribution of the Welch t-statistic. Dashed re
 <span id="cb20-240"><a href="#cb20-240" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-241"><a href="#cb20-241" aria-hidden="true" tabindex="-1"></a>**4. P-value:**</span>
 <span id="cb20-242"><a href="#cb20-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-243"><a href="#cb20-243" aria-hidden="true" tabindex="-1"></a>Since $p = <span class="in">`r format.pval(wilcox_test$p.value, digits = 3)`</span> &lt; 0.05$, we reject $H_0$. The rank-biserial effect size is $r = <span class="in">`r round(r_rb, 3)`</span>$, indicating a small effect with Cram students tending toward higher work hours.</span>
+<span id="cb20-243"><a href="#cb20-243" aria-hidden="true" tabindex="-1"></a>The observed $p = <span class="in">`r format.pval(wilcox_test$p.value, digits = 3)`</span>$. The rank-biserial effect size is $r = <span class="in">`r round(r_rb, 3)`</span>$, indicating a small effect with Cram students tending toward higher work hours.</span>
 <span id="cb20-244"><a href="#cb20-244" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-245"><a href="#cb20-245" aria-hidden="true" tabindex="-1"></a>**5. Decision:**</span>
 <span id="cb20-246"><a href="#cb20-246" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-247"><a href="#cb20-247" aria-hidden="true" tabindex="-1"></a>Since $p = <span class="in">`r format.pval(wilcox_test$p.value, digits = 3)`</span> &lt; 0.05$, we reject $H_0$: Cram students report significantly higher weekly work hours. Ties at zero reduce the precision of the rank-based test, though the large sample size still supports the conclusion. As this is observational data, the result reflects association, not causation, and unmeasured confounders (e.g., course load, financial need) remain possible.</span>
+<span id="cb20-247"><a href="#cb20-247" aria-hidden="true" tabindex="-1"></a>We reject $H_0$ ($p &lt; 0.05$): Cram students report significantly higher weekly work hours. Although ties at zero reduce test precision, the large sample size supports this finding. As observational data, the result reflects association only; unmeasured confounders (e.g., course load, financial need) remain possible.</span>
 <span id="cb20-248"><a href="#cb20-248" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-249"><a href="#cb20-249" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-250"><a href="#cb20-250" aria-hidden="true" tabindex="-1"></a><span class="fu">## RQ2: Multitasking and cramming</span></span>

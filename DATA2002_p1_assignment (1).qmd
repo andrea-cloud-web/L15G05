@@ -77,7 +77,7 @@ write_csv(df_clean, "survey_cleaned.csv")
 
 **Research Question:** Is there a difference in weekly paid employment hours between students who cram before assessments and those who do not?
 
-Paid employment may shape assessment preparation (Kember, 1999). We compare work hours between students who cram and those who do not, using the Wilcoxon rank-sum test.
+Paid employment may affect study habits (Kember, 1999). We compare work hours between students who cram and those who do not.
 
 **Exploratory data analysis:**
 
@@ -165,7 +165,7 @@ rq1_data %>%
   )
 ```
 
-@fig-rq1-eda confirms strong right-skew and zero-inflation, so normality cannot be assumed; we use the Wilcoxon rank-sum test instead.
+@fig-rq1-eda confirms strong right-skew and zero-inflation, so normality cannot be assumed.
 
 **1. Hypotheses:**
 
@@ -176,7 +176,7 @@ $H_1: \theta_1 \neq \theta_2$
 
 **2. Assumptions:**
 
-Samples are independent. Interpreting a difference as a median shift requires similarly shaped distributions: both groups show comparable skewness and zero-proportions (@tbl-rq1-skewness), supporting this. Heavy tying at zero makes the exact null distribution unavailable, so a normal approximation with continuity correction is used.
+Samples are independent. Interpreting a difference as a median shift requires similarly shaped distributions; both groups show comparable skewness and zero-proportions (@tbl-rq1-skewness). Heavy tying at zero makes the exact null distribution unavailable, so a normal approximation with continuity correction is used.
 
 ```{r}
 #| label: tbl-rq1-skewness
@@ -214,7 +214,7 @@ tibble::tibble(
   knitr::kable(align = c("c", "c"))
 ```
 
-R reports the Mann-Whitney statistic; observed $w = `r round(unname(wilcox_test$statistic), 1)`$, giving $p = `r format.pval(wilcox_test$p.value, digits = 3, eps = 0.001)`$ (@tbl-rq1-wilcox).
+R reports the Mann-Whitney statistic; observed $w = `r round(unname(wilcox_test$statistic), 1)`$ (@tbl-rq1-wilcox).
 
 ```{r}
 #| label: rq1-effect-size
@@ -230,7 +230,7 @@ The observed $p = `r format.pval(wilcox_test$p.value, digits = 3)`$. The rank-bi
 
 **5. Decision:**
 
-Since $p = `r format.pval(wilcox_test$p.value, digits = 3)` < 0.05$, we reject $H_0$: Cram students report significantly higher weekly work hours. Ties at zero reduce the precision of the rank-based test, though the large sample size still supports the conclusion. As this is observational data, the result reflects association, not causation, and unmeasured confounders (e.g., course load, financial need) remain possible.
+We reject $H_0$ ($p < 0.05$): Cram students report significantly higher weekly work hours. Although ties at zero reduce test precision, the large sample size supports this finding. As observational data, the result reflects association only; unmeasured confounders (e.g., course load, financial need) remain possible.
 
 
 ## RQ2: Multitasking and cramming
