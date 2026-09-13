@@ -77,7 +77,7 @@ write_csv(df_clean, "survey_cleaned.csv")
 
 **Research Question:** Is there a difference in weekly paid employment hours between students who cram before assessments and those who do not?
 
-Paid employment may shape assessment preparation (Kember, 1999). We compare weekly work hours between students who cram and those who do not, using the Wilcoxon rank-sum test.
+Paid employment may shape assessment preparation (Kember, 1999). We compare work hours between students who cram and those who do not, using the Wilcoxon rank-sum test.
 
 **Exploratory data analysis:**
 
@@ -108,7 +108,7 @@ rq1_data %>%
   knitr::kable(align = rep("c", 9))
 ```
 
-Means exceed medians for both groups, and the Non-Cram median is zero: both distributions are right-skewed with heavy zero-inflation.
+Means exceed medians and the Non-Cram median is zero: both groups are right-skewed with heavy zero-inflation.
 
 ```{r}
 #| label: fig-rq1-eda
@@ -165,18 +165,18 @@ rq1_data %>%
   )
 ```
 
-@fig-rq1-eda confirms both groups are strongly right-skewed with a large proportion of zero responses, so normality cannot reasonably be assumed. We therefore use the Wilcoxon rank-sum test, a non-parametric method that does not require normality, to compare work hours between the two groups.
+@fig-rq1-eda confirms strong right-skew and zero-inflation, so normality cannot be assumed; we use the Wilcoxon rank-sum test instead.
 
 **1. Hypotheses:**
 
-Let $\theta_1$ and $\theta_2$ denote the population median weekly work hours for students who cram (Yes) and those who do not (No), respectively.
+Let $\theta_1$, $\theta_2$ denote population median weekly work hours for Cram (Yes) and Non-Cram (No) students.
 
-$H_0:$ the distributions of work hours are identical between the two groups ($\theta_1 = \theta_2$)
-$H_1:$ the distributions differ, with one group tending toward higher values ($\theta_1 \neq \theta_2$)
+$H_0: \theta_1 = \theta_2$  
+$H_1: \theta_1 \neq \theta_2$
 
 **2. Assumptions:**
 
-The Wilcoxon rank-sum test requires independent samples, satisfied here since Cram and Non-Cram students are distinct individuals. It does not require normality. To interpret a significant result as a difference in medians (rather than a more general difference in distribution), the two groups should have similarly shaped distributions.
+Samples are independent. Interpreting a difference as a median shift requires similarly shaped distributions: both groups show comparable skewness and zero-proportions (@tbl-rq1-skewness), supporting this. Heavy tying at zero makes the exact null distribution unavailable, so a normal approximation with continuity correction is used.
 
 ```{r}
 #| label: tbl-rq1-skewness
@@ -199,8 +199,6 @@ tibble::tibble(
   knitr::kable(align = c("l", "c", "c"))
 ```
 
-Both groups show similar skewness and a high proportion of zero responses, supporting similarly shaped distributions and interpretation of the test as a comparison of medians. A large proportion of tied values (particularly zeros) may reduce the precision of the rank-based test, which is addressed further in the limitations.
-
 **3. Test statistic and p-value:**
 
 ```{r}
@@ -216,6 +214,8 @@ tibble::tibble(
   knitr::kable(align = c("c", "c"))
 ```
 
+R reports the Mann-Whitney statistic; observed $w = `r round(unname(wilcox_test$statistic), 1)`$, giving $p = `r format.pval(wilcox_test$p.value, digits = 3, eps = 0.001)`$ (@tbl-rq1-wilcox).
+
 **4. Effect size:**
 
 ```{r}
@@ -226,16 +226,17 @@ n2 <- length(noncram_raw)
 r_rb <- 1 - (2 * unname(wilcox_test$statistic)) / (n1 * n2)
 ```
 
-Rank-biserial $r = `r round(r_rb, 3)`$, indicating a small effect, with Cram students tending toward higher work hours.
+Rank-biserial $r = `r round(r_rb, 3)`$: a small effect, with Cram students tending toward higher work hours.
 
 **5. Decision:**
 
-Since $p = `r format.pval(wilcox_test$p.value, digits = 3)` < 0.05$, we reject $H_0$: students who cram tend to report significantly higher weekly work hours than students who do not cram. Both variables are self-reported, and the 70-hour cleaning threshold is analyst-chosen. Over half of all observations are tied at zero, which reduces the precision of the rank-based test, though the large sample size still supports a reliable conclusion. As this is observational data, the result establishes association, not causation, and unmeasured confounders (e.g., course load and financial need) cannot be ruled out.
+Since $p = `r format.pval(wilcox_test$p.value, digits = 3)` < 0.05$, we reject $H_0$: Cram students report significantly higher weekly work hours. Ties at zero reduce the precision of the rank-based test, though the large sample size still supports the conclusion. As this is observational data, the result reflects association, not causation, and unmeasured confounders (e.g., course load, financial need) remain possible.
 
 
 ## RQ2: Is multitasking during lectures associated with whether students cram before assessments?
 
 Our client, a university learning-support team, wants to distinguish a lecture-engagement problem from a broader time-management one. Divided attention during study has been linked to weaker academic outcomes (Junco & Cotten, 2012), so multitasking is unlikely to be a neutral habit. If it also travels with cramming, the two may be one behavioural pattern rather than two, which we test with a chi-squared test of independence.
+
 **Exploratory data analysis:**
 
 Rows are dropped only for missing `assess` or `multitask`; the `work_hrs` threshold is not applied here, as neither variable involves paid employment.
@@ -308,7 +309,7 @@ rq2_data %>%
   theme(legend.position = "top", panel.grid.minor = element_blank())
 ```
 
-@tbl-rq2-table and @fig-rq2-eda show multitasking is more common among students who cram (`r sprintf("%.1f", pct_cram)`%) than among those who do not (`r sprintf("%.1f", pct_notcram)`%). Both non-cramming categories sit far below the cramming group (Immediately `r sprintf("%.1f", pct_imm)`%, Gradually `r sprintf("%.1f", pct_grad)`%), so they are collapsed into one.
+@tbl-rq2-table and @fig-rq2-eda show multitasking is more common among students who cram (`r sprintf("%.1f", pct_cram)`%) than among those who do not (`r sprintf("%.1f", pct_notcram)`%). The two non-cramming categories multitask at similar rates to each other (Immediately `r sprintf("%.1f", pct_imm)`%, Gradually `r sprintf("%.1f", pct_grad)`%), justifying their collapse into one group.
 
 **1. Hypotheses:** $H_0$: multitasking is independent of cramming among DATA2x02 students, versus $H_1$: the two are not independent.
 
@@ -337,6 +338,7 @@ chi_test
 **5. Decision:** Reject $H_0$ ($p < 0.001$): students who cram are considerably more likely to multitask. The effect is modest, so multitasking is one correlate of cramming rather than a defining feature. As a self-selected, self-reported survey, "cram" and "multitask" may be interpreted inconsistently, and the association does not imply causation — overall workload could drive both.
 
 ## RQ3: Do students who multitask in class spend a different time per week on work compared to students who do not?
+
 Paid employment is an external time commitment. Students balancing more work with study may exhibit different lecture behaviours. Following our previous research, we investigate whether paid-employment hours also differ between students who do and do not multitask.
 
 ```{r}
@@ -378,7 +380,9 @@ rq3_mean_no <- rq3_summary$mean[rq3_summary$multitask == "No"]
 rq3_mean_yes <- rq3_summary$mean[rq3_summary$multitask == "Yes"]
 rq3_mean_difference <- rq3_mean_yes - rq3_mean_no
 ```
+
 @tbl-rq3-summary and @fig-work-multitask show that multitasking students averaged `r sprintf("%.2f", rq3_mean_yes)` paid-work hours per week, compared with `r sprintf("%.2f", rq3_mean_no)` hours for non-multitasking students---a difference of `r sprintf("%.2f", rq3_mean_difference)` hours. Both distributions are visually right-skewed, with many students reporting few or no hours of employment and a smaller number reporting substantially higher working hours.
+
 ```{r}
 #| label: fig-work-multitask
 #| fig-cap: "Distribution of weekly paid employment hours by multitasking status."
@@ -510,6 +514,7 @@ tibble(t_permuted = t_permuted) %>%
   theme_minimal(base_size = 12) +
   theme(plot.title = element_text(face = "bold", hjust = 0.5))
 ```
+
 The two-sided permutation p-value is the proportion of simulated statistics at
 least as extreme as the observed statistic:
 
@@ -540,34 +545,23 @@ tibble(
     table.attr = 'class="table table-bordered table-striped" style="width: auto; margin-left: auto; margin-right: auto;"'
   )
 ```
-1. **Hypotheses:** Let $\mu_Y$ and $\mu_N$ be the population mean weekly
-   paid-employment hours for students who do and do not multitask,
-   respectively. $H_0:\mu_Y-\mu_N=0$ versus
-   $H_A:\mu_Y-\mu_N\neq0$.
 
-2. **Assumptions:** Student responses are treated as independent, and the
-   multitasking labels are exchangeable under $H_0$. Normality is unnecessary,
-   although a mean-based statistic remains sensitive to large values.
-   
-3. **Test statistic:**
-   $T=(\bar X_Y-\bar X_N)/\sqrt{S_Y^2/n_Y+S_N^2/n_N}$. The observed difference
-   is `r sprintf("%.2f", mean_difference)` hours per week and
-   $t_0=`r sprintf("%.3f", t_observed)`$.
+**1. Hypotheses:** Let $\mu_Y$ and $\mu_N$ be the population mean weekly paid-employment hours for students who do and do not multitask, respectively. $H_0:\mu_Y-\mu_N=0$ versus $H_A:\mu_Y-\mu_N\neq0$.
 
-4. **Permutation procedure:** With `set.seed(2002)`, the Yes/No labels were 
-   shuffled $B=10{,}000$ times while employment hours were fixed. The Welch 
-   statistic was recalculated to form @fig-rq3-permutation.
+**2. Assumptions:** Student responses are treated as independent, and the multitasking labels are exchangeable under $H_0$. Normality is unnecessary, although a mean-based statistic remains sensitive to large values.
 
-5. **P-value:** For the two-sided test, permutations satisfying
-   $|T_b^*|\geq|t_0|$ were counted. The plus-one estimate is
-   $p_{\mathrm{perm}}=`r sprintf("%.4f", p_permutation)`$.
+**3. Test statistic:** $T=(\bar X_Y-\bar X_N)/\sqrt{S_Y^2/n_Y+S_N^2/n_N}$. The observed difference is `r sprintf("%.2f", mean_difference)` hours per week and $t_0=`r sprintf("%.3f", t_observed)`$.
 
-6. **Decision:** Since $p=`r sprintf("%.4f", p_permutation)`<0.05$(Phipson and Smyth, 2010), we reject $H_0$. There is evidence that mean employment hours differ by multitasking status. multitasking students worked `r sprintf("%.2f", mean_difference)` more hours per week on average in this sample. However, Cohen's $d=`r sprintf("%.2f", cohens_d)`$ indicates a small effect, so its practical importance is limited. Both variables are self-reported and confounding may remain. As this is an observational survey of students, the result cannot establish causation or automatically generalize to others.
+**4. Permutation procedure:** With `set.seed(2002)`, the Yes/No labels were shuffled $B=10{,}000$ times while employment hours were fixed. The Welch statistic was recalculated to form @fig-rq3-permutation.
+
+**5. P-value:** For the two-sided test, permutations satisfying $|T_b^*|\geq|t_0|$ were counted. The plus-one estimate is $p_{\mathrm{perm}}=`r sprintf("%.4f", p_permutation)`$.
+
+**6. Decision:** Since $p = `r sprintf("%.4f", p_permutation)` < 0.05$ (the p-value uses the plus-one correction of Phipson and Smyth, 2010), we reject $H_0$. There is evidence that mean employment hours differ by multitasking status; multitasking students worked `r sprintf("%.2f", mean_difference)` more hours per week on average in this sample. However, Cohen's $d=`r sprintf("%.2f", cohens_d)`$ indicates a small effect, so its practical importance is limited. Both variables are self-reported and confounding may remain. As this is an observational survey of students, the result cannot establish causation or automatically generalise to others.
 
 
 # Conclusion
 
-Overall, the three analyses show consistent links between students’ employment commitments and study behaviours. Students who crammed reported significantly more weekly paid-employment hours, while multitasking was associated with both cramming and higher employment hours. However, the observed effects were modest, suggesting these factors are related but not decisive.
+Overall, the three analyses show consistent links between students’ employment commitments and study behaviours. Students who crammed reported significantly higher weekly paid-employment hours, while multitasking was associated with both cramming and higher employment hours. However, the observed effects were modest, suggesting these factors are related but not decisive.
 
 These findings may help the teaching team recognise how students’ external commitments and study habits interact, particularly when considering cramming and lecture multitasking.
 
@@ -586,6 +580,8 @@ We conducted the analysis responsibly by maintaining data integrity, applying ap
 
 # References
 
+Junco, R., & Cotten, S. R. (2012). No A 4 U: The relationship between multitasking and academic performance. *Computers & Education, 59*(2), 505–514. https://doi.org/10.1016/j.compedu.2011.12.023
+
 Kember, D. (1999). Integrating part-time study with family, work and social obligations. *Studies in Higher Education*, 24(1), 109–124.
 
 Phipson, B., & Smyth, G. K. (2010). Permutation p-values should never be zero: Calculating exact p-values when permutations are randomly drawn. *Statistical Applications in Genetics and Molecular Biology*, 9(1), Article 39. https://doi.org/10.2202/1544-6115.1585
@@ -595,5 +591,3 @@ R Core Team. (2026). *R: A language and environment for statistical computing*. 
 Wickham, H., Averick, M., Bryan, J., Chang, W., McGowan, L. D., François, R., Grolemund, G., Hayes, A., Henry, L., Hester, J., Kuhn, M., Pedersen, T. L., Miller, E., Bache, S. M., Müller, K., Ooms, J., Robinson, D., Seidel, D. P., Spinu, V., Takahashi, K., Vaughan, D., Wilke, C., Woo, K., and Yutani, H. (2019). Welcome to the tidyverse. *Journal of Open Source Software*, 4(43), 1686.
 
 Xie, Y., Allaire, J. J., and Grolemund, G. (2018). *R Markdown: The Definitive Guide*. Chapman and Hall/CRC.
-
-Junco, R., & Cotten, S. R. (2012). No A 4 U: The relationship between multitasking and academic performance. *Computers & Education, 59*(2), 505–514. https://doi.org/10.1016/j.compedu.2011.12.023
