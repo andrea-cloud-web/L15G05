@@ -168,7 +168,7 @@ $H_1$: The distributions of weekly paid-employment hours differ between Cram and
 
 **2. Assumptions:**
 
-Samples are independent and the outcome is at least ordinal. Both groups are strongly right-skewed with substantial ties at zero (Table 2), so a Wilcoxon rank-sum test is used rather than relying on normality. The large sample size supports the normal approximation with continuity correction.
+Samples are independent and the outcome is at least ordinal. Both groups are strongly right-skewed with substantial ties at zero (@tbl-rq1-skewness), so a Wilcoxon rank-sum test is used rather than relying on normality. 
 
 ```{r}
 #| label: tbl-rq1-skewness
@@ -206,7 +206,7 @@ tibble::tibble(
   knitr::kable(align = c("c", "c"))
 ```
 
-R reports the Mann-Whitney statistic; observed $w = `r round(unname(wilcox_test$statistic), 1)`$ (@tbl-rq1-wilcox).
+The observed Wilcoxon rank-sum statistic was W=`r round(unname(wilcox_test$statistic), 1)` (@tbl-rq1-wilcox).
 
 ```{r}
 #| label: rq1-effect-size
@@ -327,7 +327,7 @@ chi_test$expected %>%
 chi_test
 ```
 
-**4. P-value:** $P(\chi^2_{`r chi_df`} \geq `r sprintf("%.2f", chi_statistic)`) = `r signif(chi_p, 3)`$. Cramér's $V = `r sprintf("%.2f", cramers_v)`$ ($n = `r n_total`$), and the 95% CI for the difference in multitasking rates is `r sprintf("%.1f", diff_ci[1])` to `r sprintf("%.1f", diff_ci[2])` percentage points.
+**4. P-value:** $P(\chi^2_{`r chi_df`} \geq `r sprintf("%.2f", chi_statistic)`) = `r signif(chi_p, 3)`$. Cramér's $V = `r sprintf("%.2f", cramers_v)`$ ($n = `r n_total`$), and the 95% CI for the difference in multitasking rates (Cram − Non-Cram) is `r sprintf("%.1f", diff_ci[1])` to `r sprintf("%.1f", diff_ci[2])` percentage points.
 
 **5. Decision:** Reject \(H_0\) (\(p<0.001\)): students who cram are more likely to multitask, though the effect is modest. Both variables are self-reported, and unmeasured factors such as overall workload may confound the association; causation cannot be inferred.
 
