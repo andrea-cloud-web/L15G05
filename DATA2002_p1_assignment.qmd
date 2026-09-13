@@ -72,9 +72,9 @@ write_csv(df_clean, "survey_cleaned.csv")
 
 **Research Question:** Is there a difference in weekly paid employment hours between students who cram before assessments and those who do not?
 
-**Exploratory data analysis:**
-
 Paid employment may affect study habits (Kember, 1999). We compare work hours between cram and non-cram students using the Wilcoxon rank-sum test.
+
+**Exploratory data analysis:**
 
 ```{r}
 #| label: rq1-setup
@@ -230,7 +230,7 @@ We reject \(H_0\) (\(p<0.001\)), providing evidence that weekly paid-employment 
 
 **Research Question:** Is multitasking during lectures associated with cramming before assessments?
 
-DATA2002/2902 teaching team wants to understand whether cramming and multitasking tend to occur together, as multitasking has been associated with poorer academic outcomes (Junco & Cotten, 2012); we test this association using a chi-squared test of independence, which may help inform student learning support.
+The DATA2002/2902 teaching team wants to understand whether cramming and multitasking tend to occur together, as multitasking has been associated with poorer academic outcomes (Junco & Cotten, 2012); we test this association using a chi-squared test of independence, which may help inform student learning support.
 
 **Exploratory data analysis:**
 
@@ -337,6 +337,8 @@ chi_test
 **Research Question:** Do students who multitask in class spend different amounts of time in paid employment?
 
 Paid employment is an external time commitment that may compete with lecture engagement. We test whether paid-employment hours differ between students who multitask and those who do not.
+
+**Exploratory data analysis:**
 
 ```{r}
 #| label: rq3-setup
@@ -485,8 +487,6 @@ pooled_sd <- sqrt(
 )
 cohens_d <- mean_difference / pooled_sd
 ```
-
-
 
 ```{r}
 #| label: rq3-p-value
