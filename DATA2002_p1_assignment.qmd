@@ -304,11 +304,11 @@ rq2_data %>%
   theme(legend.position = "top", panel.grid.minor = element_blank())
 ```
 
-@tbl-rq2-table and @fig-rq2-eda show multitasking is more common among students who cram (`r sprintf("%.1f", pct_cram)`%) than among those who do not (`r sprintf("%.1f", pct_notcram)`%). Because the research question focuses on cramming, "Immediately" and "Gradually" were combined as Non-Cram. The similar observed multitasking rates between these two groups (@fig-rq2-eda) suggest that this grouping does not conceal a substantial difference between them.
+@tbl-rq2-table and @fig-rq2-eda show multitasking is more common among students who cram (`r sprintf("%.1f", pct_cram)`%) than among those who do not (`r sprintf("%.1f", pct_notcram)`%). Because the research question focuses on cramming, "Immediately" and "Gradually" were combined as Non-Cram; multitasking rates were `r sprintf("%.1f", pct_imm)`% and `r sprintf("%.1f", pct_grad)`% respectively, suggesting this grouping does not conceal a large difference between them.
 
 **1. Hypotheses:** $H_0$: multitasking is independent of cramming among DATA2x02 students, versus $H_1$: the two are not independent.
 
-**2. Assumptions:** Observations are independent and every expected cell count must exceed 5; the minimum here is `r sprintf("%.1f", min_expected)`, so the approximation is valid without continuity correction (otherwise Fisher's exact test would apply).
+**2. Assumptions:** Observations are independent and every expected cell count must exceed 5; the minimum here is `r sprintf("%.1f", min_expected)` (@tbl-rq2-expected), so the approximation is valid without continuity correction (otherwise Fisher's exact test would apply).
 
 ```{r}
 #| label: tbl-rq2-expected
@@ -330,7 +330,7 @@ chi_test
 
 **4. P-value:** $P(\chi^2_{`r chi_df`} \geq `r sprintf("%.2f", chi_statistic)`) = `r signif(chi_p, 3)`$. Cramér's $V = `r sprintf("%.2f", cramers_v)`$ ($n = `r n_total`$), and the 95% CI for the difference in multitasking rates (Cram − Non-Cram) is `r sprintf("%.1f", diff_ci[1])` to `r sprintf("%.1f", diff_ci[2])` percentage points.
 
-**5. Decision:** Reject \(H_0\) (\(p<0.001\)): students who cram are more likely to multitask, though the effect is modest. Both variables are self-reported, and unmeasured factors such as overall workload may confound the association; causation cannot be inferred.
+**5. Decision:** Reject $H_0$ ($p<0.001$): students who cram are more likely to multitask, though the effect is modest. Both variables are self-reported, and unmeasured factors such as overall workload may confound the association; causation cannot be inferred.
 
 ## RQ3: Multitasking and employment hours
 
