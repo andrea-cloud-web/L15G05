@@ -221,7 +221,7 @@ r_rb <- 1 - (2 * unname(wilcox_test$statistic)) / (n1 * n2)
 
 **4. P-value:**
 
-The observed $p = `r format.pval(wilcox_test$p.value, digits = 3)`$. The rank-biserial effect size is $r = `r round(r_rb, 3)`$, indicating a small effect with Cram students tending toward higher work hours.
+The observed \(p=0.000458\), with a small rank-biserial effect (\(|r|=0.189\)).
 
 **5. Decision:**
 
@@ -520,8 +520,7 @@ tibble(
 
 **1. Hypotheses:** $\mu_Y$, $\mu_N$: population mean weekly paid-employment hours for multitasking vs non-multitasking students. $H_0: \mu_Y = \mu_N$ versus $H_1: \mu_Y \neq \mu_N$.
 
-**2. Assumptions:** Responses are independent, and multitasking labels are exchangeable under $H_0$; normality is unnecessary, though the statistic remains sensitive to outliers.
-
+**2. Assumptions:** Responses are independent. The studentized permutation test using the Welch statistic reduces reliance on normality and is more robust to unequal variances, although extreme observations may still influence the result.
 **3. Test statistic:** $T=(\bar X_Y-\bar X_N)/\sqrt{S_Y^2/n_Y+S_N^2/n_N}$; observed $t_0=`r sprintf("%.3f", t_observed)`$.
 
 ```{r}
