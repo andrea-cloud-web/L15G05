@@ -306,7 +306,7 @@ rq2_data %>%
 
 **1. Hypotheses:** $H_0$: multitasking is independent of cramming among DATA2x02 students, versus $H_1$: the two are not independent.
 
-**2. Assumptions:** Observations are independent and every expected cell count must exceed 5; the minimum here is 51.5, so the approximation is valid without continuity correction (otherwise Fisher's exact test would apply).
+**2. Assumptions:** Observations are independent and every expected cell count must exceed 5; the minimum here is `r sprintf("%.1f", min_expected)`, so the approximation is valid without continuity correction (otherwise Fisher's exact test would apply).
 
 ```{r}
 #| label: tbl-rq2-expected
