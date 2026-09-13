@@ -17,7 +17,7 @@ This report, commissioned by the DATA2002/2902 teaching team, examines relations
 
 # Data Wrangling
 
-All analyses were conducted in R (R Core Team, 2026) using the tidyverse (Wickham et al., 2019). Missing values were removed where required for each analysis. Responses selecting "Other" for assessment preparation were excluded because they could not be consistently classified. Weekly paid-employment hours above 70 were excluded as extreme responses, with the 70-hour threshold loosely informed by the Fair Work Act 2009 standard of 38 weekly hours plus reasonable additional hours. @fig-cleaning compares work-hour distributions before and after this exclusion.
+All analyses were conducted in R (R Core Team, 2026) using the tidyverse (Wickham et al., 2019). Missing values were removed where required for each analysis. Responses selecting "Other" for assessment preparation were excluded because they could not be consistently classified. Weekly paid-employment hours above 70 were excluded as extreme responses, with the 70-hour threshold loosely informed by the *Fair Work Act 2009* (Cth) s 62 standard of 38 weekly hours plus reasonable additional hours. @fig-cleaning compares work-hour distributions before and after this exclusion.
 
 ```{r}
 #| label: fig-cleaning
@@ -71,6 +71,8 @@ write_csv(df_clean, "survey_cleaned.csv")
 ## RQ1: Work hours and cramming
 
 **Research Question:** Is there a difference in weekly paid employment hours between students who cram before assessments and those who do not?
+
+**Exploratory data analysis:**
 
 Paid employment may affect study habits (Kember, 1999). We compare work hours between cram and non-cram students using the Wilcoxon rank-sum test.
 
@@ -228,7 +230,7 @@ We reject \(H_0\) (\(p<0.001\)), providing evidence that weekly paid-employment 
 
 **Research Question:** Is multitasking during lectures associated with cramming before assessments?
 
-The university learning-support team wants to understand whether cramming and multitasking tend to occur together, as multitasking has been associated with poorer academic outcomes (Junco & Cotten, 2012); we test this association using a chi-squared test of independence, which may help inform student learning support.
+DATA2002/2902 teaching team wants to understand whether cramming and multitasking tend to occur together, as multitasking has been associated with poorer academic outcomes (Junco & Cotten, 2012); we test this association using a chi-squared test of independence, which may help inform student learning support.
 
 **Exploratory data analysis:**
 
@@ -562,12 +564,14 @@ AI was used as a supplementary tool to improve chart formatting and visualisatio
 
 # ISI Professional Ethics Statement
 
-We conducted the analysis responsibly by maintaining data integrity, applying appropriate statistical methods, and transparently reporting limitations. We avoided causal claims beyond the evidence and protected participants’ privacy by using survey data only for the intended academic analysis.
+This analysis was conducted in accordance with the ISI Declaration on Professional Ethics for Statisticians (International Statistical Institute, 2010). We conducted the analysis responsibly by maintaining data integrity, applying appropriate statistical methods, and transparently reporting limitations. We avoided causal claims beyond the evidence and protected participants' privacy by using survey data only for the intended academic analysis.
 
 
 # References
 
 *Fair Work Act 2009* (Cth) s 62 (Austl.).
+
+International Statistical Institute. (2010). *Declaration on professional ethics*. https://www.isi-web.org/resources/declaration-on-professional-ethics
 
 Junco, R., & Cotten, S. R. (2012). No A 4 U: The relationship between multitasking and academic performance. *Computers & Education, 59*(2), 505–514. https://doi.org/10.1016/j.compedu.2011.12.023
 
