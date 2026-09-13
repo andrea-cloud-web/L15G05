@@ -229,7 +229,7 @@ We reject \(H_0\) (\(p<0.001\)), providing evidence that weekly paid-employment 
 
 **Research Question:** Is multitasking during lectures associated with cramming before assessments?
 
-The university learning-support team wants to understand whether cramming is associated with multitasking, which has been linked to weaker academic outcomes (May & Elder, 2018). Identifying such an association may help distinguish study behaviours that tend to occur together.
+The university learning-support team wants to understand whether cramming and multitasking tend to occur together, as multitasking has been associated with poorer academic outcomes (Junco & Cotten, 2012). Identifying this relationship may help inform student learning support.
 
 **Exploratory data analysis:**
 
