@@ -4,13 +4,11 @@ date: "`r Sys.Date()`"
 author: "541035662 530029720 540872536 550505479 530210568 550041014"
 format:
   html:
-    #embed-resources: true # Creates a single HTML file as output
-    code-fold: true # Show code chunks directly in the rendered HTML
-    code-tools: true # Includes a menu to download the code file
-    # code-tools are particularly important if you use inline R to
-    # improve the reproducibility of your report
-table-of-contents: true # (Optional) Creates a table of contents
-number-sections: true # (Optional) Puts numbers next to heading/subheadings
+    embed-resources: true
+    code-fold: true
+    code-tools: true
+table-of-contents: true
+number-sections: true
 ---
 
 # Introduction
