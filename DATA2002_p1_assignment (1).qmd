@@ -19,7 +19,7 @@ This report examines how paid employment and study habits relate to students’ 
 
 # Data Wrangling
 
-All data processing for this report was conducted in R (R Core Team 2026) within the R Markdown environment (Xie, Allaire, and Grolemund 2018) for reproducibility. Data wrangling was performed using base R and the tidyverse, and visualisations were produced with ggplot2 (Wickham et al. 2019).
+All data processing for this report was conducted in R (R Core Team, 2026) within the R Markdown environment (Xie, Allaire, & Grolemund, 2018) for reproducibility. Data wrangling was performed using base R and the tidyverse, and visualisations were produced with ggplot2 (Wickham et al., 2019).
 
 Variables were cleaned and recoded, with missing values handled case-by-case. The survey dataset was imported, variables were renamed for clarity, "Other" responses were removed from `assess`, and `work_hrs` values above 70 hours per week were removed because they exceed a standard full-time work week. A boxplot compares the distributions before and after cleaning, and the cleaned data are saved as `survey_cleaned.csv`.
 
@@ -75,7 +75,7 @@ write_csv(df_clean, "survey_cleaned.csv")
 
 ## RQ1: Work hours and cramming
 
-**Research Question :** Is there a difference in weekly paid employment hours between students who cram before assessments and those who do not?
+**Research Question:** Is there a difference in weekly paid employment hours between students who cram before assessments and those who do not?
 
 Paid employment may shape assessment preparation (Kember, 1999). We compare work hours between students who cram and those who do not, using the Wilcoxon rank-sum test.
 
@@ -199,7 +199,7 @@ tibble::tibble(
   knitr::kable(align = c("l", "c", "c"))
 ```
 
-**3. Test statistic and p-value:**
+**3. Test statistic:**
 
 ```{r}
 #| label: tbl-rq1-wilcox
@@ -216,8 +216,6 @@ tibble::tibble(
 
 R reports the Mann-Whitney statistic; observed $w = `r round(unname(wilcox_test$statistic), 1)`$, giving $p = `r format.pval(wilcox_test$p.value, digits = 3, eps = 0.001)`$ (@tbl-rq1-wilcox).
 
-**4. Effect size:**
-
 ```{r}
 #| label: rq1-effect-size
 
@@ -226,7 +224,9 @@ n2 <- length(noncram_raw)
 r_rb <- 1 - (2 * unname(wilcox_test$statistic)) / (n1 * n2)
 ```
 
-Rank-biserial $r = `r round(r_rb, 3)`$: a small effect, with Cram students tending toward higher work hours.
+**4. P-value:**
+
+Since $p = `r format.pval(wilcox_test$p.value, digits = 3)` < 0.05$, we reject $H_0$. The rank-biserial effect size is $r = `r round(r_rb, 3)`$, indicating a small effect with Cram students tending toward higher work hours.
 
 **5. Decision:**
 
@@ -385,10 +385,10 @@ rq3_mean_yes <- rq3_summary$mean[rq3_summary$multitask == "Yes"]
 rq3_mean_difference <- rq3_mean_yes - rq3_mean_no
 ```
 
-@tbl-rq3-summary and @fig-work-multitask show that multitasking students averaged `r sprintf("%.2f", rq3_mean_yes)` paid-work hours per week, compared with `r sprintf("%.2f", rq3_mean_no)` hours for non-multitasking students---a difference of `r sprintf("%.2f", rq3_mean_difference)` hours. Both distributions are visually right-skewed, with many students reporting few or no hours of employment and a smaller number reporting substantially higher working hours.
+@tbl-rq3-summary and @fig-rq3-eda show that multitasking students averaged `r sprintf("%.2f", rq3_mean_yes)` paid-work hours per week, compared with `r sprintf("%.2f", rq3_mean_no)` hours for non-multitasking students---a difference of `r sprintf("%.2f", rq3_mean_difference)` hours. Both distributions are visually right-skewed, with many students reporting few or no hours of employment and a smaller number reporting substantially higher working hours.
 
 ```{r}
-#| label: fig-work-multitask
+#| label: fig-rq3-eda
 #| fig-cap: "Distribution of weekly paid employment hours by multitasking status."
 
 df_rq3 %>%
@@ -550,7 +550,7 @@ tibble(
   )
 ```
 
-**1. Hypotheses:** Let $\mu_Y$ and $\mu_N$ be the population mean weekly paid-employment hours for students who do and do not multitask, respectively. $H_0:\mu_Y-\mu_N=0$ versus $H_A:\mu_Y-\mu_N\neq0$.
+**1. Hypotheses:** Let $\mu_Y$ and $\mu_N$ be the population mean weekly paid-employment hours for students who do and do not multitask, respectively. $H_0: \mu_Y - \mu_N = 0$ versus $H_1: \mu_Y - \mu_N \neq 0$.
 
 **2. Assumptions:** Student responses are treated as independent, and the multitasking labels are exchangeable under $H_0$. Normality is unnecessary, although a mean-based statistic remains sensitive to large values.
 
@@ -560,7 +560,7 @@ tibble(
 
 **5. P-value:** For the two-sided test, permutations satisfying $|T_b^*|\geq|t_0|$ were counted. The plus-one estimate is $p_{\mathrm{perm}}=`r sprintf("%.4f", p_permutation)`$.
 
-**6. Decision:** Since $p = `r sprintf("%.4f", p_permutation)` < 0.05$ (the p-value uses the plus-one correction of Phipson and Smyth, 2010), we reject $H_0$. There is evidence that mean employment hours differ by multitasking status; multitasking students worked `r sprintf("%.2f", mean_difference)` more hours per week on average in this sample. However, Cohen's $d=`r sprintf("%.2f", cohens_d)`$ indicates a small effect, so its practical importance is limited. Both variables are self-reported and confounding may remain. As this is an observational survey of students, the result cannot establish causation or automatically generalise to others.
+**6. Decision:** Since $p = `r sprintf("%.4f", p_permutation)` < 0.05$ (the p-value uses the plus-one correction of Phipson & Smyth, 2010), we reject $H_0$. There is evidence that mean employment hours differ by multitasking status; multitasking students worked `r sprintf("%.2f", mean_difference)` more hours per week on average in this sample. However, Cohen's $d=`r sprintf("%.2f", cohens_d)`$ indicates a small effect, so its practical importance is limited. Both variables are self-reported and confounding may remain. As this is an observational survey of students, the result cannot establish causation or automatically generalise to others.
 
 
 # Conclusion
@@ -586,12 +586,12 @@ We conducted the analysis responsibly by maintaining data integrity, applying ap
 
 Junco, R., & Cotten, S. R. (2012). No A 4 U: The relationship between multitasking and academic performance. *Computers & Education, 59*(2), 505–514. https://doi.org/10.1016/j.compedu.2011.12.023
 
-Kember, D. (1999). Integrating part-time study with family, work and social obligations. *Studies in Higher Education*, 24(1), 109–124.
+Kember, D. (1999). Integrating part-time study with family, work and social obligations. *Studies in Higher Education, 24*(1), 109–124.
 
-Phipson, B., & Smyth, G. K. (2010). Permutation p-values should never be zero: Calculating exact p-values when permutations are randomly drawn. *Statistical Applications in Genetics and Molecular Biology*, 9(1), Article 39. https://doi.org/10.2202/1544-6115.1585
+Phipson, B., & Smyth, G. K. (2010). Permutation p-values should never be zero: Calculating exact p-values when permutations are randomly drawn. *Statistical Applications in Genetics and Molecular Biology, 9*(1), Article 39. https://doi.org/10.2202/1544-6115.1585
 
 R Core Team. (2026). *R: A language and environment for statistical computing*. R Foundation for Statistical Computing.
 
-Wickham, H., Averick, M., Bryan, J., Chang, W., McGowan, L. D., François, R., Grolemund, G., Hayes, A., Henry, L., Hester, J., Kuhn, M., Pedersen, T. L., Miller, E., Bache, S. M., Müller, K., Ooms, J., Robinson, D., Seidel, D. P., Spinu, V., Takahashi, K., Vaughan, D., Wilke, C., Woo, K., and Yutani, H. (2019). Welcome to the tidyverse. *Journal of Open Source Software*, 4(43), 1686.
+Wickham, H., Averick, M., Bryan, J., Chang, W., McGowan, L. D., François, R., Grolemund, G., Hayes, A., Henry, L., Hester, J., Kuhn, M., Pedersen, T. L., Miller, E., Bache, S. M., Müller, K., Ooms, J., Robinson, D., Seidel, D. P., Spinu, V., Takahashi, K., Vaughan, D., Wilke, C., Woo, K., & Yutani, H. (2019). Welcome to the tidyverse. *Journal of Open Source Software, 4*(43), 1686.
 
-Xie, Y., Allaire, J. J., and Grolemund, G. (2018). *R Markdown: The Definitive Guide*. Chapman and Hall/CRC.
+Xie, Y., Allaire, J. J., & Grolemund, G. (2018). *R Markdown: The Definitive Guide*. Chapman and Hall/CRC.
