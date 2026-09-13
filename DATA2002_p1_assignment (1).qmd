@@ -555,7 +555,7 @@ tibble(t_permuted = t_permuted) %>%
 
 **4. P-value:** With `set.seed(2002)`, Yes/No labels were shuffled $B=10{,}000$ times while hours were fixed; permutations with $|T_b^*|\geq|t_0|$ gave $p_{\mathrm{perm}}=`r sprintf("%.4f", p_permutation)`$ from @fig-rq3-permutation using the plus-one estimate. Cohen's $d=`r sprintf("%.2f", cohens_d)`$ indicates a small effect.
 
-**5. Decision:** Since $p = `r sprintf("%.4f", p_permutation)` < 0.05$ (Phipson & Smyth, 2010), we reject $H_0$: multitasking students worked `r sprintf("%.2f", mean_difference)` more hours per week. As self-reported observational data, this shows association, not causation.
+**5. Decision:** Since $p=`r sprintf("%.4f", p_permutation)`<0.05$ (Phipson & Smyth, 2010), we reject $H_0$. There is evidence that mean employment hours differ by multitasking status; multitasking students worked `r sprintf("%.2f", mean_difference)` more hours per week on average in this sample. However, the effect is small, so its practical importance is limited. Both variables are self-reported and confounding may remain. As this is an observational survey of students, the result cannot establish causation or automatically generalise to others.
 
 
 # Conclusion
