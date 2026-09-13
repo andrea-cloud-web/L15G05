@@ -228,7 +228,7 @@ We reject \(H_0\) (\(p<0.001\)), providing evidence that weekly paid-employment 
 
 **Research Question:** Is multitasking during lectures associated with cramming before assessments?
 
-The university learning-support team wants to understand whether cramming and multitasking tend to occur together, as multitasking has been associated with poorer academic outcomes (Junco & Cotten, 2012). Identifying this relationship may help inform student learning support, which we test with a chi-squared test of independence.
+The university learning-support team wants to understand whether cramming and multitasking tend to occur together, as multitasking has been associated with poorer academic outcomes (Junco & Cotten, 2012); we test this association using a chi-squared test of independence, which may help inform student learning support.
 
 **Exploratory data analysis:**
 
