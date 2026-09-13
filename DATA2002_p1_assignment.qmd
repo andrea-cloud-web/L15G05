@@ -13,11 +13,11 @@ number-sections: true
 
 # Introduction
 
-This report examines relationships among paid employment, cramming, and multitasking to understand how students’ work commitments relate to study habits. Data come from a survey of DATA2002/2902 students. Because students were not randomly sampled from the broader university population, selection bias limits generalisability. Self-reported work hours and study behaviours may also be affected by recall and social-desirability biases.
+This report examines relationships among paid employment, cramming, and multitasking to understand how students' work commitments may relate to study habits. Data come from a voluntary survey of DATA2002/2902 students rather than a random sample of the broader student population, potentially over-representing more engaged students and limiting generalisability. Self-reported work hours and study behaviours may be subject to recall and social-desirability bias. Questions requiring students to estimate average work hours and categorise study behaviours may also be interpreted inconsistently due to imprecise reference periods or behavioural definitions.
 
 # Data Wrangling
 
-All analyses were conducted in R (R Core Team, 2026) using the tidyverse (Wickham et al., 2019). Questions asking students to report “average” work hours and categorise study behaviours may be interpreted inconsistently because no reference period or precise behavioural definitions are provided. Missing values were removed separately for variables required in each analysis. Responses selecting “Other” for assessment preparation were excluded because they could not be consistently classified. Weekly paid-employment hours above 70 were excluded as extreme responses, informed by Australian working-hour standards of 38 hours plus reasonable additional hours (Fair Work Act 2009 (Cth) s 62).
+All analyses were conducted in R (R Core Team, 2026) using the tidyverse (Wickham et al., 2019). Missing values were removed separately for variables required in each analysis. Responses selecting “Other” for assessment preparation were excluded because they could not be consistently classified. Weekly paid-employment hours above 70 were excluded as extreme responses, with the threshold informed by the Australian standard of 38 weekly hours plus reasonable additional hours (Fair Work Act 2009 (Cth) s 62). @fig-cleaning compares work-hour distributions before and after this exclusion.
 
 ```{r}
 #| label: fig-cleaning
@@ -229,7 +229,7 @@ We reject \(H_0\) (\(p<0.001\)), providing evidence that weekly paid-employment 
 
 **Research Question:** Is multitasking during lectures associated with cramming before assessments?
 
-Our client, a university learning-support team, wants to distinguish a lecture-engagement problem from a broader time-management one. Divided attention has been linked to weaker academic outcomes (Junco & Cotten, 2012), so we test whether it also travels with cramming using a chi-squared test of independence.
+The university learning-support team wants to understand whether cramming is associated with multitasking, which has been linked to weaker academic outcomes (May & Elder, 2018). Identifying such an association may help distinguish study behaviours that tend to occur together.
 
 **Exploratory data analysis:**
 
@@ -303,7 +303,7 @@ rq2_data %>%
   theme(legend.position = "top", panel.grid.minor = element_blank())
 ```
 
-@tbl-rq2-table and @fig-rq2-eda show multitasking is more common among students who cram (`r sprintf("%.1f", pct_cram)`%) than among those who do not (`r sprintf("%.1f", pct_notcram)`%). Because the research question focuses on cramming, "Immediately" and "Gradually" were combined as Non-Cram. Their similar observed multitasking rates (@tbl-rq2-eda) suggest that this grouping does not conceal a substantial difference between the two categories. @fig-rq2-proportions compares multitasking proportions between Cram and Non-Cram students.
+@tbl-rq2-table and @fig-rq2-eda show multitasking is more common among students who cram (`r sprintf("%.1f", pct_cram)`%) than among those who do not (`r sprintf("%.1f", pct_notcram)`%). Because the research question focuses on cramming, "Immediately" and "Gradually" were combined as Non-Cram. The similar observed multitasking rates between these two groups (@tbl-rq2-eda) suggest that this grouping does not conceal a substantial difference between them. @fig-rq2-proportions compares multitasking proportions between Cram and Non-Cram students.
 
 **1. Hypotheses:** $H_0$: multitasking is independent of cramming among DATA2x02 students, versus $H_1$: the two are not independent.
 
@@ -579,5 +579,3 @@ Phipson, B., & Smyth, G. K. (2010). Permutation p-values should never be zero: C
 R Core Team. (2026). *R: A language and environment for statistical computing*. R Foundation for Statistical Computing.
 
 Wickham, H., Averick, M., Bryan, J., Chang, W., McGowan, L. D., François, R., Grolemund, G., Hayes, A., Henry, L., Hester, J., Kuhn, M., Pedersen, T. L., Miller, E., Bache, S. M., Müller, K., Ooms, J., Robinson, D., Seidel, D. P., Spinu, V., Takahashi, K., Vaughan, D., Wilke, C., Woo, K., & Yutani, H. (2019). Welcome to the tidyverse. *Journal of Open Source Software, 4*(43), 1686.
-
-Xie, Y., Allaire, J. J., & Grolemund, G. (2018). *R Markdown: The Definitive Guide*. Chapman and Hall/CRC.
