@@ -13,7 +13,7 @@ number-sections: true
 
 # Introduction
 
-This report, commissioned by the DATA2002/2902 teaching team, examines relationships among paid employment, cramming, and multitasking to understand how students' work commitments may relate to study habits. The data come from an anonymous, voluntary survey of r nrow(raw) DATA2002/2902 students; as a non-random sample, it may over-represent engaged students, limiting generalisability. Self-reported behaviours may also be affected by recall and social-desirability bias. The question "Do you multi-task in lectures?" does not clearly define what behaviours or frequency constitute multitasking, so responses may be interpreted inconsistently. Extreme and unusable responses were removed (see Data Wrangling).
+This report, commissioned by the DATA2002/2902 teaching team, examines relationships among paid employment, cramming, and multitasking to understand how students' work commitments may relate to study habits. The data come from an anonymous, voluntary survey of `r nrow(raw)` DATA2002/2902 students; as a non-random sample, it may over-represent engaged students, limiting generalisability. Self-reported behaviours may also be affected by recall and social-desirability bias. The question "Do you multi-task in lectures?" does not clearly define what behaviours or frequency constitute multitasking, so responses may be interpreted inconsistently. Extreme and unusable responses were removed (see Data Wrangling).
 
 # Data Wrangling
 
@@ -72,7 +72,7 @@ write_csv(df_clean, "survey_cleaned.csv")
 
 **Research Question:** Is there a difference in weekly paid employment hours between students who cram before assessments and those who do not?
 
-Paid employment may affect study habits (Kember, 1999), which the teaching team could use to flag at-risk students. We compare work hours between cram and non-cram students using the Wilcoxon rank-sum test.
+Paid employment may affect study habits (Kember, 1999), which is relevant to the teaching team's interest in student support. We compare work hours between cram and non-cram students using the Wilcoxon rank-sum test.
 
 **Exploratory data analysis:**
 
